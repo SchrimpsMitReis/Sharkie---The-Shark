@@ -1,0 +1,23 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("../IMG/BrowserBG3.webp");
+    background-size: 110% 145%;
+    background-repeat: no-repeat;
+    background-position: top;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Spongebob';
+    font-size: 2.5em;
+    color: #FFE878;
+    filter: drop-shadow( 0 0em 0.1em #1147AD);
+}
+.cursorNone{
+    cursor: none;
+}
+canvas{
+    background-color: black;
+}
