@@ -58,9 +58,10 @@ class moveableObjekt extends drawableObject {
         } else {
             this.lastHit = new Date().getTime();
         }
+        console.log(this.isHurt());
     }
     isHurt() {
-        let timepassed = new Date().getTime() - this.e
+        let timepassed = new Date().getTime() - this.lastHit
         timepassed = timepassed / 1000;
         return timepassed < 3;
     }

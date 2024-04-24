@@ -4,6 +4,7 @@ class Charakter extends moveableObjekt {
     world;
     speed = 5;
     lifePoints = 100;
+    energie = 100;
     coins = 0;
     score = 0;
     meleeActive = false;
@@ -153,14 +154,13 @@ class Charakter extends moveableObjekt {
                 }else{
                     this.loadImage(this.IMAGES_SHARKIE_DEAD[11])
                 }
-            } else if (this.isHurt()) {
-                // this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)
-            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.alive)) {
+            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.alive) {
                 this.playAnimation(this.IMAGES_SHARKIE_SWIM)
+                this.addEnergie(0.5)
 
             } else {
                 this.playAnimation(this.IMAGES_SHARKIESTILL)
-
+                this.addEnergie(1)
             }
         }, 100)
     }
@@ -178,6 +178,12 @@ class Charakter extends moveableObjekt {
         this.score -= x
         if (this.score < 0){
             this.score = 0
+        }
+    }
+    addEnergie(x){
+        this.energie += x;
+        if(this.energie > 100){
+            this.energie = 100
         }
     }
 }

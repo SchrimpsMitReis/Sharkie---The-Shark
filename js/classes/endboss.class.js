@@ -4,6 +4,7 @@ class Endboss extends moveableObjekt{
     height = 300;
     width = 300;
     lifePoints = 100;
+    isAttacking = false
     IMAGES_INTRO = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/1.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -61,9 +62,54 @@ class Endboss extends moveableObjekt{
             }else if (this.isHurt()){
                 this.playAnimation(this.IMAGES_HURT)
             }
-            else{this.playAnimation(this.IMAGES_FLOATING)}
+            else if(!this.isHurt() || !this.isDead() || !this.isAttacking){
+                this.attackPlayer()
+            }
+            else{this.playAnimation(this.IMAGES_FLOATING)
+            }
         }, 100)
 
     }
+    attackPlayer(){
+        this.isAttacking = true
+        let target_X = world.charakter.position_x
+        let target_Y = world.charakter.position_y
+        let distanzToX = this.position_x - target_X
+        let distanzToY = this.position_y - target_Y
+        // console.log(target_X, "/", target_Y , ':', distanzToX,'/',distanzToY);
+        setTimeout(()=>{
+            this.moveToPlayer(distanzToX,distanzToY, target_X, target_Y)
 
+        }, 1000)
+    }
+    moveToPlayer(distanceX, distanceY, target_X, target_Y){
+        let attackSpeed = 10
+        for (let i = 0; i < attackSpeed; i++) {
+            setTimeout(()=>{
+                this.position_x -= distanceX/attackSpeed
+                this.position_y -= distanceY/attackSpeed
+                if (this.position_x <= world.charakter.position_x - 50){
+                    this.position_x = world.charakter.position_x - 50
+                }else if (this.position_x >= world.charakter.position_x + 600){
+                    this.position_x = world.charakter.position_x + 600
+                }else if (this.position_y >= 200){
+                    this.position_y = 200
+                }else if (this.position_y <= 100){
+                    this.position_y = 100
+                }
+            }, 1000)
+    
+        }
+        // let move = setInterval(()=>{
+        //         if(this.position_x !== target_X && this.position_y !== target_Y){
+        //             this.position_x -= distanceX
+        //             this.position_y -= distanceY
+        //         }else{
+        //             clearInterval(move);
+        //         }
+    
+        //     }, 100)
+        this.isAttacking = false
+    }
 }
+

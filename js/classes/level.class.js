@@ -3,6 +3,7 @@ class Level {
     scenerie;
     world;
     levelEndX = 1440 * 3;
+    spawnedEndboss = false
     constructor(enemies, scenerie, collectables, menues, dif = 0) {
         this.enemies = enemies;
         this.scenerie = scenerie;
@@ -28,9 +29,13 @@ class Level {
         const ingameMenue = [
             new planeShield_IG(0, 0, 720, 480),
             new PauseBtn(20, 0, 75, 75),
-            new Scoreboard(120, 0, 200, 75)
+            new Scoreboard(120, 0, 200, 75),
         ]
         this.menues = ingameMenue;
+    }
+
+    generateEndcard(){
+        
     }
     // Generate Enemies
     generateEnemie(dif) {
@@ -71,8 +76,10 @@ class Level {
     }
     generateEndboss() {
         let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
-            if (!endbossExistiert) {
+        let spawnTrigger = world.charakter.position_x > 2500
+            if (!endbossExistiert && !this.spawnedEndboss && spawnTrigger) {
                 let endboss = new Endboss();
+                this.spawnedEndboss = true
                 this.enemies.push(endboss)
                 console.log("Endboss erstellt");
             }
