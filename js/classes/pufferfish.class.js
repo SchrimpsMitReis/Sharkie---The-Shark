@@ -42,4 +42,13 @@ class Pufferfish extends moveableObjekt {
         }, 100)
 
     }
+    // despawn(){
+    //     setTimeout(()=>{
+    //         setInterval(()=>{
+    //             if (this.position_x < (world.charakter.position_x - 100)){
+    //                 this.deconstruct(world.enemies)
+    //             }
+    //         },500)
+    //     },1000)
+    // }
 }

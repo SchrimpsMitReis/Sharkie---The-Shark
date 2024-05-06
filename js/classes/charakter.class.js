@@ -127,8 +127,10 @@ class Charakter extends moveableObjekt {
                 if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
                     this.moveDown()
                 }
-                if (this.world.keyboard.SHIFT) {
-                    this.speed = 10;
+                if (this.world.keyboard.SHIFT && !(this.energie < 10)){
+                        this.speed = 10;
+                        this.energie -= 0.7
+                    
                 } else {
                     this.speed = 5
                 }
@@ -148,9 +150,9 @@ class Charakter extends moveableObjekt {
                 if (this.alive){
                     this.playAnimation(this.IMAGES_SHARKIE_DEAD)
                     this.alive = false;
-                    setTimeout(()=>{
-                        world.gameOver()
-                    })
+                    // setTimeout(()=>{
+                        world.isGameOver = true;
+                    // },3000)
                 }else{
                     this.loadImage(this.IMAGES_SHARKIE_DEAD[11])
                 }

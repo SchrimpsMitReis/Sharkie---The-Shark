@@ -17,5 +17,5 @@ const level00 = new Level(
 
 )
 level00.generateHauptmenü()
-playSound(allSounds[0])
-playSound(allSounds[3])
+playSound(0)
+playSound(3)

@@ -37,7 +37,9 @@ class World {
     keyboard;
     camera_x = -100;
     isGameOver = false;
+    win = false;
     gameOverShield = new GameOver(150, 50, 400, 400)
+    winShield = new winShield(200, 70, 400, 400)
     
     ctxOptions() {
     }
@@ -54,6 +56,15 @@ class World {
             // console.log("Hallo");
         }, 4)
     }
+    /**
+    * Überprüft Kollisionen des Spielcharakters mit verschiedenen Elementen.
+    * Ruft Methoden auf, um Kollisionen mit Feinden, Sammelobjekten, werfbaren Objekten und Menüs zu überprüfen.
+    *   `
+    * @name checkCollisions
+    * @memberof World
+    * @instance
+    * @returns {void}
+    */
     checkCollisions() {
         this.checkEnemies()
         this.checkCollectables()
@@ -101,6 +112,7 @@ class World {
         })
 
     }
+    /** */
     checkCollectables() {
         this.level.collectables.forEach((collectable) => {
             if (this.charakter.isColliding(collectable)) {
@@ -108,9 +120,7 @@ class World {
                     this.charakter.coins++
                     this.charakter.addScore(10)
                     collectable.deconstruct(this.level.collectables)
-
-                    // this.coinBar.setPercentage(this.charakter.coins)
-
+                    playSound(4)
                     console.log(`${this.charakter.coins} Coins`);
                 }
             }
@@ -154,16 +164,15 @@ class World {
                 this.gameCurser.position_y <= menue.position_y + menue.height){
                     if (this.areButtons(menue)){
                         if (!menue.highlighted){
-                            playSound(allSounds[1])
+                            playSound(1)
                             menue.highlighted = true;
                         }
                         menue.hover()
-                        console.log("Hover");
                     }else{
 
                     }
                     if(this.keyboard.MOUSEBTN){
-                        playSound(allSounds[2])
+                        playSound(2)
                         if (menue instanceof Startbutton){
                             this.setLevel(1)
                         }
@@ -173,12 +182,14 @@ class World {
                         }
                         else if (menue instanceof Controlbutton){
                             console.log("Show Controlls");
+                            this.keyboard.HELP = !this.keyboard.HELP
                         }
                         else if (menue instanceof Highscorebutton){
                             console.log("Show Highscores");
                         }
                         else if (menue instanceof Mutebutton){
                             console.log("Mute all");
+                            muteAll()
                         }
                     }
             }
@@ -202,6 +213,7 @@ class World {
             }, 2000);
             let newBubble = new bubble(this.charakter.position_x + 100, this.charakter.position_y + 100)
             this.throwableObjects.push(newBubble)
+            playSound(5)
             this.charakter.energie -= 25;
             this.keyboard.SECONDARY = !this.keyboard.SECONDARY;
 
@@ -226,6 +238,7 @@ class World {
         })
     }
     addLifebar(x,y,w,h){
+        let bg = new Scoreboard(310, 0, 200, 75)
         let factor = 1.8
         let frame = new lifebarFrame(x, y, w * factor, h)
         let lifeProcentage = this.charakter.lifePoints / 100
@@ -238,12 +251,14 @@ class World {
                 return 'red'
             }
         }
+        this.addToMap(bg)
         this.ctx.fillStyle = barColor()
         this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * factor, h - 4)
         this.addToMap(frame)
 
     }
     addEnergiebar(x,y,w,h){
+        let bg = new Scoreboard(500, 0, 200, 75)
         let factor = 1.8
         let frame = new lifebarFrame(x, y, w * factor, h)
         let lifeProcentage = this.charakter.energie / 100
@@ -256,6 +271,7 @@ class World {
                 return 'white'
             }
         }
+        this.addToMap(bg)
         this.ctx.fillStyle = barColor()
         this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * factor, h - 4)
         this.addToMap(frame)
@@ -317,23 +333,35 @@ class World {
             this.addEnergiebar(510,8, 100, 60)
             this.ctx.translate(this.camera_x, 0)
             this.addToMap(this.charakter)
-            if(this.charakter.isDead()){
-                setTimeout(()=>{
-                    this.addToMap(this.gameOverShield)                
-
-                },1000)
-            }
+            this.gameEnd()
             this.ctx.translate(-this.camera_x, 0)
         }
     }
     levelRestart() {
+        this.restartLevel()
+        this.restartCharacter()
+        this.camera_x = -100
+        this.draw()
+    }
+    restartCharacter(){
+        this.charakter.position_x = 120
+        this.charakter.lifePoints = 100
+        this.charakter.energie = 100
+        this.charakter.switchDirectionBack()
+    }
+    restartLevel(){
         this.level = this.allLevels[this.activLevel]
         this.enemies = this.level.enemies;
         this.scenerie = this.level.scenerie;
         this.collectables = this.level.collectables;
         this.gameMenues = this.level.menues;
-        this.charakter.position_x = 120
-        this.camera_x = -100
-        this.draw()
+    }
+    gameEnd(){
+        if(this.isGameOver && !this.win){
+            this.addToMap(this.gameOverShield)                
+        }else if (this.isGameOver && this.win){
+            this.addToMap(this.winShield)                
+        }
+
     }
 }

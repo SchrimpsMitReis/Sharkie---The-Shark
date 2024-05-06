@@ -67,21 +67,20 @@ class Level {
             }
     }
     generateCoin(dif) {
-            if (this.collectables.length < 10 * dif) {
-                let pX = world.charakter.position_x + 720 + (720 * Math.random())
-                let pY = Math.random() * 420;
-                let coin = new Coin(pX, pY);
-                this.collectables.push(coin)
-            }
+        if (this.collectables.length < 10 * dif) {
+            let pX = world.charakter.position_x + 720 + (720 * Math.random())
+            let pY = Math.random() * 420;
+            let coin = new Coin(pX, pY);
+            this.collectables.push(coin)
+        }
     }
     generateEndboss() {
         let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
-        let spawnTrigger = world.charakter.position_x > 2500
-            if (!endbossExistiert && !this.spawnedEndboss && spawnTrigger) {
+            if (!endbossExistiert && !this.spawnedEndboss) {
                 let endboss = new Endboss();
                 this.spawnedEndboss = true
-                this.enemies.push(endboss)
-                console.log("Endboss erstellt");
+                world.enemies.push(endboss)
+                console.log("Endboss erstellt :", endboss.position_x, "/", endboss.position_y );
             }
     }
     // Soundtracks

@@ -46,60 +46,101 @@ class Endboss extends moveableObjekt{
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Hurt/3.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Hurt/4.png"
     ]
+    IMAGES_ATTACK = [
+        "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/1.png",
+        "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/2.png",
+        "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/3.png",
+        "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/4.png",
+        "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/5.png",
+        "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/6.png",
+    ]
     constructor(){
         super().loadImage(this.IMAGES_FLOATING[0])
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_FLOATING);
         this.loadImages(this.IMAGES_DEAD)
         this.loadImages(this.IMAGES_HURT)
+        this.loadImages(this.IMAGES_ATTACK)
         this.animate()
     }
-    animate(){
+    async animate(){
         
         setInterval( ()=>{
             if (this.isDead()){
                 this.playAnimation(this.IMAGES_DEAD)
+                // setTimeout(()=>{
+                    world.isGameOver = true;
+                    world.win = true
+                // }, 1000)
             }else if (this.isHurt()){
                 this.playAnimation(this.IMAGES_HURT)
             }
-            else if(!this.isHurt() || !this.isDead() || !this.isAttacking){
-                this.attackPlayer()
+            else if(!this.isHurt() || !this.isDead()){
+                // this.attackPlayer()
             }
             else{this.playAnimation(this.IMAGES_FLOATING)
             }
         }, 100)
 
     }
-    attackPlayer(){
-        this.isAttacking = true
-        let target_X = world.charakter.position_x
-        let target_Y = world.charakter.position_y
-        let distanzToX = this.position_x - target_X
-        let distanzToY = this.position_y - target_Y
-        // console.log(target_X, "/", target_Y , ':', distanzToX,'/',distanzToY);
-        setTimeout(()=>{
-            this.moveToPlayer(distanzToX,distanzToY, target_X, target_Y)
-
-        }, 1000)
-    }
-    moveToPlayer(distanceX, distanceY, target_X, target_Y){
-        let attackSpeed = 10
-        for (let i = 0; i < attackSpeed; i++) {
-            setTimeout(()=>{
-                this.position_x -= distanceX/attackSpeed
-                this.position_y -= distanceY/attackSpeed
-                if (this.position_x <= world.charakter.position_x - 50){
-                    this.position_x = world.charakter.position_x - 50
-                }else if (this.position_x >= world.charakter.position_x + 600){
-                    this.position_x = world.charakter.position_x + 600
-                }else if (this.position_y >= 200){
-                    this.position_y = 200
-                }else if (this.position_y <= 100){
-                    this.position_y = 100
-                }
-            }, 1000)
+    // async attackPlayer() {
+    //     this.isAttacking = true;
     
-        }
+    //     await new Promise(resolve => {
+    //         setTimeout(() => {
+    //             let target_X = world.charakter.position_x;
+    //             let target_Y = world.charakter.position_y;
+    //             let distanzToX = this.position_x - target_X;
+    //             let distanzToY = this.position_y - target_Y;
+    //             console.log('DISTANCE TO: ', distanzToX, '/', distanzToY);
+    //             this.playAnimation(this.IMAGES_ATTACK);
+    //             resolve(); // Signalisiere das Ende der Verzögerung
+    //         }, 5000);
+    //     });
+    
+    //     // Der Rest des Codes wird nach der Verzögerung ausgeführt
+    //     this.isAttacking = false;
+    // }
+    
+    // async attackPlayer(){
+    //     this.isAttacking = true
+    //     await new Promise(resolve => {
+    //         setTimeout(() => {
+    //             let target_X = world.charakter.position_x
+    //             let target_Y = world.charakter.position_y
+    //             let distanzToX = this.position_x - target_X
+    //             let distanzToY = this.position_y - target_Y
+    //             console.log('DISTANCE TO: ', distanzToX , '/', distanzToY);
+    //             this.playAnimation(this.IMAGES_ATTACK)
+    //         }, 5000);
+    //         resolve()      
+
+    //     })
+    //     // console.log(target_X, "/", target_Y , ':', distanzToX,'/',distanzToY);
+    //     // setTimeout(()=>{
+    //     //     this.moveToPlayer(distanzToX,distanzToY, target_X, target_Y)
+
+    //     // }, 1000)
+    //     this.isAttacking = false;
+    // }
+    // moveToPlayer(distanceX, distanceY, target_X, target_Y){
+    //     let attackSpeed = 100
+    //     for (let i = 0; i < attackSpeed; i++) {
+    //         setTimeout(()=>{
+    //             this.position_x -= distanceX
+    //             this.position_y -= distanceY
+    //             if (this.position_x <= world.charakter.position_x - 50){
+    //                 this.position_x = world.charakter.position_x - 50
+    //             }else if (this.position_x >= world.charakter.position_x + 600){
+    //                 this.position_x = world.charakter.position_x + 600
+    //             }else if (this.position_y >= 180){
+    //                 this.position_y = 179
+    //             }else if (this.position_y <= 0){
+    //                 this.position_y = 0
+    //             }
+    //         }, 1000)
+    
+    //     }
         // let move = setInterval(()=>{
         //         if(this.position_x !== target_X && this.position_y !== target_Y){
         //             this.position_x -= distanceX
@@ -109,7 +150,7 @@ class Endboss extends moveableObjekt{
         //         }
     
         //     }, 100)
-        this.isAttacking = false
-    }
+        // this.isAttacking = false
+    // }
 }
 

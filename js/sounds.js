@@ -2,10 +2,11 @@ let allSounds = [
     new Audio('audio/BarCrowd.wav'),
     new Audio('audio/click1.mp3'),
     new Audio('audio/bite.mp3'),
-    new Audio('audio/oceanSeagulls.wav')
+    new Audio('audio/oceanSeagulls.wav'),
+    new Audio('audio/coin.mp3'), // coin Pling
+    new Audio('audio/pop.mp3'),
     // new Audio('audio/walkingsound.mp3'), // "Walkingsound"
     // new Audio('audio/SHIFT - swoosh.mp3'), // "Swoosh" 
-    // new Audio('audio/coin.mp3'), // coin Pling
     // new Audio('audio/electric-shock.mp3'), // electroshock
     // new Audio('audio/bonk.mp3'), 
     // new Audio('audio/bubblesound.mp3'),
@@ -34,8 +35,8 @@ let smackSounds = [
     new Audio('audio/smack/smack (4).mp3'),
 ]
 function playSound(x){
-    x.load()
-    x.play()
+    allSounds[x].load()
+    allSounds[x].play()
 }
 function playSoundOnce(x){
     if(!x.used){
