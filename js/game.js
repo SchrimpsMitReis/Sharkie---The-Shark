@@ -114,7 +114,6 @@ function toggleFullscreen(){
         } else if (document.msExitFullscreen) { /* IE/Edge */
             document.msExitFullscreen();
         }
-
     }
 
 }

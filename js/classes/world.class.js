@@ -7,8 +7,9 @@ class World {
         this.setWorld()
         this.run()
         this.ctxOptions()
+        this.soundTriggers()
     }
-    activLevel = 1
+    activLevel = 0
 
     charakter = new Charakter();
     allLevels = [
@@ -17,6 +18,7 @@ class World {
     ]
 
     level = this.allLevels[this.activLevel]
+    // const {enemies, scenerie, collectables, menues} = this.level;
     enemies = this.level.enemies;
     scenerie = this.level.scenerie;
     collectables = this.level.collectables;
@@ -35,7 +37,7 @@ class World {
 
     ctx;
     keyboard;
-    camera_x = -100;
+    camera_x = 100;
     isGameOver = false;
     win = false;
     gameOverShield = new GameOver(150, 50, 400, 400)
@@ -55,6 +57,24 @@ class World {
             this.checkObjectThrow();
             // console.log("Hallo");
         }, 4)
+    }
+    soundTriggers(){
+        setInterval(()=>{
+            this.winLooseSound()
+            this.walkingSound()
+        },10)
+    }
+    winLooseSound(){
+        if (this.isGameOver){
+                playSoundOnce(6)
+        }
+    }
+    walkingSound(){
+        if (this.keyboard.LEFT || this.keyboard.RIGHT || this.keyboard.UP || this.keyboard.DOWN){
+            allSounds[9].play()
+        }else{
+            allSounds[9].pause()
+        }
     }
     /**
     * Überprüft Kollisionen des Spielcharakters mit verschiedenen Elementen.
@@ -178,7 +198,6 @@ class World {
                         }
                         else if(menue instanceof PauseBtn){
                             this.setLevel(0)
-
                         }
                         else if (menue instanceof Controlbutton){
                             console.log("Show Controlls");
@@ -314,9 +333,6 @@ class World {
         this.ctx.fillText(`${counter}`, x, y);
 
     }
-    addLifeCounter() {
-
-    }
     drawLevelComponents(){
         this.ctx.translate(this.camera_x, 0)
         this.addObjectsToMap(this.scenerie)
@@ -331,10 +347,8 @@ class World {
             this.addTextElement(48, "2237ac", this.charakter.score, 150, 60)
             this.addLifebar(320,8, 100, 60)
             this.addEnergiebar(510,8, 100, 60)
-            this.ctx.translate(this.camera_x, 0)
-            this.addToMap(this.charakter)
+            this.addCharacter()
             this.gameEnd()
-            this.ctx.translate(-this.camera_x, 0)
         }
     }
     levelRestart() {
@@ -344,10 +358,7 @@ class World {
         this.draw()
     }
     restartCharacter(){
-        this.charakter.position_x = 120
-        this.charakter.lifePoints = 100
-        this.charakter.energie = 100
-        this.charakter.switchDirectionBack()
+        // this.charakter = new Charakter();
     }
     restartLevel(){
         this.level = this.allLevels[this.activLevel]
@@ -362,6 +373,10 @@ class World {
         }else if (this.isGameOver && this.win){
             this.addToMap(this.winShield)                
         }
-
+    }
+    addCharacter(){
+        this.ctx.translate(this.camera_x, 0)
+        this.addToMap(this.charakter)
+        this.ctx.translate(-this.camera_x, 0)
     }
 }

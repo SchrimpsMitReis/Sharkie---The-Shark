@@ -120,6 +120,7 @@ class Charakter extends moveableObjekt {
                 }
                 if (this.world.keyboard.LEFT && this.position_x > 110) {
                     this.moveLeft()
+
                 }
                 if (this.world.keyboard.UP && this.position_y > 0 - 30 ) {
                     this.moveUp()

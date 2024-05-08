@@ -1,7 +1,5 @@
 const level01 = new Level(
     [
-        new Squid()
-        // new Endboss(),
     ],
     [
         new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/5. Water/L.png"),

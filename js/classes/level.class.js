@@ -40,14 +40,14 @@ class Level {
     // Generate Enemies
     generateEnemie(dif) {
         console.log("Dif = ", dif);
-        if (dif !== 0){
-            setInterval(()=>{
+        setInterval(()=>{
+                if (world.activLevel !== 0){
                 this.generatePufferfish(dif)
                 this.generateSquid(dif)
                 this.generateCoin(dif)
                 this.generateEndboss()
+            }
             },1000 / (dif + 1))
-        }
 
     }
     generatePufferfish(dif) {
@@ -66,7 +66,7 @@ class Level {
                 this.enemies.push(tintenFisch)
             }
     }
-    generateCoin(dif) {
+    generateCoin(dif) { 
         if (this.collectables.length < 10 * dif) {
             let pX = world.charakter.position_x + 720 + (720 * Math.random())
             let pY = Math.random() * 420;
