@@ -48,7 +48,6 @@ class Level {
                 this.generateEndboss()
             }
             },1000 / (dif + 1))
-
     }
     generatePufferfish(dif) {
             if (this.enemies.length < 10 * dif) {
