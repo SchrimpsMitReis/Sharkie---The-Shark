@@ -8,7 +8,6 @@ class Charakter extends moveableObjekt {
     coins = 0;
     score = 0;
     meleeActive = false;
-    sleepTimer = 0;
     alive = true
     IMAGES_SHARKIESTILL = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png",
@@ -160,12 +159,13 @@ class Charakter extends moveableObjekt {
             } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.alive) {
                 this.playAnimation(this.IMAGES_SHARKIE_SWIM)
                 this.addEnergie(0.5)
-
+            } else if(this.isSleeping()){
+                this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
             } else {
                 this.playAnimation(this.IMAGES_SHARKIESTILL)
                 this.addEnergie(1)
             }
-        }, 100)
+        }, 1000/10)
     }
     activateMelee(){
         this.meleeActive = true;

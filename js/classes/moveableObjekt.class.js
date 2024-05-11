@@ -10,6 +10,8 @@ class moveableObjekt extends drawableObject {
     lifePoints;
     boost;
     lastHit = 0;
+    sleepTimer = new Date().getTime();
+
     constructor() {
         super()
     }
@@ -64,6 +66,11 @@ class moveableObjekt extends drawableObject {
         let timepassed = new Date().getTime() - this.lastHit
         timepassed = timepassed / 1000;
         return timepassed < 3;
+    }
+    isSleeping() {
+        let timepassed = new Date().getTime() - this.sleepTimer;
+        timepassed = timepassed / 1000;
+        return timepassed > 10;
     }
     isDead() {
         return this.lifePoints == 0;

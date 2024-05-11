@@ -13,15 +13,12 @@ document.addEventListener('mousemove', (event)=>{
     // event.preventDefault()
     let canvasBorder = canvas.getBoundingClientRect();
     if(keyboard.FULLSCREEN){
-        world.gameCurser.position_x = (event.clientX/document.width) / canvas.width;
-        world.gameCurser.position_y = (event.clientY/document.height) / canvas.height;
-
-
+        world.gameCurser.position_x = (event.clientX/window.innerWidth) * canvas.width;
+        world.gameCurser.position_y = (event.clientY/window.innerHeight) * canvas.height;
     }
     else{
         world.gameCurser.position_x = event.clientX - canvasBorder.left ;
         world.gameCurser.position_y = event.clientY - canvasBorder.top;
-
     }
 })
 document.addEventListener('keydown', (event)=>{
@@ -55,6 +52,7 @@ document.addEventListener('keydown', (event)=>{
     else if (event.key === 'H' || event.key === 'h'){
         keyboard.HELP = !keyboard.HELP;
     }
+    world.charakter.sleepTimer = new Date().getTime();
 })
 document.addEventListener('keyup', (event)=>{
     if (event.key === 'A' || event.key === 'a'){
