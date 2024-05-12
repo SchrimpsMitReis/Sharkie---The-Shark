@@ -39,7 +39,6 @@ class Level {
     }
     // Generate Enemies
     generateEnemie(dif) {
-        console.log("Dif = ", dif);
         setInterval(()=>{
                 if (world.activLevel !== 0){
                 this.generatePufferfish(dif)

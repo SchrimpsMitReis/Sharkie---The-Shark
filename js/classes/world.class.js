@@ -47,8 +47,11 @@ class World {
     winShield = new winShield(0, 76, 200, 200)
     ScoreTable = new HighscoreBoard(20, 10, 500, 500);
     HighScore = []
-    showHighscore = false
-    testSound2D = new SoundObject2D(3000,50, 1000)
+    showHighscore = false;
+    soundObjects = [
+        new SoundObject2D('./audio/BarCrowd.wav',0, 1000),
+        new SoundObject2D('./audio/EndbossMusic.wav',3000, 1000),
+    ]
 
     ctxOptions() {
     }
@@ -89,11 +92,13 @@ class World {
                 if(this.win){
                     this.saveScore()
                 }
+                if(this.keyboard.MOUSEBTN){
+                        this.setLevel(0)
+                }
             }
             
-        }, 1000);
+        }, 10);
     }
-
     /**
     * Überprüft Kollisionen des Spielcharakters mit verschiedenen Elementen.
     * Ruft Methoden auf, um Kollisionen mit Feinden, Sammelobjekten, werfbaren Objekten und Menüs zu überprüfen.
@@ -397,7 +402,8 @@ class World {
         this.draw()
     }
     restartCharacter(){
-        // this.charakter = new Charakter();
+        this.charakter.position_x = 120;
+        this.charakter.position_y = 250;
     }
     restartLevel(){
         this.level = this.allLevels[this.activLevel]
@@ -405,6 +411,8 @@ class World {
         this.scenerie = this.level.scenerie;
         this.collectables = this.level.collectables;
         this.gameMenues = this.level.menues;
+        this.isGameOver = false;
+        this.win = false;
     }
     gameEnd(){
         if(this.isGameOver){
@@ -446,7 +454,7 @@ class World {
     async printHighScore(){
         await this.loadHighScore()
         this.HighScore.sort((a,b)=> b.scoreValue - a.scoreValue)
-
+        this.HighScore.length = 10;
         for (let i = 0; i < this.HighScore.length; i++) {
             let printableScore = this.HighScore[i]
             console.log(`${i+1}. => ${printableScore['date']} <=> ${printableScore['scoreValue']}`)
