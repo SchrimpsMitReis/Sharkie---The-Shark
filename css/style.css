@@ -14,10 +14,60 @@ body{
     font-size: 2.5em;
     color: #FFE878;
     filter: drop-shadow( 0 0em 0.1em #1147AD);
+    margin: 0;
 }
 .cursorNone{
     cursor: none;
 }
 canvas{
     background-color: black;
+}
+.smartOverlay{
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    top:0;
+    display: flex;
+    flex-direction: row;
+
+}
+.overlayButton{
+    background-color: rgba(128, 128, 128, 0.331);
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px dotted gray;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    position: absolute;
+}
+.leftBtn{
+    bottom: 40px;
+    left: 30px;
+}
+.rightBtn{
+    bottom: 40px;
+    left: 100px;
+}
+.upBtn{
+    bottom: 75px;
+    left: 65px;
+}
+.downBtn{
+    bottom: 5px;
+    left: 65px;
+}
+.aBtn{
+    bottom:60px;
+    right: 10px;
+
+}
+.bBtn{
+    bottom:10px;
+    right: 50px;
+
+}
+.zBtn{
+    bottom:70px;
+    right: 70px;
 }

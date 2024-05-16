@@ -1,6 +1,43 @@
-let array1 = ['a', 'b', 'c']
-let array2 = [1, '2', '3']
-let array3 = array1.concat(array2)
-let array4 = array1 + array2;
-console.log(array3);
-console.log(array4);
+let testFunktion = () =>{
+    for (let i = 0; i < 10; i++) {
+        if(i == 1){
+            console.log(`${i} Schaf`);
+            
+        }else{
+            console.log(`${i} Schafe`);
+        }
+        
+    }
+}
+let testFunktion2 = () =>{
+    for (let i = 0; i < 10; i++) {
+        if(i == 1){
+            console.log(`${i} Ziege`);
+            
+        }else{
+            console.log(`${i} Ziegen`);
+        }
+        
+    }
+}
+let testFunktion3 = () =>{
+    for (let i = 0; i < 10; i++) {
+        if(i == 1){
+            console.log(`${i} Wildschwein`);
+            
+        }else{
+            console.log(`${i} Wildschweine`);
+        }
+        
+    }
+}
+
+let array = [
+    testFunktion(),
+    testFunktion2(),
+    testFunktion3(),
+    
+]
+
+
+// array[0]
