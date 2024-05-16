@@ -7,11 +7,4 @@ class BackgroundObjekt extends moveableObjekt{
         this.position_x = this.width * extention;
     }
 
-    moveUp(){
-
-    }
-    moveDown(){
-
-    }
-
 }

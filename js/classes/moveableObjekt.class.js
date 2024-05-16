@@ -100,4 +100,27 @@ class moveableObjekt extends drawableObject {
         this.position_y += this.speed;
         // console.log("Moving left");
     }
+    moveAtoB(x, y) {
+        let targetX = x;
+        let targetY = y;
+        let xWay = targetX - this.position_x;
+        console.log(xWay);
+        let yWay = targetY - this.position_y;
+        let steps = 10;
+        let stepDuration = 100; // Dauer eines Schritts in Millisekunden
+        if (xWay >= 0){
+            this.otherDirection = true
+        }else{
+            this.otherDirection = false
+        }
+        for (let i = 0; i < steps; i++) {
+            setTimeout(() => {
+                if(!this.isHurt()||!this.isDead()){
+                    this.position_x += (xWay / steps);
+                    this.position_y += (yWay / steps);
+                }
+                console.log(`Bin angekommen: ${this.position_x} / ${this.position_y}`);
+            }, i * stepDuration); // Delay für jeden Schritt erhöhen
+        }
+    }
 }

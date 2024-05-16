@@ -23,6 +23,7 @@ class Level {
             new Mutebutton(370, 340, 150, 133),
         ] 
         this.menues = Hauptmenü;
+        this.scenerie = [new BackgroundObjekt("./IMG/lvl00.webp",0, 800 , 480),]
 
     }
     generateIngameMenue(){
@@ -33,7 +34,16 @@ class Level {
         ]
         this.menues = ingameMenue;
     }
-
+    generateScenerie(x){
+        const sceneriePattern = [
+            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/5. Water/L.png",x),
+            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/3.Fondo 1/L.png",x),
+            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/4.Fondo 2/L.png",x),
+            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Layers/1. Light/3.png",x),
+            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/2. Floor/L.png",x),
+        ]
+        this.scenerie.push(sceneriePattern)
+    }
     generateEndcard(){
         
     }
@@ -41,12 +51,16 @@ class Level {
     generateEnemie(dif) {
         setInterval(()=>{
                 if (world.activLevel !== 0){
-                this.generatePufferfish(dif)
-                this.generateSquid(dif)
-                this.generateCoin(dif)
-                this.generateEndboss()
-            }
+                    this.generatePufferfish(dif)
+                    this.generateSquid(dif)
+                    this.generateCoin(dif)
+                    if(world.charakter.position_x > 2500){
+                        this.generateEndboss()
+
+                    }
+                }
             },1000 / (dif + 1))
+    
     }
     generatePufferfish(dif) {
             if (this.enemies.length < 10 * dif) {
@@ -73,15 +87,15 @@ class Level {
         }
     }
     generateEndboss() {
-        let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
-            if (!endbossExistiert && !this.spawnedEndboss) {
-                let endboss = new Endboss();
-                this.spawnedEndboss = true
-                world.enemies.push(endboss)
-                console.log("Endboss erstellt :", endboss.position_x, "/", endboss.position_y );
-            }
+            let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
+                if (!endbossExistiert && !this.spawnedEndboss) {
+                    this.spawnedEndboss = true
+                    let endboss = new Endboss();
+                    world.enemies.push(endboss)
+                    console.log("Endboss erstellt :", endboss.position_x, "/", endboss.position_y );
+                }
+            
     }
-    // Soundtracks
 
     
 }

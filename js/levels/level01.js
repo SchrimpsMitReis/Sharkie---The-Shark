@@ -22,7 +22,6 @@ const level01 = new Level(
         // new Coin(100, 200),
     ],
     [
-        new PauseBtn(20, 0, 70, 70)
     ],
     1,
 

@@ -1,10 +1,11 @@
 class Endboss extends moveableObjekt{
     position_x = 3000;
     position_y = 50;
-    height = 300;
-    width = 300;
+    height = 250;
+    width = 250;
     lifePoints = 100;
-    isAttacking = false
+    isAttacking = false;
+    energie = 30;
     IMAGES_INTRO = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/1.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -81,7 +82,19 @@ class Endboss extends moveableObjekt{
             else{this.playAnimation(this.IMAGES_FLOATING)
             }
         }, 100)
-
+        setInterval(() => { // Attack Schleife
+            if (this.energie >= 25 && !this.isDead()){
+                this.energie -= 25
+                this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
+                this.playAnimation(this.IMAGES_ATTACK)
+            }
+        }, 100);
+        setInterval(() => {
+            this.energie += 5;
+            if (this.energie >= 30){
+                this.energie = 30
+            }
+        }, 400);
     }
     // async attackPlayer() {
     //     this.isAttacking = true;

@@ -2,7 +2,7 @@ const level00 = new Level(
     [
     ],
     [
-        new BackgroundObjekt("./IMG/lvl00.webp",0, 800 , 480),
+        // new BackgroundObjekt("./IMG/lvl00.webp",0, 800 , 480),
 
     ],
     [
