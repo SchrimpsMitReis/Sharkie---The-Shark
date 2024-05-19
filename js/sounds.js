@@ -10,6 +10,10 @@ let allSounds = [
     new Audio('audio/outdoor.wav'),
     new Audio('audio/testSound.wav'),
     new Audio('audio/Jaws.mp3'),
+
+    new Audio('audio/biteEndboss.mp3'),
+    new Audio('audio/screamEndboss.mp3'),
+    new Audio('audio/sleeping.mp3'),
     // new Audio('audio/walkingsound.mp3'), // "Walkingsound"
     // new Audio('audio/SHIFT - swoosh.mp3'), // "Swoosh" 
     // new Audio('audio/electric-shock.mp3'), // electroshock
@@ -25,7 +29,7 @@ allSounds[1].loop = false;
 allSounds[1].used;
 
 allSounds[9].loop = true;
-
+allSounds[12].loop = true;
 let hitSounds = [
     new Audio('audio/hitSound/hitSound (1).mp3'),
     new Audio('audio/hitSound/hitSound (2).mp3'),

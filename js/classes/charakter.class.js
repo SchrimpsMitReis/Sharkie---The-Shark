@@ -3,7 +3,7 @@ class Charakter extends moveableObjekt {
     width = 200;
     world;
     speed = 5;
-    lifePoints = 100;
+    lifePoints = 1;
     energie = 100;
     coins = 0;
     score = 0;
@@ -107,13 +107,12 @@ class Charakter extends moveableObjekt {
         this.loadImages(this.IMAGES_SHARKIE_SLEEP)
         this.loadImages(this.IMAGES_SHARKIE_SHOOT)
         this.applyGravity()
-        // this.setOffset(0.5, 0.3 ,0.27, 0.24)
-        this.setOffset(0.45, 0.05 ,0.05, 0.05)
+        this.setOffset(0.45, 0.05, 0.05, 0.05)
         this.animate();
     }
     animate() {
         setInterval(() => {
-            if (this.alive){
+            if (this.alive) {
                 if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
                     this.moveRight()
                 }
@@ -121,16 +120,16 @@ class Charakter extends moveableObjekt {
                     this.moveLeft()
 
                 }
-                if (this.world.keyboard.UP && this.position_y > 0 - 30 ) {
+                if (this.world.keyboard.UP && this.position_y > 0 - 30) {
                     this.moveUp()
                 }
                 if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
                     this.moveDown()
                 }
-                if (this.world.keyboard.SHIFT && !(this.energie < 10)){
-                        this.speed = 10;
-                        this.energie -= 0.7
-                    
+                if (this.world.keyboard.SHIFT && !(this.energie < 10)) {
+                    this.speed = 10;
+                    this.energie -= 0.7
+
                 } else {
                     this.speed = 5
                 }
@@ -147,46 +146,87 @@ class Charakter extends moveableObjekt {
 
         setInterval(() => {
             if (this.isDead()) {
-                if (this.alive){
+                if (this.alive) {
                     this.playAnimation(this.IMAGES_SHARKIE_DEAD)
                     this.alive = false;
-                    // setTimeout(()=>{
+                } else {
+                    this.loadImage(this.IMAGES_SHARKIE_DEAD[this.IMAGES_SHARKIE_DEAD.length - 1])
+                    setTimeout(() => {
                         world.isGameOver = true;
-                    // },3000)
-                }else{
-                    this.loadImage(this.IMAGES_SHARKIE_DEAD[11])
+                    }, 1000)
+
                 }
-            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.alive) {
-                this.playAnimation(this.IMAGES_SHARKIE_SWIM)
-                this.addEnergie(0.5)
-            } else if(this.isSleeping()){
-                this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
             } else {
-                this.playAnimation(this.IMAGES_SHARKIESTILL)
-                this.addEnergie(1)
+                allSounds[12].pause()
+                if (this.isSleeping()) {
+                    allSounds[12].play()
+
+                    this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
+                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.playAnimation(this.IMAGES_SHARKIE_SWIM)
+                } else {
+                    this.playAnimation(this.IMAGES_SHARKIESTILL)
+                    this.addEnergie(1)
+                }
+
             }
-        }, 1000/10)
+            // if (this.isDead()) {
+            //     if (this.alive){
+            //         this.playAnimation(this.IMAGES_SHARKIE_DEAD)
+            //         this.alive = false;
+            //         // setTimeout(()=>{
+            //             world.isGameOver = true;
+            //         // },3000)
+            //     }else{
+            //         this.loadImage(this.IMAGES_SHARKIE_DEAD[11])
+            //     }
+            // } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.alive) {
+            //     this.playAnimation(this.IMAGES_SHARKIE_SWIM)
+            //     this.addEnergie(0.5)
+            // } else if(this.isSleeping()){
+            //     allSounds[12].play()
+            //     this.addEnergie(1)
+            //     this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
+            // } else {
+            //     this.playAnimation(this.IMAGES_SHARKIESTILL)
+            //     this.addEnergie(1)
+            // }
+        }, 1000 / 10)
     }
-    activateMelee(){
+    activateMelee() {
         this.meleeActive = true;
-        setTimeout(()=>{
+        setTimeout(() => {
             this.meleeActive = false;
-        },200)
+        }, 200)
 
     }
-    addScore(x){
+    addScore(x) {
         this.score += x
     }
-    reduceScore(x){
+    reduceScore(x) {
         this.score -= x
-        if (this.score < 0){
+        if (this.score < 0) {
             this.score = 0
         }
     }
-    addEnergie(x){
+    addEnergie(x) {
         this.energie += x;
-        if(this.energie > 100){
+        if (this.energie > 100) {
             this.energie = 100
         }
+    }
+    reconstuct(){
+        this.height = 220;
+        this.width = 200;
+        this.speed = 5;
+        this.lifePoints = 1;
+        this.energie = 100;
+        this.coins = 0;
+        this.score = 0;
+        this.meleeActive = false;
+        this.alive = true;
+        this.position_x = 120;
+        this.position_y = 250;
+    
     }
 }

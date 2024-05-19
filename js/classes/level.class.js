@@ -48,9 +48,10 @@ class Level {
         
     }
     // Generate Enemies
-    generateEnemie(dif) {
+    async generateEnemie(dif) {
+        let count = 0;
         setInterval(()=>{
-                if (world.activLevel !== 0){
+                if (world.activLevel == 1){
                     this.generatePufferfish(dif)
                     this.generateSquid(dif)
                     this.generateCoin(dif)
@@ -59,7 +60,8 @@ class Level {
 
                     }
                 }
-            },1000 / (dif + 1))
+                count++
+            },count * (1000 / (dif + 1)))
     
     }
     generatePufferfish(dif) {
@@ -87,13 +89,18 @@ class Level {
         }
     }
     generateEndboss() {
-            let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
-                if (!endbossExistiert && !this.spawnedEndboss) {
-                    this.spawnedEndboss = true
-                    let endboss = new Endboss();
-                    world.enemies.push(endboss)
-                    console.log("Endboss erstellt :", endboss.position_x, "/", endboss.position_y );
-                }
+        let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
+        let allEndbosses = this.enemies.filter(enemie => enemie instanceof Endboss)
+        if(allEndbosses.length === 0){
+            if (!endbossExistiert && !this.spawnedEndboss) {
+                this.spawnedEndboss = true
+                let endboss = new Endboss();
+                world.enemies.push(endboss)
+            }
+
+        }else if(allEndbosses.length > 1){
+            allEndbosses[0].deconstuct(world.enemies)
+        }
             
     }
 

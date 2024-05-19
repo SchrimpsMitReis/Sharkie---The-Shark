@@ -6,6 +6,8 @@ class Endboss extends moveableObjekt{
     lifePoints = 100;
     isAttacking = false;
     energie = 30;
+    spawnCount = 0
+    firstContact = false
     IMAGES_INTRO = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/1.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -62,33 +64,44 @@ class Endboss extends moveableObjekt{
         this.loadImages(this.IMAGES_DEAD)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
+        this.setOffset(0.3, 0.04, 0.06, 0.1)
         this.animate()
     }
     async animate(){
-        
         setInterval( ()=>{
-            if (this.isDead()){
+            if (!this.isDead()){
+                playSoundOnceUnuse(10)
+                this.playAnimation(this.IMAGES_FLOATING)
+                if(this.isHurt()){
+                    this.playAnimation(this.IMAGES_HURT)
+                }else{
+
+                    if (this.energie >= 25 && this.inRange()){
+                        this.energie -= 25
+                        this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
+                        this.playAnimation(this.IMAGES_ATTACK)
+                        playSoundOnce(10)
+                    }        
+                }
+                if(this.spawnCount === 0 && !this.firstContact){
+                    this.playAnimation(this.IMAGES_INTRO);
+                    this.firstContact = true;
+                }
+
+            }else{
                 this.playAnimation(this.IMAGES_DEAD)
-                // setTimeout(()=>{
-                    world.isGameOver = true;
-                    world.win = true
-                // }, 1000)
-            }else if (this.isHurt()){
-                this.playAnimation(this.IMAGES_HURT)
+                allSounds[10].pause()
+                world.isGameOver = true;
+                world.win = true
+                setTimeout(()=>{
+                    this.deconstruct(world.enemies)
+                }, 2000)
             }
-            else if(!this.isHurt() || !this.isDead()){
-                // this.attackPlayer()
+            if (world.charakter.position_x > 2500) {
+                this.spawnCount = 0;
             }
-            else{this.playAnimation(this.IMAGES_FLOATING)
-            }
+            this.spawnCount++
         }, 100)
-        setInterval(() => { // Attack Schleife
-            if (this.energie >= 25 && !this.isDead()){
-                this.energie -= 25
-                this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
-                this.playAnimation(this.IMAGES_ATTACK)
-            }
-        }, 100);
         setInterval(() => {
             this.energie += 5;
             if (this.energie >= 30){
@@ -96,6 +109,10 @@ class Endboss extends moveableObjekt{
             }
         }, 400);
     }
+inRange(){
+    let range = Math.abs(this.position_x - world.charakter.position_x)
+    return range < 600 
+}
     // async attackPlayer() {
     //     this.isAttacking = true;
     

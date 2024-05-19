@@ -1,13 +1,18 @@
 let canvas;
 let world;
 let keyboard = new Keyboard()
+let isMobile = false
+let landscapeMode = checkLandscape()
+let md = new MobileDetect(window.navigator.userAgent)
 const body = document.getElementById('body')
 let smartOverlay;
 
 function init(){
+    getDeviceType()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     smartOverlay = document.getElementById('smartOverlay')
+    portaitDialog = document.getElementById('portaitDialog')
     arrangeSmartOverlay(canvas)
     document.addEventListener('mousemove', (event)=>{
         // event.preventDefault()
@@ -117,11 +122,37 @@ function init(){
     }
 }
 function arrangeSmartOverlay(canvas){
+    if (isMobile){
+        if (landscapeMode){
+            overlayFit(smartOverlay)
+        }
+        else{
+            overlayFit(portaitDialog)
+        }
+    }
+
+}
+function overlayFit(overlay) {
+    overlay.classList.remove('d-none')
     let canvasBorder = canvas.getBoundingClientRect();
     console.log(canvasBorder);
-    smartOverlay.style.left = canvasBorder.left +'px';
-    smartOverlay.style.top = canvasBorder.top +'px';
-    smartOverlay.style.right = canvasBorder.right +'px';
-    smartOverlay.style.bottom = canvasBorder.bottom +'px';
-
+    overlay.style.left = canvasBorder.left +'px';
+    overlay.style.top = canvasBorder.top +'px';
+    overlay.style.right = canvasBorder.right +'px';
+    overlay.style.bottom = canvasBorder.bottom +'px';
+}
+function getDeviceType(){
+    if (md.mobile()) {
+        isMobile = true
+        return "Mobilgerät";
+    } else if (md.tablet()) {
+        return "Tablet";
+    } else {
+        return "Desktop";
+    }
+    // const userAgent = navigator.userAgent
+    // console.log(userAgent);
+}
+function checkLandscape(){
+    return window.innerWidth > window.innerHeight
 }

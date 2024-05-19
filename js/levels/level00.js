@@ -1,7 +1,5 @@
 const level00 = new Level(
     [
-    ],
-    [
 
     ],
     [

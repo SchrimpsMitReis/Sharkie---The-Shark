@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>Sharkie</title>
     <div id="skripte">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
         <script src="./js/sounds.js"></script>
         <script src="./js/saveScore.js"></script>
         <script src="./js/classes/score.class.js"></script>
@@ -49,24 +50,33 @@
         <script src="./js/classes/2dSoundObject.class.js"></script>
 
         <script src="./js/game.js"></script>
-        <script src="./js/script.js"></script>
     </div>
 
 </head>
 
 <body id="body" onload="init()">
-    <h1>Sharkie</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
-    <div id="smartOverlay" class="smartOverlay">
-        <div id="leftSmartBtn" class="overlayButton leftBtn">&#8592;</div>
-        <div id="rightSmartBtn" class="overlayButton rightBtn">&#8594;</div>
-        <div id="upSmartBtn" class="overlayButton upBtn">&#8593;</div>
-        <div id="downSmartBtn" class="overlayButton downBtn">&#8595;</div>
-        <div id="aSmartBtn" class="overlayButton aBtn">A</div>
-        <div id="bSmartBtn" class="overlayButton bBtn">B</div>
-        <div id="zSmartBtn" class="overlayButton zBtn">Z</div>
-    </div>
+    <h1 id="heading">Sharkie</h1>
+    <main>
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="smartOverlay" class="smartOverlay d-none">
+            <div id="leftSmartBtn" class="overlayButton leftBtn">&#8592;</div>
+            <div id="rightSmartBtn" class="overlayButton rightBtn">&#8594;</div>
+            <div id="upSmartBtn" class="overlayButton upBtn">&#8593;</div>
+            <div id="downSmartBtn" class="overlayButton downBtn">&#8595;</div>
+            <div id="aSmartBtn" class="overlayButton aBtn">A</div>
+            <div id="bSmartBtn" class="overlayButton bBtn">B</div>
+            <div id="zSmartBtn" class="overlayButton zBtn">Z</div>
+        </div>
+        <div id="portaitDialog" class="smartOverlay bgColor d-none">
+            <h1>Falsches Format</h1>
+        </div>
+    </main>
+    <footer>
+        <a href="https://roman-schroeder.developerakademie.net/" id="Datenschutz">Impressum</a>
+        <a href="https://roman-schroeder.developerakademie.net/" id="Datenschutz">Datenschutz</a>
 
+    </footer>
 </body>
+    <script src="./js/script.js"></script>
 
 </html>

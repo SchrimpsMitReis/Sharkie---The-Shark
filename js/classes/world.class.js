@@ -125,31 +125,34 @@ class World {
                     this.charakter.addScore(30)
                     if (enemie instanceof Endboss) {
                         enemie.hit(20);
+                        playSound(11)
                     } else {
                         enemie.hit(10)
                     }
 
                 } else {
-                    if (enemie instanceof Pufferfish && !this.charakter.isHurt()) {
-                        this.charakter.hit(15);
-                        this.lifeBar.setPercentage(this.charakter.lifePoints)
-                        this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_POISON)
-                        this.charakter.reduceScore(10)
-                        console.log(`Noch ${this.charakter.lifePoints} Leben Puffer`);
-                    }
-                    if (enemie instanceof Squid && !this.charakter.isHurt()) {
-                        this.charakter.hit(10);
-                        this.lifeBar.setPercentage(this.charakter.lifePoints)
-                        this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
-                        this.charakter.reduceScore(10)
-                        console.log(`Noch ${this.charakter.lifePoints} Leben Squid`);
-                    }
-                    if (enemie instanceof Endboss && !enemie.isDead()&& !this.charakter.isHurt()) {
-                        this.charakter.hit(20);
-                        this.lifeBar.setPercentage(this.charakter.lifePoints)
-                        this.charakter.reduceScore(10)
-                        this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
-                        console.log(`Noch ${this.charakter.lifePoints} Leben Boss`);
+                    if(!this.charakter.isDead()){
+                        if (enemie instanceof Pufferfish && !this.charakter.isHurt()) {
+                            this.charakter.hit(15);
+                            this.lifeBar.setPercentage(this.charakter.lifePoints)
+                            this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_POISON)
+                            this.charakter.reduceScore(10)
+                            console.log(`Noch ${this.charakter.lifePoints} Leben Puffer`);
+                        }
+                        if (enemie instanceof Squid && !this.charakter.isHurt()) {
+                            this.charakter.hit(10);
+                            this.lifeBar.setPercentage(this.charakter.lifePoints)
+                            this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
+                            this.charakter.reduceScore(10)
+                            console.log(`Noch ${this.charakter.lifePoints} Leben Squid`);
+                        }
+                        if (enemie instanceof Endboss && !enemie.isDead()&& !this.charakter.isHurt()) {
+                            this.charakter.hit(20);
+                            this.lifeBar.setPercentage(this.charakter.lifePoints)
+                            this.charakter.reduceScore(10)
+                            this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
+                            console.log(`Noch ${this.charakter.lifePoints} Leben Boss`);
+                        }
                     }
                 }
             }
@@ -178,6 +181,7 @@ class World {
                     if (enemie instanceof Endboss) {
                         enemie.hit(20);
                         console.log("Endbosslife : ", enemie.lifePoints)
+                        playSound(11)
                     }
                     else {
                         enemie.hit(5)
@@ -402,18 +406,18 @@ class World {
         this.draw()
     }
     restartCharacter(){
-        this.charakter.position_x = 120;
-        this.charakter.position_y = 250;
+        this.charakter.reconstuct()
     }
     restartLevel(){
         this.level = this.allLevels[this.activLevel]
-        this.enemies = this.level.enemies;
+        this.enemies.length = 0;
         this.scenerie = this.level.scenerie;
-        this.collectables = this.level.collectables;
+        this.collectables.length = 0;
         this.gameMenues = this.level.menues;
         this.isGameOver = false;
         this.win = false;
     }
+
     gameEnd(){
         if(this.isGameOver){
             if (!this.win){
@@ -434,7 +438,6 @@ class World {
             const endScore = new Score(resultScore)
             this.HighScore.push(endScore)
             this.saveHighScore()
-            await this.printHighScore() // Test
             this.saved = !this.saved
         }
     }
@@ -449,16 +452,6 @@ class World {
             this.HighScore = parsedHighscore;
             } catch (error) {
             console.log(error);
-        }
-    }
-    async printHighScore(){
-        await this.loadHighScore()
-        this.HighScore.sort((a,b)=> b.scoreValue - a.scoreValue)
-        this.HighScore.length = 10;
-        for (let i = 0; i < this.HighScore.length; i++) {
-            let printableScore = this.HighScore[i]
-            console.log(`${i+1}. => ${printableScore['date']} <=> ${printableScore['scoreValue']}`)
-            
         }
     }
 
