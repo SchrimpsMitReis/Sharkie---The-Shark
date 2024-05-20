@@ -1,4 +1,4 @@
-class Endboss extends moveableObjekt{
+class Endboss extends moveableObjekt {
     position_x = 3000;
     position_y = 50;
     height = 250;
@@ -57,7 +57,7 @@ class Endboss extends moveableObjekt{
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/5.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/6.png",
     ]
-    constructor(){
+    constructor() {
         super().loadImage(this.IMAGES_FLOATING[0])
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_FLOATING);
@@ -67,55 +67,57 @@ class Endboss extends moveableObjekt{
         this.setOffset(0.3, 0.04, 0.06, 0.1)
         this.animate()
     }
-    async animate(){
-        setInterval( ()=>{
-            if (!this.isDead()){
+    async animate() {
+        setInterval(() => {
+            if (!this.isDead()) {
                 playSoundOnceUnuse(10)
                 this.playAnimation(this.IMAGES_FLOATING)
-                if(this.isHurt()){
+                if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT)
-                }else{
-
-                    if (this.energie >= 25 && this.inRange()){
-                        this.energie -= 25
-                        this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
-                        this.playAnimation(this.IMAGES_ATTACK)
-                        playSoundOnce(10)
-                    }        
+                } else {
+                    // this.attack()
                 }
-                if(this.spawnCount === 0 && !this.firstContact){
+                if (this.spawnCount === 0) {
                     this.playAnimation(this.IMAGES_INTRO);
-                    this.firstContact = true;
                 }
+                // if (world.charakter.position_x > 2500 && !this.firstContact) {
+                //     this.spawnCount = 0;
+                //     this.firstContact = true;
 
-            }else{
+                // }    
+            } else {
                 this.playAnimation(this.IMAGES_DEAD)
                 allSounds[10].pause()
                 world.isGameOver = true;
                 world.win = true
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.deconstruct(world.enemies)
                 }, 2000)
-            }
-            if (world.charakter.position_x > 2500) {
-                this.spawnCount = 0;
             }
             this.spawnCount++
         }, 100)
         setInterval(() => {
             this.energie += 5;
-            if (this.energie >= 30){
+            if (this.energie >= 30) {
                 this.energie = 30
             }
         }, 400);
     }
-inRange(){
-    let range = Math.abs(this.position_x - world.charakter.position_x)
-    return range < 600 
-}
+    inRange() {
+        let range = Math.abs(this.position_x - world.charakter.position_x)
+        return range < 600
+    }
+    // attack() {
+    //     if (this.energie >= 25 && this.inRange()) {
+    //         this.energie -= 25
+    //         this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
+    //         this.playAnimation(this.IMAGES_ATTACK)
+    //         playSoundOnce(10)
+    //     }
+    // }
     // async attackPlayer() {
     //     this.isAttacking = true;
-    
+
     //     await new Promise(resolve => {
     //         setTimeout(() => {
     //             let target_X = world.charakter.position_x;
@@ -127,11 +129,11 @@ inRange(){
     //             resolve(); // Signalisiere das Ende der Verzögerung
     //         }, 5000);
     //     });
-    
+
     //     // Der Rest des Codes wird nach der Verzögerung ausgeführt
     //     this.isAttacking = false;
     // }
-    
+
     // async attackPlayer(){
     //     this.isAttacking = true
     //     await new Promise(resolve => {
@@ -169,18 +171,18 @@ inRange(){
     //                 this.position_y = 0
     //             }
     //         }, 1000)
-    
+
     //     }
-        // let move = setInterval(()=>{
-        //         if(this.position_x !== target_X && this.position_y !== target_Y){
-        //             this.position_x -= distanceX
-        //             this.position_y -= distanceY
-        //         }else{
-        //             clearInterval(move);
-        //         }
-    
-        //     }, 100)
-        // this.isAttacking = false
+    // let move = setInterval(()=>{
+    //         if(this.position_x !== target_X && this.position_y !== target_Y){
+    //             this.position_x -= distanceX
+    //             this.position_y -= distanceY
+    //         }else{
+    //             clearInterval(move);
+    //         }
+
+    //     }, 100)
+    // this.isAttacking = false
     // }
 }
 

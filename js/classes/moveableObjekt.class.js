@@ -60,7 +60,6 @@ class moveableObjekt extends drawableObject {
         } else {
             this.lastHit = new Date().getTime();
         }
-        console.log(this.isHurt());
     }
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit
@@ -98,13 +97,11 @@ class moveableObjekt extends drawableObject {
     };
     moveDown() {
         this.position_y += this.speed;
-        // console.log("Moving left");
     }
     moveAtoB(x, y) {
         let targetX = x;
         let targetY = y;
         let xWay = targetX - this.position_x;
-        console.log(xWay);
         let yWay = targetY - this.position_y;
         let steps = 10;
         let stepDuration = 100; // Dauer eines Schritts in Millisekunden
@@ -119,7 +116,6 @@ class moveableObjekt extends drawableObject {
                     this.position_x += (xWay / steps);
                     this.position_y += (yWay / steps);
                 }
-                console.log(`Bin angekommen: ${this.position_x} / ${this.position_y}`);
             }, i * stepDuration); // Delay für jeden Schritt erhöhen
         }
     }

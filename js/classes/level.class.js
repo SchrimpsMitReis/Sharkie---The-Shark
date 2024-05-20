@@ -11,7 +11,6 @@ class Level {
         this.menues = menues;
 
         this.dif = dif;
-        this.generateEnemie(this.dif)
     }
     // Generate Menues
     generateHauptmenü(){
@@ -51,14 +50,11 @@ class Level {
     async generateEnemie(dif) {
         let count = 0;
         setInterval(()=>{
-                if (world.activLevel == 1){
+                if (this.world.startPlay){
                     this.generatePufferfish(dif)
                     this.generateSquid(dif)
                     this.generateCoin(dif)
-                    if(world.charakter.position_x > 2500){
-                        this.generateEndboss()
-
-                    }
+                    this.generateEndboss()
                 }
                 count++
             },count * (1000 / (dif + 1)))
@@ -95,7 +91,7 @@ class Level {
             if (!endbossExistiert && !this.spawnedEndboss) {
                 this.spawnedEndboss = true
                 let endboss = new Endboss();
-                world.enemies.push(endboss)
+                this.enemies.push(endboss)
             }
 
         }else if(allEndbosses.length > 1){

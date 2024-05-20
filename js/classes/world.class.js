@@ -1,30 +1,23 @@
 class World {
+    level;
+    enemies;
+    scenerie;
+    collectables;
+    gameMenues;
+    charakter;
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.LevelZero()
         this.draw()
-        this.setWorld()
         this.run()
-        this.ctxOptions()
         this.soundTriggers()
         this.checkGameEnd()
         this.loadHighScore();
     }
-    activLevel = 0
 
-    charakter = new Charakter();
-    allLevels = [
-        level00,
-        level01
-    ]
-
-    level = this.allLevels[this.activLevel]
-    // const {enemies, scenerie, collectables, menues} = this.level;
-    enemies = this.level.enemies;
-    scenerie = this.level.scenerie;
-    collectables = this.level.collectables;
-    gameMenues = this.level.menues;
     menuHelp = new HelpMenu(0, 0);
     escMenue = new ESCMenu(0,0);
     lifeBar = new lifebar(50, 20, 0.3);
@@ -40,50 +33,38 @@ class World {
 
     ctx;
     keyboard;
-    camera_x = 100;
+    camera_x = 0;
     isGameOver = false;
     win = false;
     gameOverShield = new GameOver(150, 50, 400, 400)
-    winShield = new winShield(0, 76, 200, 200)
+    winShield = new winShield(150, 50, 400, 400)
     ScoreTable = new HighscoreBoard(20, 10, 500, 500);
     HighScore = []
+    showGUI = false
     showHighscore = false;
-    soundObjects = [
-        new SoundObject2D('./audio/BarCrowd.wav',0, 1000),
-        new SoundObject2D('./audio/EndbossMusic.wav',3000, 1000),
-    ]
-
-    ctxOptions() {
-    }
+    startPlay = false
+    soundObjects;
+    restarted = false
     setWorld() {
         this.charakter.world = this;
         this.level.world = this;
         this.gameCurser.world = this;
-
     }
+    // Checking Loops
     run() {
         setInterval(() => {
             this.checkCollisions();
             this.checkObjectThrow();
-            // console.log("Hallo");
         }, 4)
     }
     soundTriggers(){
         setInterval(()=>{
             this.winLooseSound()
-            this.walkingSound()
         },10)
     }
     winLooseSound(){
         if (this.isGameOver){
                 playSoundOnce(6)
-        }
-    }
-    walkingSound(){
-        if (this.keyboard.LEFT || this.keyboard.RIGHT || this.keyboard.UP || this.keyboard.DOWN){
-            allSounds[9].play()
-        }else{
-            allSounds[9].pause()
         }
     }
     checkGameEnd(){
@@ -92,22 +73,14 @@ class World {
                 if(this.win){
                     this.saveScore()
                 }
-                if(this.keyboard.MOUSEBTN){
-                        this.setLevel(0)
+                if(this.keyboard.MOUSEBTN && !this.restarted){
+                    this.restarted = true
+                    this.LevelZero()
                 }
             }
             
         }, 10);
     }
-    /**
-    * Überprüft Kollisionen des Spielcharakters mit verschiedenen Elementen.
-    * Ruft Methoden auf, um Kollisionen mit Feinden, Sammelobjekten, werfbaren Objekten und Menüs zu überprüfen.
-    *   `
-    * @name checkCollisions
-    * @memberof World
-    * @instance
-    * @returns {void}
-    */
     checkCollisions() {
         this.checkEnemies()
         this.checkCollectables()
@@ -159,7 +132,6 @@ class World {
         })
 
     }
-    /** */
     checkCollectables() {
         this.level.collectables.forEach((collectable) => {
             if (this.charakter.isColliding(collectable)) {
@@ -222,10 +194,10 @@ class World {
                     if(this.keyboard.MOUSEBTN){
                         playSound(2)
                         if (menue instanceof Startbutton){
-                            this.setLevel(1)
+                            this.LevelOne()
                         }
                         else if(menue instanceof PauseBtn){
-                            this.setLevel(0)
+                            this.LevelZero()
                         }
                         else if (menue instanceof Controlbutton){
                             console.log("Show Controlls");
@@ -267,6 +239,7 @@ class World {
 
         }
     }
+    // Drawfunction & Co
     draw() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -360,21 +333,6 @@ class World {
             mo.switchDirectionBack(this.ctx)
         }
     }
-    nextLevel() {
-        this.activLevel++
-        this.levelRestart()
-    }
-    setLevel(lvl){
-        this.activLevel = lvl;
-        this.levelRestart()
-    }
-    prevLevel() {
-        this.activLevel--
-        if (this.activLevel < 0) {
-            this.activLevel = 0;
-        }
-        this.levelRestart()
-    }
     addTextElement(fontSize, hexColor, counter, x, y) {
         this.ctx.font = `${fontSize}px Spongebob`;
         this.ctx.fillStyle = `#${hexColor}`;
@@ -391,7 +349,7 @@ class World {
 
     }
     levelGUI(){
-        if (this.activLevel !== 0) {
+        if (this.showGUI) {
             this.addTextElement(48, "2237ac", this.charakter.score, 150, 60)
             this.addLifebar(320,8, 100, 60)
             this.addEnergiebar(510,8, 100, 60)
@@ -399,25 +357,6 @@ class World {
             this.gameEnd()
         }
     }
-    levelRestart() {
-        this.restartLevel()
-        this.restartCharacter()
-        this.camera_x = -100
-        this.draw()
-    }
-    restartCharacter(){
-        this.charakter.reconstuct()
-    }
-    restartLevel(){
-        this.level = this.allLevels[this.activLevel]
-        this.enemies.length = 0;
-        this.scenerie = this.level.scenerie;
-        this.collectables.length = 0;
-        this.gameMenues = this.level.menues;
-        this.isGameOver = false;
-        this.win = false;
-    }
-
     gameEnd(){
         if(this.isGameOver){
             if (!this.win){
@@ -432,6 +371,7 @@ class World {
         this.addToMap(this.charakter)
         this.ctx.translate(-this.camera_x, 0)
     }
+    // Save/Load the Game
     async saveScore(){
         if (!this.saved){
             let resultScore = this.charakter.score;
@@ -454,5 +394,48 @@ class World {
             console.log(error);
         }
     }
+    // Changing Levels & Restart
 
+    LevelZero(){
+        this.level = level00;
+        this.loadingLevel()
+        this.clearWorld()
+        console.log("LevelZero");
+    }
+    LevelOne(){
+        this.level = level01;
+        this.loadingCharakter()
+        this.loadingLevel()
+        this.loadingSoundObjects()
+        this.showGUI = true;
+        this.startPlay = true;
+        this.level.generateEnemie(1)
+        console.log("LevelOne");
+    }
+    clearWorld(){
+        this.isGameOver = false;
+        this.win = false;
+        this.showGUI = false;
+        this.startPlay = false;
+        this.soundObjects = null;
+        this.charakter = null;
+        this.camera_x = 0;
+    }
+    loadingLevel(){
+        this.enemies = this.level.enemies;
+        this.scenerie = this.level.scenerie;
+        this.collectables = this.level.collectables;
+        this.gameMenues = this.level.menues;
+    }
+    loadingCharakter(){
+        this.charakter = new Charakter()
+        this.camera_x = 100
+        this.setWorld()
+    }
+    loadingSoundObjects(){
+        this.soundObjects = [
+            new SoundObject2D('./audio/BarCrowd.mp3',0, 1000),
+            new SoundObject2D('./audio/EndbossMusic.mp3',3000, 1000),
+        ]
+    }
 }

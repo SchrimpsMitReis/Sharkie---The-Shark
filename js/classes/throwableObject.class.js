@@ -5,7 +5,6 @@ class throwableObject extends moveableObjekt{
         this.directionLeft = world.charakter.otherDirection
     }
     throw(x){
-        console.log(world.width);
         this.speedY = 10;
         this.applyGravity();
         setInterval(()=>{

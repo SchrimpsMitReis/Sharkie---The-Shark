@@ -3,7 +3,7 @@ class Charakter extends moveableObjekt {
     width = 200;
     world;
     speed = 5;
-    lifePoints = 1;
+    lifePoints = 100;
     energie = 100;
     coins = 0;
     score = 0;
@@ -113,18 +113,23 @@ class Charakter extends moveableObjekt {
     animate() {
         setInterval(() => {
             if (this.alive) {
+                allSounds[9].pause()
                 if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
                     this.moveRight()
+                    allSounds[9].play()
                 }
                 if (this.world.keyboard.LEFT && this.position_x > 110) {
                     this.moveLeft()
+                    allSounds[9].play()
 
                 }
                 if (this.world.keyboard.UP && this.position_y > 0 - 30) {
                     this.moveUp()
+                    allSounds[9].play()
                 }
                 if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
                     this.moveDown()
+                    allSounds[9].play()
                 }
                 if (this.world.keyboard.SHIFT && !(this.energie < 10)) {
                     this.speed = 10;
@@ -138,7 +143,7 @@ class Charakter extends moveableObjekt {
                     playRandomSound(hitSounds)
                     this.activateMelee()
                 }
-                this.world.camera_x = - this.position_x + 100;
+                this.world.camera_x = -this.position_x + 100;
             }
             // this.world.lifeBar.position_x = this.position_x 
             // this.world.lifeBar.position_y = this.position_y
@@ -146,6 +151,7 @@ class Charakter extends moveableObjekt {
 
         setInterval(() => {
             if (this.isDead()) {
+                allSounds[12].pause()
                 if (this.alive) {
                     this.playAnimation(this.IMAGES_SHARKIE_DEAD)
                     this.alive = false;
@@ -154,7 +160,6 @@ class Charakter extends moveableObjekt {
                     setTimeout(() => {
                         world.isGameOver = true;
                     }, 1000)
-
                 }
             } else {
                 allSounds[12].pause()
@@ -164,6 +169,7 @@ class Charakter extends moveableObjekt {
                     this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
                 } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_SHARKIE_SWIM)
+                    this.addEnergie(0.5)
                 } else {
                     this.playAnimation(this.IMAGES_SHARKIESTILL)
                     this.addEnergie(1)

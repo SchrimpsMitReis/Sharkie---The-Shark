@@ -7,7 +7,11 @@ let md = new MobileDetect(window.navigator.userAgent)
 const body = document.getElementById('body')
 let smartOverlay;
 
-function init(){
+async function init(){
+    loadWorld();
+}
+
+function loadWorld(){
     getDeviceType()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -120,6 +124,7 @@ function init(){
         }
     
     }
+
 }
 function arrangeSmartOverlay(canvas){
     if (isMobile){

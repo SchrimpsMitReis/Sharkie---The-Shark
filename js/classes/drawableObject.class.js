@@ -29,12 +29,6 @@ class drawableObject {
             this.imageCache[path] = img;
         })
     }
-    setOffset(t,l,r,b){ // Muss Prozentual berechent werden, da sonst von Skalierung betroffen
-        this.offset.top = t*this.height
-        this.offset.left = l*this.width
-        this.offset.right = r*this.width
-        this.offset.bottom = b*this.height
-    }
     draw(ctx) {
         ctx.drawImage(this.img, this.position_x, this.position_y, this.width, this.height)
     }
@@ -54,30 +48,18 @@ class drawableObject {
         let index = gameArray.findIndex(münze => münze.id === this.id)
         gameArray.splice(index, 1);
     }
+    // Collision Functions
     isColliding(obj) {
-        // let precision = 0.2;
-        // let versatzX = (precision * this.width)
-        // let versatzY = (precision * this.height)
-        // // console.log(this.width , " / ", this.height);
-        // let p1 = this.position_x + this.width - versatzX
-        // let p2 = this.position_y + this.height - versatzY
-        // let p3 = this.position_x + versatzX
-        // let p4 = this.position_y + versatzY
-
-        // if (this instanceof Charakter) {
-        //     p4 = this.position_y + (0.3 * this.height)
-        // }
-
-        // return p1 > mo.position_x &&
-        //     p2 > mo.position_y &&
-        //     p3 < mo.position_x &&
-        //     p4 < mo.position_y;
-
-
-    return (this.position_x + this.width) -this.offset.right >= obj.position_x + obj.offset.left && 
-        this.position_x + this.offset.left <= (obj.position_x + obj.width) - obj.offset.right &&
-        (this.position_y + this.height) - this.offset.bottom >= obj.position_y + this.offset.top &&
-        (this.position_y + this.offset.top) <= (obj.position_y + obj.height) - obj.offset.bottom;
+        return (this.position_x + this.width) - this.offset.right >= obj.position_x + obj.offset.left &&
+            this.position_x + this.offset.left <= (obj.position_x + obj.width) - obj.offset.right &&
+            (this.position_y + this.height) - this.offset.bottom >= obj.position_y + this.offset.top &&
+            (this.position_y + this.offset.top) <= (obj.position_y + obj.height) - obj.offset.bottom;
+    }
+    setOffset(t, l, r, b) { // Muss Prozentual berechent werden, da sonst von Skalierung betroffen
+        this.offset.top = t * this.height
+        this.offset.left = l * this.width
+        this.offset.right = r * this.width
+        this.offset.bottom = b * this.height
     }
 
 }
