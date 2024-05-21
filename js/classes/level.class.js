@@ -9,7 +9,7 @@ class Level {
         this.scenerie = scenerie;
         this.collectables = collectables;
         this.menues = menues;
-
+        this.prozGeneration = null;
         this.dif = dif;
     }
     // Generate Menues
@@ -49,7 +49,7 @@ class Level {
     // Generate Enemies
     async generateEnemie(dif) {
         let count = 0;
-        setInterval(()=>{
+        this.prozGeneration = setInterval(()=>{
                 if (this.world.startPlay){
                     this.generatePufferfish(dif)
                     this.generateSquid(dif)
@@ -93,12 +93,13 @@ class Level {
                 let endboss = new Endboss();
                 this.enemies.push(endboss)
             }
-
         }else if(allEndbosses.length > 1){
             allEndbosses[0].deconstuct(world.enemies)
         }
             
     }
-
+    stopLoops(){
+        clearInterval(this.prozGeneration)
+    }
     
 }

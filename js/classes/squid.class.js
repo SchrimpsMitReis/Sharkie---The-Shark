@@ -23,15 +23,19 @@ class Squid extends moveableObjekt{
         this.speed = 5 + Math.random()*2;
         this.position_x = x;
         this.position_y = y;
-
+        this.animateLoop = null;
         this.animate()
     }
 
     animate(){
-        setInterval( ()=>{
+        this.animateLoop = setInterval( ()=>{
             this.moveUp()
             this.playAnimation(this.IMAGES_SQUIDSTILL)
         }, 500)
 
     }
+    stopLoops(){
+        this.animateLoop = null;
+    }
+
 }

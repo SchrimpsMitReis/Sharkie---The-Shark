@@ -65,26 +65,28 @@ class Endboss extends moveableObjekt {
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
         this.setOffset(0.3, 0.04, 0.06, 0.1)
+        this.animateLoop = null
+        this.energieLoop = null
         this.animate()
     }
     async animate() {
-        setInterval(() => {
+        this.animateLoop = setInterval(() => {
             if (!this.isDead()) {
                 playSoundOnceUnuse(10)
                 this.playAnimation(this.IMAGES_FLOATING)
                 if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT)
                 } else {
-                    // this.attack()
+                    this.attack()
                 }
                 if (this.spawnCount === 0) {
                     this.playAnimation(this.IMAGES_INTRO);
                 }
-                // if (world.charakter.position_x > 2500 && !this.firstContact) {
-                //     this.spawnCount = 0;
-                //     this.firstContact = true;
+                if (world.charakter.position_x > 2500 && !this.firstContact) {
+                    this.spawnCount = 0;
+                    this.firstContact = true;
 
-                // }    
+                }    
             } else {
                 this.playAnimation(this.IMAGES_DEAD)
                 allSounds[10].pause()
@@ -96,7 +98,7 @@ class Endboss extends moveableObjekt {
             }
             this.spawnCount++
         }, 100)
-        setInterval(() => {
+        this.energieLoop = setInterval(() => {
             this.energie += 5;
             if (this.energie >= 30) {
                 this.energie = 30
@@ -107,14 +109,18 @@ class Endboss extends moveableObjekt {
         let range = Math.abs(this.position_x - world.charakter.position_x)
         return range < 600
     }
-    // attack() {
-    //     if (this.energie >= 25 && this.inRange()) {
-    //         this.energie -= 25
-    //         this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
-    //         this.playAnimation(this.IMAGES_ATTACK)
-    //         playSoundOnce(10)
-    //     }
-    // }
+    attack() {
+        if (this.energie >= 25 && this.inRange()) {
+            this.energie -= 25
+            this.moveAtoB(world.charakter.position_x, world.charakter.position_y)
+            this.playAnimation(this.IMAGES_ATTACK)
+            playSoundOnce(10)
+        }
+    }
+    stopLoops(){
+        clearInterval(this.animateLoop);
+        clearInterval(this.energieLoop);
+    }
     // async attackPlayer() {
     //     this.isAttacking = true;
 

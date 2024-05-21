@@ -5,9 +5,10 @@ class SoundObject2D {
         this.sound.loop = true;
         this.position_x = x;
         this.range = range
+        this.detectionLoop = null;
     }
     detectVolume(){
-        setInterval(()=>{
+        this.detectionLoop = setInterval(()=>{
             let charakterPosX = world.charakter.position_x;
             let distanceX = Math.abs(this.position_x - charakterPosX)
             if (distanceX <= this.range ){
@@ -16,5 +17,8 @@ class SoundObject2D {
                 this.sound.volume = 0;
             }
         }, 10)
+    }
+    stopLoops(){
+        clearInterval(this.detectionLoop)
     }
 }

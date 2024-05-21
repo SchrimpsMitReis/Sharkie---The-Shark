@@ -108,10 +108,12 @@ class Charakter extends moveableObjekt {
         this.loadImages(this.IMAGES_SHARKIE_SHOOT)
         this.applyGravity()
         this.setOffset(0.45, 0.05, 0.05, 0.05)
+        this.movementLoop = null;
+        this.animationLoop = null
         this.animate();
     }
     animate() {
-        setInterval(() => {
+        this.movementLoop = setInterval(() => {
             if (this.alive) {
                 allSounds[9].pause()
                 if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
@@ -149,7 +151,7 @@ class Charakter extends moveableObjekt {
             // this.world.lifeBar.position_y = this.position_y
         }, 1000 / 60)
 
-        setInterval(() => {
+        this.animationLoop = setInterval(() => {
             if (this.isDead()) {
                 allSounds[12].pause()
                 if (this.alive) {
@@ -234,5 +236,10 @@ class Charakter extends moveableObjekt {
         this.position_x = 120;
         this.position_y = 250;
     
+    }
+    stopLoops(){
+        clearInterval(this.movementLoop)
+        clearInterval(this.animationLoop)
+        allSounds[12].pause()
     }
 }

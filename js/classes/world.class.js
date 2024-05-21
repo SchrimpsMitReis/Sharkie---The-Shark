@@ -74,7 +74,8 @@ class World {
                     this.saveScore()
                 }
                 if(this.keyboard.MOUSEBTN && !this.restarted){
-                    this.restarted = true
+                    this.restarted = true;
+                    this.level.stopLoops()
                     this.LevelZero()
                 }
             }
@@ -398,6 +399,7 @@ class World {
 
     LevelZero(){
         this.level = level00;
+        this.stopEnemieLoops()
         this.loadingLevel()
         this.clearWorld()
         console.log("LevelZero");
@@ -406,6 +408,7 @@ class World {
         this.level = level01;
         this.loadingCharakter()
         this.loadingLevel()
+        this.stopEnemieLoops()
         this.loadingSoundObjects()
         this.showGUI = true;
         this.startPlay = true;
@@ -417,7 +420,9 @@ class World {
         this.win = false;
         this.showGUI = false;
         this.startPlay = false;
+        this.stopSOLoops()
         this.soundObjects = null;
+        this.stopCharakterLoops
         this.charakter = null;
         this.camera_x = 0;
     }
@@ -437,5 +442,27 @@ class World {
             new SoundObject2D('./audio/BarCrowd.mp3',0, 1000),
             new SoundObject2D('./audio/EndbossMusic.mp3',3000, 1000),
         ]
+    }
+    
+    stopEnemieLoops(){
+        if(this.enemies){
+            console.log("Amount of Enemies", this.enemies);
+            this.enemies.forEach((enemie)=>{
+                enemie.stopLoops();
+            })
+        }
+    }
+    stopCharakterLoops(){
+        if(this.charakter){
+            this.charakter.stopLoops();
+        }
+    }
+    stopSOLoops(){
+        if(this.soundObjects){
+            this.soundObjects.forEach((SO)=>{
+                SO.sound.pause()
+                SO.stopLoops()
+            })
+        }
     }
 }
