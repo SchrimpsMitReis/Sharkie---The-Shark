@@ -14,11 +14,17 @@ body{
     margin: 0;
     height: 100vh;
 }
+body:hover{
+    cursor: url('../IMG/Mauszeiger.png');
+}
 .cursorNone{
     cursor: none;
 }
 canvas{
     background-color: black;
+}
+canvas:hover{
+    cursor: none;
 }
 .smartOverlay{
     position: absolute;

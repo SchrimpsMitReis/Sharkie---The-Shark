@@ -1,12 +1,12 @@
 class Endboss extends moveableObjekt {
     position_x = 3000;
     position_y = 50;
-    offset = {
-        top: 120,
-        left: 10,
-        right: 30,
-        bottom: 170,
-    }
+    // offset = {
+    //     top: 120,
+    //     left: 10,
+    //     right: 30,
+    //     bottom: 170,
+    // }
 
     height = 250;
     width = 250;
@@ -71,6 +71,7 @@ class Endboss extends moveableObjekt {
         this.loadImages(this.IMAGES_DEAD)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
+        this.setOffset(0.5, 0.04, 0.06, 0.1)
         this.animateLoop = null
         this.energieLoop = null
         this.animate()

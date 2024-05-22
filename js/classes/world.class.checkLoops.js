@@ -72,7 +72,7 @@ World.prototype.inYourFace = function(enemie){
 }
 World.prototype.collidingMelee = function(enemie){
     this.charakter.addScore(30)
-    if (enemie instanceof Endboss) {
+    if (enemie instanceof Endboss && !enemie.isHurt()) {
         enemie.hit(20);
         playSound(11)
     } else {
