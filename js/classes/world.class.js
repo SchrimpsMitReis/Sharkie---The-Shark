@@ -27,6 +27,7 @@ class World {
     canvas;
     editorMode = false;
     ctx;
+    muted = false;
     keyboard;
     camera_x = 0;
     isGameOver = false;

@@ -29,15 +29,15 @@ class moveableObjekt extends drawableObject {
             return this.position_y < 320
         }
     }
-    drawFrame(ctx) {
-        if (this instanceof Charakter || this instanceof Pufferfish || this instanceof Squid || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = "2";
-            ctx.strokeStyle = "black";
-            ctx.rect(this.position_x, this.position_y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
+    // drawFrame(ctx) {
+    //     if (this instanceof Charakter || this instanceof Pufferfish || this instanceof Squid || this instanceof Endboss) {
+    //         ctx.beginPath();
+    //         ctx.lineWidth = "2";
+    //         ctx.strokeStyle = "black";
+    //         ctx.rect(this.position_x, this.position_y, this.width, this.height);
+    //         ctx.stroke();
+    //     }
+    // }
     switchDirection(ctx) {
         if (this.otherDirection) {
             ctx.save();

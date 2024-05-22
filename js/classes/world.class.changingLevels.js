@@ -16,7 +16,6 @@ World.prototype.LevelOne = function(){
     this.showGUI = true;
     this.startPlay = true;
     this.level.generateEnemie(1)
-    console.log("LevelOne");
 }
 World.prototype.clearLevel = function(){
     this.level.enemies.length = 0;

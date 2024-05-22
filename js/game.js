@@ -11,7 +11,6 @@ async function init(){
     setSaveSpace()
     loadWorld();
 }
-
 function loadWorld(){
     getDeviceType()
     canvas = document.getElementById('canvas');
@@ -19,6 +18,9 @@ function loadWorld(){
     smartOverlay = document.getElementById('smartOverlay')
     portaitDialog = document.getElementById('portaitDialog')
     arrangeSmartOverlay(canvas)
+    keyEventListeners()
+}
+function keyEventListeners(){
     document.addEventListener('mousemove', (event)=>{
         let canvasBorder = canvas.getBoundingClientRect();
         if(keyboard.FULLSCREEN){
@@ -97,33 +99,30 @@ function loadWorld(){
         }, 3);
     
     })
-    
-    function toggleFullscreen(){
-        keyboard.FULLSCREEN = !keyboard.FULLSCREEN;
-        if (keyboard.FULLSCREEN){
-            if (canvas.requestFullscreen) {
-                canvas.requestFullscreen();
-            } else if (canvas.mozRequestFullScreen) { /* Firefox */
-                canvas.mozRequestFullScreen();
-            } else if (canvas.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-                canvas.webkitRequestFullscreen();
-            } else if (canvas.msRequestFullscreen) { /* IE/Edge */
-                canvas.msRequestFullscreen();
-            }
-        }else{
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) { /* Firefox */
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) { /* Chrome, Safari und Opera */
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { /* IE/Edge */
-                document.msExitFullscreen();
-            }
+}
+function toggleFullscreen(){
+    keyboard.FULLSCREEN = !keyboard.FULLSCREEN;
+    if (keyboard.FULLSCREEN){
+        if (canvas.requestFullscreen) {
+            canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) { /* Firefox */
+            canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) { /* IE/Edge */
+            canvas.msRequestFullscreen();
         }
-    
+    }else{
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { /* Firefox */
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { /* Chrome, Safari und Opera */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE/Edge */
+            document.msExitFullscreen();
+        }
     }
-
 }
 function arrangeSmartOverlay(canvas){
     if (isMobile){
@@ -139,7 +138,6 @@ function arrangeSmartOverlay(canvas){
 function overlayFit(overlay) {
     overlay.classList.remove('d-none')
     let canvasBorder = canvas.getBoundingClientRect();
-    console.log(canvasBorder);
     overlay.style.left = canvasBorder.left +'px';
     overlay.style.top = canvasBorder.top +'px';
     overlay.style.right = canvasBorder.right +'px';

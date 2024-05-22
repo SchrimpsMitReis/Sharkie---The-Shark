@@ -11,7 +11,7 @@ class SoundObject2D {
         this.detectionLoop = setInterval(()=>{
             let charakterPosX = world.charakter.position_x;
             let distanceX = Math.abs(this.position_x - charakterPosX)
-            if (distanceX <= this.range ){
+            if (distanceX <= this.range && !world.muted){
                 this.sound.volume = ((this.range - distanceX)/this.range )*0.5
             }else{
                 this.sound.volume = 0;

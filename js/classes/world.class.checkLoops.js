@@ -160,15 +160,12 @@ World.prototype.buttonSelection = function(menue){
         this.LevelZero()
     }
     else if (menue instanceof Controlbutton) {
-        console.log("Show Controlls");
         this.keyboard.HELP = !this.keyboard.HELP
     }
     else if (menue instanceof Highscorebutton) {
-        console.log("Show Highscores");
         this.showHighscore = !this.showHighscore
     }
     else if (menue instanceof Mutebutton) {
-        console.log("Mute all");
         muteAll()
     }
 }

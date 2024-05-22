@@ -83,7 +83,7 @@ World.prototype.addToMap = function(mo) {
         mo.switchDirection(this.ctx)
     }
     mo.draw(this.ctx)
-    mo.drawFrame(this.ctx)
+    // mo.drawFrame(this.ctx)
 
     if (mo.otherDirection) {
         mo.switchDirectionBack(this.ctx)

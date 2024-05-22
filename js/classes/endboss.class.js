@@ -1,6 +1,13 @@
 class Endboss extends moveableObjekt {
     position_x = 3000;
     position_y = 50;
+    offset = {
+        top: 120,
+        left: 10,
+        right: 30,
+        bottom: 170,
+    }
+
     height = 250;
     width = 250;
     lifePoints = 100;
@@ -64,7 +71,6 @@ class Endboss extends moveableObjekt {
         this.loadImages(this.IMAGES_DEAD)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.setOffset(0.3, 0.04, 0.06, 0.1)
         this.animateLoop = null
         this.energieLoop = null
         this.animate()
@@ -92,9 +98,6 @@ class Endboss extends moveableObjekt {
                 allSounds[10].pause()
                 world.isGameOver = true;
                 world.win = true
-                // setTimeout(() => {
-                //     this.deconstruct(world.enemies)
-                // }, 2000)
             }
             this.spawnCount++
         }, 100)
@@ -121,74 +124,5 @@ class Endboss extends moveableObjekt {
         clearInterval(this.animateLoop);
         clearInterval(this.energieLoop);
     }
-    // async attackPlayer() {
-    //     this.isAttacking = true;
-
-    //     await new Promise(resolve => {
-    //         setTimeout(() => {
-    //             let target_X = world.charakter.position_x;
-    //             let target_Y = world.charakter.position_y;
-    //             let distanzToX = this.position_x - target_X;
-    //             let distanzToY = this.position_y - target_Y;
-    //             console.log('DISTANCE TO: ', distanzToX, '/', distanzToY);
-    //             this.playAnimation(this.IMAGES_ATTACK);
-    //             resolve(); // Signalisiere das Ende der Verzögerung
-    //         }, 5000);
-    //     });
-
-    //     // Der Rest des Codes wird nach der Verzögerung ausgeführt
-    //     this.isAttacking = false;
-    // }
-
-    // async attackPlayer(){
-    //     this.isAttacking = true
-    //     await new Promise(resolve => {
-    //         setTimeout(() => {
-    //             let target_X = world.charakter.position_x
-    //             let target_Y = world.charakter.position_y
-    //             let distanzToX = this.position_x - target_X
-    //             let distanzToY = this.position_y - target_Y
-    //             console.log('DISTANCE TO: ', distanzToX , '/', distanzToY);
-    //             this.playAnimation(this.IMAGES_ATTACK)
-    //         }, 5000);
-    //         resolve()      
-
-    //     })
-    //     // console.log(target_X, "/", target_Y , ':', distanzToX,'/',distanzToY);
-    //     // setTimeout(()=>{
-    //     //     this.moveToPlayer(distanzToX,distanzToY, target_X, target_Y)
-
-    //     // }, 1000)
-    //     this.isAttacking = false;
-    // }
-    // moveToPlayer(distanceX, distanceY, target_X, target_Y){
-    //     let attackSpeed = 100
-    //     for (let i = 0; i < attackSpeed; i++) {
-    //         setTimeout(()=>{
-    //             this.position_x -= distanceX
-    //             this.position_y -= distanceY
-    //             if (this.position_x <= world.charakter.position_x - 50){
-    //                 this.position_x = world.charakter.position_x - 50
-    //             }else if (this.position_x >= world.charakter.position_x + 600){
-    //                 this.position_x = world.charakter.position_x + 600
-    //             }else if (this.position_y >= 180){
-    //                 this.position_y = 179
-    //             }else if (this.position_y <= 0){
-    //                 this.position_y = 0
-    //             }
-    //         }, 1000)
-
-    //     }
-    // let move = setInterval(()=>{
-    //         if(this.position_x !== target_X && this.position_y !== target_Y){
-    //             this.position_x -= distanceX
-    //             this.position_y -= distanceY
-    //         }else{
-    //             clearInterval(move);
-    //         }
-
-    //     }, 100)
-    // this.isAttacking = false
-    // }
 }
 

@@ -7,61 +7,47 @@ let SmartBtnA = document.getElementById('aSmartBtn')
 let SmartBtnB = document.getElementById('bSmartBtn')
 let SmartBtnZ = document.getElementById('zSmartBtn')
 
-SmartBtnLEFT.addEventListener('touchstart', (event) =>{
-    console.log("Links");
+SmartBtnLEFT.addEventListener('touchstart', () =>{
     keyboard.LEFT = true;
 })
-SmartBtnRIGHT.addEventListener('touchstart', (event) =>{
-    console.log("Rechts");
+SmartBtnRIGHT.addEventListener('touchstart', () =>{
     keyboard.RIGHT = true;
 })
-SmartBtnUP.addEventListener('touchstart', (event) =>{
-    console.log("Oben");
+SmartBtnUP.addEventListener('touchstart', () =>{
     keyboard.UP = true;
 })
-SmartBtnDOWN.addEventListener('touchstart', (event) =>{
-    console.log("Unten");
+SmartBtnDOWN.addEventListener('touchstart', () =>{
     keyboard.DOWN = true;
 })
-SmartBtnA.addEventListener('touchstart', (event) =>{
-    console.log("Rechts");
+SmartBtnA.addEventListener('touchstart', () =>{
     keyboard.SPACE = true;
 })
-SmartBtnB.addEventListener('touchstart', (event) =>{
-    console.log("Oben");
+SmartBtnB.addEventListener('touchstart', () =>{
     keyboard.SECONDARY = true;
 })
-SmartBtnDOWN.addEventListener('touchstart', (event) =>{
-    console.log("Unten");
+SmartBtnDOWN.addEventListener('touchstart', () =>{
     keyboard.SHIFT = true;
 })
 
-SmartBtnLEFT.addEventListener('touchend', (event) =>{
-    console.log("Links");
+SmartBtnLEFT.addEventListener('touchend', () =>{
     keyboard.LEFT = false;
 })
-SmartBtnRIGHT.addEventListener('touchend', (event) =>{
-    console.log("Rechts");
+SmartBtnRIGHT.addEventListener('touchend', () =>{
     keyboard.RIGHT = false;
 })
-SmartBtnUP.addEventListener('touchend', (event) =>{
-    console.log("Oben");
+SmartBtnUP.addEventListener('touchend', () =>{
     keyboard.UP = false;
 })
-SmartBtnDOWN.addEventListener('touchend', (event) =>{
-    console.log("Unten");
+SmartBtnDOWN.addEventListener('touchend', () =>{
     keyboard.DOWN = false;
 })
-SmartBtnA.addEventListener('touchend', (event) =>{
-    console.log("Rechts");
+SmartBtnA.addEventListener('touchend', () =>{
     keyboard.SPACE = false;
 })
-SmartBtnB.addEventListener('touchend', (event) =>{
-    console.log("Oben");
+SmartBtnB.addEventListener('touchend', () =>{
     keyboard.SECONDARY = false;
 })
-SmartBtnDOWN.addEventListener('touchend', (event) =>{
-    console.log("Unten");
+SmartBtnDOWN.addEventListener('touchend', () =>{
     keyboard.SHIFT = false;
 })
     

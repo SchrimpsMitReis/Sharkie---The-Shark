@@ -33,12 +33,6 @@ let hitSounds = [
     new Audio('audio/hitSound/hitSound (6).mp3'),
     new Audio('audio/hitSound/hitSound (7).mp3')
 ]
-let smackSounds = [
-    new Audio('audio/smack/smack (1).mp3'),
-    new Audio('audio/smack/smack (2).mp3'),
-    new Audio('audio/smack/smack (3).mp3'),
-    new Audio('audio/smack/smack (4).mp3'),
-]
 function playSound(x){
     // allSounds[x].load()
     allSounds[x].play()
@@ -62,4 +56,9 @@ function muteAll(){
     allSounds.forEach((sound)=>{
         sound.muted = !sound.muted;
     })
+    hitSounds.forEach((sound)=>{
+        sound.muted = !sound.muted;
+    })
+
+    world.muted = !world.muted;
 }

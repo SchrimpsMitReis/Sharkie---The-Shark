@@ -19,7 +19,7 @@ World.prototype.loadHighScore = async function() {
         let parsedHighscore = JSON.parse(resHighScoreAsJSON)
         this.HighScore = parsedHighscore;
     } catch (error) {
-        console.log(error);
+        console.log(`Can not Load Highscores: ${error}`);
     }
 }
 World.prototype.clearHighscores = function() {
