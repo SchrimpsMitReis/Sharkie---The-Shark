@@ -33,7 +33,8 @@ class Pufferfish extends moveableObjekt {
             if (this.isDead()){
                 this.playAnimation(this.IMAGES_DIE)
                 this.loadImage(this.IMAGES_DIE[2])
-            }else{
+            }
+            else{
                 this.moveLeft();
                 this.playAnimation(this.IMAGES_PUFFERFISHSTILL)
             }
@@ -43,13 +44,7 @@ class Pufferfish extends moveableObjekt {
     stopLoops(){
         clearInterval(this.animateLoop);
     }
-    // despawn(){
-    //     setTimeout(()=>{
-    //         setInterval(()=>{
-    //             if (this.position_x < (world.charakter.position_x - 100)){
-    //                 this.deconstruct(world.enemies)
-    //             }
-    //         },500)
-    //     },1000)
-    // }
+    outOfView(){
+        return this.position_x > (world.charakter.position_x + 100)
+    }
 }

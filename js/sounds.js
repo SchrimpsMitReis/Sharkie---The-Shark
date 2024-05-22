@@ -14,13 +14,6 @@ let allSounds = [
     new Audio('audio/biteEndboss.mp3'),
     new Audio('audio/screamEndboss.mp3'),
     new Audio('audio/sleeping.mp3'),
-    // new Audio('audio/walkingsound.mp3'), // "Walkingsound"
-    // new Audio('audio/SHIFT - swoosh.mp3'), // "Swoosh" 
-    // new Audio('audio/electric-shock.mp3'), // electroshock
-    // new Audio('audio/bonk.mp3'), 
-    // new Audio('audio/bubblesound.mp3'),
-    // new Audio('audio/UnderwaterHit.mp3')
-
 ]
 let mute = false;
 allSounds[0].volume = 0.2

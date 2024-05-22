@@ -109,7 +109,7 @@ class Charakter extends moveableObjekt {
         this.applyGravity()
         this.setOffset(0.45, 0.05, 0.05, 0.05)
         this.movementLoop = null;
-        this.animationLoop = null
+        this.animationLoop = null;
         this.animate();
     }
     animate() {
@@ -147,8 +147,6 @@ class Charakter extends moveableObjekt {
                 }
                 this.world.camera_x = -this.position_x + 100;
             }
-            // this.world.lifeBar.position_x = this.position_x 
-            // this.world.lifeBar.position_y = this.position_y
         }, 1000 / 60)
 
         this.animationLoop = setInterval(() => {

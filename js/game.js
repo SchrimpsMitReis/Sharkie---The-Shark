@@ -8,6 +8,7 @@ const body = document.getElementById('body')
 let smartOverlay;
 
 async function init(){
+    setSaveSpace()
     loadWorld();
 }
 
@@ -19,7 +20,6 @@ function loadWorld(){
     portaitDialog = document.getElementById('portaitDialog')
     arrangeSmartOverlay(canvas)
     document.addEventListener('mousemove', (event)=>{
-        // event.preventDefault()
         let canvasBorder = canvas.getBoundingClientRect();
         if(keyboard.FULLSCREEN){
             world.gameCurser.position_x = (event.clientX/window.innerWidth) * canvas.width;
@@ -88,7 +88,6 @@ function loadWorld(){
         else if (event.key === 'E' || event.key === 'e'){
             keyboard.SECONDARY = false;
         }
-        // Editor Tools :D
     
     })
     document.addEventListener('click', async ()=>{
@@ -155,9 +154,24 @@ function getDeviceType(){
     } else {
         return "Desktop";
     }
-    // const userAgent = navigator.userAgent
-    // console.log(userAgent);
 }
 function checkLandscape(){
     return window.innerWidth > window.innerHeight
+}
+function setSaveSpace(){
+    let firstSave = () =>{
+        let keyFound = true;
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key == 'HighScore'){
+                keyFound = false;
+            }
+        }
+        return keyFound;
+    }
+    if (firstSave){
+        let HighScoreProto = [testScore1, testScore2, testScore3, testScore4, testScore5];
+        let HighScoreProtoAsJSON = JSON.stringify(HighScoreProto)
+        localStorage.setItem('HighScore', HighScoreProtoAsJSON)
+    }
 }

@@ -44,7 +44,6 @@ class Level {
         this.scenerie.push(sceneriePattern)
     }
     generateEndcard(){
-        
     }
     // Generate Enemies
     async generateEnemie(dif) {
@@ -71,7 +70,7 @@ class Level {
     generateSquid(dif) {
         if (this.enemies.length < 10 * dif) {
             let pX = world.charakter.position_x + 720 + (720 * Math.random())
-            let pY = Math.random() * 420;
+            let pY = Math.random() * 10 + 420;
             let tintenFisch = new Squid(pX, pY);
             this.enemies.push(tintenFisch)
         }

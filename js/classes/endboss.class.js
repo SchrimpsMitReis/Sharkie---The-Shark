@@ -92,9 +92,9 @@ class Endboss extends moveableObjekt {
                 allSounds[10].pause()
                 world.isGameOver = true;
                 world.win = true
-                setTimeout(() => {
-                    this.deconstruct(world.enemies)
-                }, 2000)
+                // setTimeout(() => {
+                //     this.deconstruct(world.enemies)
+                // }, 2000)
             }
             this.spawnCount++
         }, 100)
