@@ -4,15 +4,20 @@ class sprite extends drawableObject{
     height = 480;
     highlighted = false
     constructor(x,y){
-        super()
+        super().loadImage(this.IMAGE_SPRITE)
         this.position_x = x;
         this.position_y = y;
+        
     }
     hover(){
         this.loadImage(this.IMAGE_SPRITE_HOVER)
     }
     unhover(){
         this.loadImage(this.IMAGE_SPRITE)
+    }
+    showCache(){
+        console.log(this.imageCache);
+        // this.img = this.imageCache[]
     }
 
 }

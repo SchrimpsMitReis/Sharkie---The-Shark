@@ -21,13 +21,20 @@ class drawableObject {
         this.img = new Image()
         this.img.src = path;
     }
-
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
             this.imageCache[path] = img;
         })
+    }
+    loadSingleImage(path){
+        let img = new Image()
+        img.src = path;
+        this.imageCache[path] = img
+    };
+    showImage(path){
+        this.img = this.imageCache[path]
     }
     draw(ctx) {
         ctx.drawImage(this.img, this.position_x, this.position_y, this.width, this.height)
