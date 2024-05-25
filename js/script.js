@@ -28,7 +28,6 @@ SmartBtnB.addEventListener('touchstart', () =>{
 SmartBtnDOWN.addEventListener('touchstart', () =>{
     keyboard.SHIFT = true;
 })
-
 SmartBtnLEFT.addEventListener('touchend', () =>{
     keyboard.LEFT = false;
 })

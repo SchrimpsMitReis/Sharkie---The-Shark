@@ -17,8 +17,8 @@ class World {
     }
     menuHelp = new HelpMenu(0, 0);
     escMenue = new ESCMenu(0, 0);
-    lifeBar = new lifebar(50, 20, 0.3);
-    coinBar = new coinbar(50, 50, 0.3);
+    // lifeBar = new lifebar(50, 20, 0.3);
+    // coinBar = new coinbar(50, 50, 0.3);
     gameCurser = new Cursor()
     throwableObjects = []
     width = 720;
