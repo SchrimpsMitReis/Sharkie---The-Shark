@@ -1,13 +1,6 @@
 class Endboss extends moveableObjekt {
     position_x = 3000;
     position_y = 50;
-    // offset = {
-    //     top: 120,
-    //     left: 10,
-    //     right: 30,
-    //     bottom: 170,
-    // }
-
     height = 250;
     width = 250;
     lifePoints = 100;
@@ -96,6 +89,7 @@ class Endboss extends moveableObjekt {
                 }    
             } else {
                 this.playAnimation(this.IMAGES_DEAD)
+                this.showImage(this.IMAGES_DEAD[5])
                 allSounds[10].pause()
                 world.isGameOver = true;
                 world.win = true

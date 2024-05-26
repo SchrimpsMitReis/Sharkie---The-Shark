@@ -1,4 +1,4 @@
- // Save/Load the Game
+// Save/Load the Game
 
 World.prototype.saveScore = async function() {
     if (!this.saved) {

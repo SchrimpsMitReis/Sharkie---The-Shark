@@ -107,7 +107,7 @@ class Charakter extends moveableObjekt {
         this.loadImages(this.IMAGES_SHARKIE_SLEEP)
         this.loadImages(this.IMAGES_SHARKIE_SHOOT)
         this.applyGravity()
-        this.setOffset(0.45, 0.05, 0.05, 0.05)
+        this.setOffset(0.5, 0.05, 0.10, 0.30)
         this.movementLoop = null;
         this.animationLoop = null;
         this.animate();
@@ -141,9 +141,8 @@ class Charakter extends moveableObjekt {
                     this.speed = 5
                 }
                 if (this.world.keyboard.SPACE && !this.meleeActive) {
-                    this.playAnimation(this.IMAGES_SHARKIE_FINSLAP);
-                    playRandomSound(hitSounds)
                     this.activateMelee()
+                    playRandomSound(hitSounds);
                 }
                 this.world.camera_x = -this.position_x + 100;
             }
@@ -165,45 +164,37 @@ class Charakter extends moveableObjekt {
                 allSounds[12].pause()
                 if (this.isSleeping()) {
                     allSounds[12].play()
-
                     this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
-                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
+                } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() ) {
                     this.playAnimation(this.IMAGES_SHARKIE_SWIM)
                     this.addEnergie(0.5)
-                } else {
+                }else if (this.meleeActive){
+                    this.playAnimation(this.IMAGES_SHARKIE_FINSLAP)
+                    
+                }else if(this.isHurt()){
+                    if (this.lastHitBy instanceof Pufferfish) {
+                        this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)
+                    } else if(this.lastHitBy instanceof Squid){
+                        this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+                    }else{
+                        this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+                    }
+                        
+                }
+                else {
                     this.playAnimation(this.IMAGES_SHARKIESTILL)
                     this.addEnergie(1)
                 }
 
             }
-            // if (this.isDead()) {
-            //     if (this.alive){
-            //         this.playAnimation(this.IMAGES_SHARKIE_DEAD)
-            //         this.alive = false;
-            //         // setTimeout(()=>{
-            //             world.isGameOver = true;
-            //         // },3000)
-            //     }else{
-            //         this.loadImage(this.IMAGES_SHARKIE_DEAD[11])
-            //     }
-            // } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.alive) {
-            //     this.playAnimation(this.IMAGES_SHARKIE_SWIM)
-            //     this.addEnergie(0.5)
-            // } else if(this.isSleeping()){
-            //     allSounds[12].play()
-            //     this.addEnergie(1)
-            //     this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
-            // } else {
-            //     this.playAnimation(this.IMAGES_SHARKIESTILL)
-            //     this.addEnergie(1)
-            // }
         }, 1000 / 10)
     }
     activateMelee() {
         this.meleeActive = true;
         setTimeout(() => {
             this.meleeActive = false;
-        }, 200)
+        }, 400)
 
     }
     addScore(x) {

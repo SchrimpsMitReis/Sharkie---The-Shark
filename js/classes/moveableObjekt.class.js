@@ -10,6 +10,7 @@ class moveableObjekt extends drawableObject {
     lifePoints;
     boost;
     lastHit = 0;
+    lastHitBy = null
     sleepTimer = new Date().getTime();
 
     constructor() {
@@ -53,12 +54,13 @@ class moveableObjekt extends drawableObject {
         }
     }
 
-    hit(damage = 0) {
+    hit(damage = 0, enemie = null) {
         this.lifePoints -= damage;
         if (this.lifePoints < 0) {
             this.lifePoints = 0;
         } else {
             this.lastHit = new Date().getTime();
+            this.lastHitBy = enemie; 
         }
     }
     isHurt() {
@@ -69,7 +71,7 @@ class moveableObjekt extends drawableObject {
     isSleeping() {
         let timepassed = new Date().getTime() - this.sleepTimer;
         timepassed = timepassed / 1000;
-        return timepassed > 10;
+        return timepassed > 10 && !this.isHurt() && !world.isGameOver;
     }
     isDead() {
         return this.lifePoints == 0;

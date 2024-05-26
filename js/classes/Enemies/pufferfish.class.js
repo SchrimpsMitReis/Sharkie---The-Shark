@@ -32,7 +32,7 @@ class Pufferfish extends moveableObjekt {
         this.animateLoop = setInterval( ()=>{
             if (this.isDead()){
                 this.playAnimation(this.IMAGES_DIE)
-                this.loadImage(this.IMAGES_DIE[2])
+                this.showImage(this.IMAGES_DIE[2])
             }
             else{
                 this.moveLeft();

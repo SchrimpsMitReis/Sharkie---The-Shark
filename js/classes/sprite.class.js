@@ -15,9 +15,5 @@ class sprite extends drawableObject{
     unhover(){
         this.showImage(this.IMAGE_SPRITE)
     }
-    showCache(){
-        console.log(this, this.imageCache);
-        // this.img = this.imageCache[]
-    }
 
 }

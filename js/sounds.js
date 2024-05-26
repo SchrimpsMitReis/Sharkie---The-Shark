@@ -14,6 +14,8 @@ let allSounds = [
     new Audio('audio/biteEndboss.mp3'),
     new Audio('audio/screamEndboss.mp3'),
     new Audio('audio/sleeping.mp3'),
+    new Audio('audio/electric-shock.mp3'),
+    new Audio('audio/poison.mp3')
 ]
 let mute = false;
 allSounds[0].volume = 0.2
@@ -34,7 +36,6 @@ let hitSounds = [
     new Audio('audio/hitSound/hitSound (7).mp3')
 ]
 function playSound(x){
-    // allSounds[x].load()
     allSounds[x].play()
 }
 function playSoundOnce(x){

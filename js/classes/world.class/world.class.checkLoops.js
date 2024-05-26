@@ -43,7 +43,7 @@ World.prototype.checkEnemies = function() {
                 this.collidingMelee(enemie)
             } else {
                 if (!this.charakter.isDead()) {
-                    this.inYourFace()
+                    this.inYourFace(enemie)
                 }
             }
         }
@@ -52,21 +52,17 @@ World.prototype.checkEnemies = function() {
 }
 World.prototype.inYourFace = function(enemie){
     if (enemie instanceof Pufferfish && !this.charakter.isHurt()) {
-        this.charakter.hit(15);
-        this.lifeBar.setPercentage(this.charakter.lifePoints)
-        this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_POISON)
+        this.charakter.hit(15, enemie);
+        playSound(14)
         this.charakter.reduceScore(10)
     }
     if (enemie instanceof Squid && !this.charakter.isHurt()) {
-        this.charakter.hit(10);
-        this.lifeBar.setPercentage(this.charakter.lifePoints)
-        this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
+        this.charakter.hit(10, enemie);
         this.charakter.reduceScore(10)
+        playSound(13)
     }
     if (enemie instanceof Endboss && !enemie.isDead() && !this.charakter.isHurt()) {
-        this.charakter.hit(20);
-        this.lifeBar.setPercentage(this.charakter.lifePoints)
-        this.charakter.reduceScore(10)
+        this.charakter.hit(20, enemie);
         this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
     }
 }
