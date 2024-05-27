@@ -8,7 +8,7 @@
  */
 World.prototype.saveScore = async function() {
     if (!this.saved) {
-        let resultScore = this.character.score;
+        let resultScore = this.charakter.score;
         const endScore = new Score(resultScore);
         this.HighScore.push(endScore);
         this.saveHighScore();

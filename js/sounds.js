@@ -1,3 +1,7 @@
+/**
+ * Initializes an array of Audio objects, each loaded with a specific sound file.
+ * @type {Audio[]}
+ */
 let allSounds = [
     new Audio('audio/BarCrowd.mp3'),
     new Audio('audio/click1.mp3'),
@@ -17,15 +21,11 @@ let allSounds = [
     new Audio('audio/electric-shock.mp3'),
     new Audio('audio/poison.mp3')
 ]
-let mute = false;
-allSounds[0].volume = 0.2
-allSounds[3].volume = 0.1
-allSounds[1].loop = false;
-allSounds[1].used;
+/**
+ * Initializes an array of Audio objects, each loaded with a sound files of the same topic.
+ * @type {Audio[]}
+ */
 
-allSounds[9].loop = true;
-allSounds[10].loop = false;
-allSounds[12].loop = true;
 let hitSounds = [
     new Audio('audio/hitSound/hitSound (1).mp3'),
     new Audio('audio/hitSound/hitSound (2).mp3'),
@@ -35,24 +35,59 @@ let hitSounds = [
     new Audio('audio/hitSound/hitSound (6).mp3'),
     new Audio('audio/hitSound/hitSound (7).mp3')
 ]
+
+// Audio Config
+allSounds[0].volume = 0.2
+allSounds[3].volume = 0.1
+allSounds[1].used;
+allSounds[1].loop = false;
+allSounds[9].loop = true;
+allSounds[10].loop = false;
+allSounds[12].loop = true;
+
+/**
+ * Plays a Sound from allSounds
+ * @param {number} x 
+ */
 function playSound(x){
     allSounds[x].play()
 }
+/**
+ * Plays a sound from the allSounds array only once per session or until reset. 
+ * Each sound can only be played once unless the 'used' property is reset elsewhere in the code.
+ * @param {number} x - The index of the sound in the allSounds array to play.
+ */
 function playSoundOnce(x){
     if(!allSounds[x].used){
         allSounds[x].play();
         allSounds[x].used = true;
     }
 }
+/**
+ * Resets the 'used' flag of a sound in the `allSounds` array to allow it to be played again.
+ * This function ensures that sounds which are meant to be played only once per interaction
+ * can be re-triggered after they have been initially used.
+ * @param {number} x - The index of the sound in the `allSounds` array whose 'used' flag should be reset.
+ */
 function playSoundOnceUnuse(x){
     if(allSounds[x].used){
         allSounds[x].used = false;
     }
 }
+/**
+ * Plays a random sound from an array of Audio objects. This function selects a sound at random 
+ * from the provided array and plays it.
+ * @param {Audio[]} x - An array of Audio objects from which a random sound will be played.
+ */
 function playRandomSound(x){
     let random = Math.floor(Math.random()* x.length)
     x[random].play()
 }
+/**
+ * Toggles the mute state for all sounds within the game, both for individual sound effects
+ * and any background music tracks. This applies to all sounds in the allSounds and hitSounds arrays,
+ * and also toggles a global mute state tracked by the `world` object.
+ */
 function muteAll(){
     allSounds.forEach((sound)=>{
         sound.muted = !sound.muted;

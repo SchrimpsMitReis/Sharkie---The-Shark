@@ -176,39 +176,34 @@ World.prototype.areButtons = function(menue) {
         menue instanceof PauseBtn;
 }
 /**
- * Checks the state of menus in the game level to manage user interactions and visual feedback.
- * Iterates through each menu in the current level, performing checks to determine if the cursor is over the menu,
- * if the menu contains buttons, and handling user clicks.
- * It updates the visual state of menus by highlighting them when hovered over,
- * plays sounds on interactions, and manages the button selections.
- *
- * @memberof World
- * @method
- * @fires playSound
+ * the Method checks for each @param menue if the curser hovers
+ * 
  */
 World.prototype.checkMenues = function() {
     this.level.menues.forEach((menue) => {
         if (this.curserOverMenue(menue)) {
             if (this.areButtons(menue)) {
                 if (!menue.highlighted) {
-                    playSound(1);  // Play a sound when the menu is highlighted.
+                    playSound(1)
                     menue.highlighted = true;
                 }
-                menue.hover();  // Call hover method to update menu's visual state.
+                menue.hover()
             }
             if (this.keyboard.MOUSEBTN) {
-                playSound(2);  // Play a sound when a button is selected.
-                this.buttonSelection(menue);  // Perform the action associated with the button.
-            }
-        } else {
-            if (this.areButtons(menue)) {
-                menue.unhover();  // Revert hover effects when the cursor is not over the menu.
-            }
-            if (menue.highlighted) {
-                menue.highlighted = false;  // Remove highlight when the cursor moves away.
+                playSound(2)
+                this.buttonSelection(menue)
             }
         }
-    });
+        else {
+            if (this.areButtons(menue)) {
+                menue.unhover()
+            }
+            if (menue.highlighted) {
+                menue.highlighted = false;
+            }
+        }
+    })
+
 }
 /**
  * Determines if the game cursor is currently over a specified menu.
@@ -219,12 +214,16 @@ World.prototype.checkMenues = function() {
  * @method
  * @param {Object} menue - The menu object to check against, which includes position and size properties.
  * @returns {boolean} Returns true if the cursor is over the menu, false otherwise.
+ * @example
+ * // Assuming a menu at position (100, 100) with a size of 200x100 and a cursor at position (150, 120)
+ * const isOverMenu = world.curserOverMenue(menu);
+ * console.log(isOverMenu);  // Outputs: true
  */
 World.prototype.curserOverMenue = function(menue){
     return this.gameCurser.position_x >= menue.position_x &&
-           this.gameCurser.position_y >= menue.position_y &&
-           this.gameCurser.position_x <= menue.position_x + menue.width &&
-           this.gameCurser.position_y <= menue.position_y + menue.height; 
+        this.gameCurser.position_y >= menue.position_y &&
+        this.gameCurser.position_x <= menue.position_x + menue.width &&
+        this.gameCurser.position_y <= menue.position_y + menue.height; 
 }
 /**
  * Handles the actions triggered when different types of menu buttons are selected.
@@ -238,22 +237,25 @@ World.prototype.curserOverMenue = function(menue){
  * @memberof World
  * @method
  * @param {Object} menue - The menu button object that was selected. Expected to be an instance of one of the button classes.
+ * @example
+ * // Assuming `menu` is an instance of `Startbutton`
+ * world.buttonSelection(menu);  // This would trigger the `LevelOne` method to start the game.
  */
 World.prototype.buttonSelection = function(menue){
     if (menue instanceof Startbutton) {
-        this.LevelOne();  // Start the game at level one.
+        this.LevelOne()
     }
     else if (menue instanceof PauseBtn) {
-        this.LevelZero();  // Reset the game to its initial state.
+        this.LevelZero()
     }
     else if (menue instanceof Controlbutton) {
-        this.keyboard.HELP = !this.keyboard.HELP;  // Toggle the help display.
+        this.keyboard.HELP = !this.keyboard.HELP
     }
     else if (menue instanceof Highscorebutton) {
-        this.showHighscore = !this.showHighscore;  // Toggle the high score display.
+        this.showHighscore = !this.showHighscore
     }
     else if (menue instanceof Mutebutton) {
-        muteAll();  // Mute all game sounds.
+        muteAll()
     }
 }
 /**
@@ -265,25 +267,20 @@ World.prototype.buttonSelection = function(menue){
  * @memberof World
  * @method
  * @fires playSound - Triggers a sound effect when the bubble is thrown.
+ * @example
+ * // This method is typically called within the game loop to continuously check if the 
+ * // character should throw a bubble based on current input and energy level.
+ * world.checkObjectThrow();
  */
 World.prototype.checkObjectThrow = function() {
     if (this.keyboard.SECONDARY && this.charakter.energie >= 25) {
-        // Set a delay before playing the shooting animation
         setTimeout(() => {
-            this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_SHOOT);
+            this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_SHOOT)
         }, 2000);
-
-        // Create a new bubble object at adjusted positions and add it to the throwable objects list
-        let newBubble = new Bubble(this.charakter.position_x + 100, this.charakter.position_y + 100);
-        this.throwableObjects.push(newBubble);
-
-        // Play a sound effect for throwing the bubble
-        playSound(5);
-
-        // Deduct energy from the character for throwing the bubble
+        let newBubble = new bubble(this.charakter.position_x + 100, this.charakter.position_y + 100)
+        this.throwableObjects.push(newBubble)
+        playSound(5)
         this.charakter.energie -= 25;
-
-        // Reset the key state to prevent continuous throwing without further input
         this.keyboard.SECONDARY = !this.keyboard.SECONDARY;
     }
 }

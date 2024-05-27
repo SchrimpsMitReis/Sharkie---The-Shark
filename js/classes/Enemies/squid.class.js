@@ -1,3 +1,12 @@
+/**
+ * Represents a Squid enemy in the game, handling its movements and animations.
+ * Extends the `moveableObjekt` class to include specific functionality for animations and conditional behavior based on game state.
+ *
+ * @class
+ * @extends moveableObjekt
+ * @param {number} x - The initial x-coordinate of the squid.
+ * @paran {number} y - The initial y-coordinate of the squid.
+ */
 class Squid extends moveableObjekt {
     IMAGES_SQUIDSTILL = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
@@ -16,6 +25,9 @@ class Squid extends moveableObjekt {
     ]
     currentImage = 0;
     lifePoints = 5;
+    /**
+     * Initializes an instance of Squid with given coordinates and default properties.
+     */
     constructor(x, y) {
         super().loadImage("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png")
         this.loadImages(this.IMAGES_SQUIDSTILL)
@@ -26,7 +38,9 @@ class Squid extends moveableObjekt {
         this.animateLoop = null;
         this.animate()
     }
-
+    /**
+        * Manages the animation states of the Squid, including moving up and dying.
+        */
     animate() {
         this.animateLoop = setInterval(() => {
             if (this.isDead()) {
@@ -40,10 +54,17 @@ class Squid extends moveableObjekt {
         }, 300)
 
     }
+    /**
+     * Stops all ongoing animations for the Squid.
+     */
     stopLoops() {
         this.animateLoop = null;
     }
-    outOfView(){
+    /**
+     * Determines if the Squid is out of the view above the visible screen area.
+     * @returns {boolean} Indicates whether the Squid is out of the player's view above the screen.
+     */
+    outOfView() {
         return this.position_y < 0
     }
 

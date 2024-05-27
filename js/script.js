@@ -1,4 +1,6 @@
-
+/**
+ * Sets up touch event listeners for on-screen control buttons to simulate keyboard input for a game.
+ */
 let SmartBtnLEFT = document.getElementById('leftSmartBtn')
 let SmartBtnRIGHT = document.getElementById('rightSmartBtn')
 let SmartBtnUP = document.getElementById('upSmartBtn')

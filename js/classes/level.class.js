@@ -1,9 +1,22 @@
+/**
+ * Manages a game level's settings, including enemies, scenery, collectibles, and menus. It provides functions to initialize
+ * and control level-specific behaviors such as spawning enemies and managing menus.
+ * @class
+ */
 class Level {
     enemies;
     scenerie;
     world;
     levelEndX = 1440 * 3;
     spawnedEndboss = false
+    /**
+     * Initializes a new instance of a game level with specified game objects.
+     * @param {Array} enemies - An array of enemies to be included in the level.
+     * @param {Array} scenerie - An array of scenery objects for the level's background.
+     * @param {Array} collectables - An array of collectable items within the level.
+     * @param {Array} menues - An array of menu objects for in-game interaction.
+     * @param {number} [dif=0] - Difficulty setting for the level, influencing enemy generation and behavior.
+     */
     constructor(enemies, scenerie, collectables, menues, dif = 0) {
         this.enemies = enemies;
         this.scenerie = scenerie;
@@ -13,18 +26,24 @@ class Level {
         this.dif = dif;
     }
     // Generate Menues
-    generateHauptmenü(){
-        const Hauptmenü = [
+    /**
+     * Sets up the main menu with buttons and background for the game start.
+     */
+    generatemainMenu(){
+        const mainMenu = [
             new planeShield(0, 0, 720, 480),
             new Startbutton(10, 330, 150, 150),
             new Controlbutton(185, 340,150, 133),
             new Highscorebutton(550, 340, 150, 133),
             new Mutebutton(370, 340, 150, 133),
         ] 
-        this.menues = Hauptmenü;
+        this.menues = mainMenu;
         this.scenerie = [new BackgroundObjekt("./IMG/lvl00.webp",0, 800 , 480),]
 
     }
+    /**
+     * Configures the in-game menu which can include pause functionality and score display.
+     */
     generateIngameMenue(){
         const ingameMenue = [
             new planeShield_IG(0, 0, 720, 480),
@@ -33,19 +52,11 @@ class Level {
         ]
         this.menues = ingameMenue;
     }
-    generateScenerie(x){
-        const sceneriePattern = [
-            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/5. Water/L.png",x),
-            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/3.Fondo 1/L.png",x),
-            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/4.Fondo 2/L.png",x),
-            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Legacy/Layers/1. Light/3.png",x),
-            new BackgroundObjekt("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/3. Background/Layers/2. Floor/L.png",x),
-        ]
-        this.scenerie.push(sceneriePattern)
-    }
-    generateEndcard(){
-    }
     // Generate Enemies
+    /**
+     * Periodically generates enemies based on the level's difficulty setting.
+     * @param {number} dif - The difficulty factor that influences enemy spawn rates and types.
+     */
     async generateEnemie(dif) {
         let count = 0;
         this.prozGeneration = setInterval(()=>{
@@ -59,6 +70,10 @@ class Level {
             },count * (1000 / (dif + 1)))
     
     }
+    /**
+     * Generates a pufferfish enemy at a calculated position based on difficulty and player's current position.
+     * @param {number} dif - Difficulty factor affecting the spawn rate and positioning.
+     */
     generatePufferfish(dif) {
             if (this.enemies.length < 10 * dif) {
                 let pX = world.charakter.position_x + 720
@@ -67,6 +82,10 @@ class Level {
                 this.enemies.push(pufferfish)
             }
     }
+    /**
+     * Generates a squid enemy at a calculated position based on difficulty and player's current position.
+     * @param {number} dif - Difficulty factor affecting the spawn rate and positioning.
+     */
     generateSquid(dif) {
         if (this.enemies.length < 10 * dif) {
             let pX = world.charakter.position_x + 720 + (720 * Math.random())
@@ -75,6 +94,10 @@ class Level {
             this.enemies.push(tintenFisch)
         }
     }
+    /**
+     * Generates a coin at a random position within the level, influenced by the difficulty setting.
+     * @param {number} dif - Difficulty factor affecting the spawn rate and positioning of coins.
+     */
     generateCoin(dif) { 
         if (this.collectables.length < 10 * dif) {
             let pX = world.charakter.position_x + 720 + (720 * Math.random())
@@ -83,6 +106,9 @@ class Level {
             this.collectables.push(coin)
         }
     }
+    /**
+     * Generates the level's end boss if it has not been spawned yet.
+     */
     generateEndboss() {
         let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
         let allEndbosses = this.enemies.filter(enemie => enemie instanceof Endboss)
@@ -97,6 +123,9 @@ class Level {
         }
             
     }
+    /**
+     * Stops all ongoing enemy generation loops within the level.
+     */
     stopLoops(){
         clearInterval(this.prozGeneration)
     }

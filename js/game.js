@@ -7,10 +7,17 @@ let md = new MobileDetect(window.navigator.userAgent)
 const body = document.getElementById('body')
 let smartOverlay;
 
+/**
+ * Initializes the game by setting safe storage and loading the game world.
+ * @async
+ */
 async function init(){
     setSaveSpace()
     loadWorld();
 }
+/**
+ * Loads the game world, initializes the canvas, the world object, keyboard handlers, and overlays.
+ */
 function loadWorld(){
     getDeviceType()
     canvas = document.getElementById('canvas');
@@ -20,6 +27,9 @@ function loadWorld(){
     arrangeSmartOverlay(canvas)
     keyEventListeners()
 }
+/**
+ * Registers event listeners for mouse and keyboard interactions.
+ */
 function keyEventListeners(){
     document.addEventListener('mousemove', (event)=>{
         let canvasBorder = canvas.getBoundingClientRect();
@@ -100,6 +110,9 @@ function keyEventListeners(){
     
     })
 }
+/**
+ * Toggles the full screen state of the canvas.
+ */
 function toggleFullscreen(){
     keyboard.FULLSCREEN = !keyboard.FULLSCREEN;
     if (keyboard.FULLSCREEN){
@@ -124,6 +137,10 @@ function toggleFullscreen(){
         }
     }
 }
+/**
+ * Arranges the overlay based on device orientation.
+ * @param {HTMLElement} canvas - The canvas element where the game is rendered.
+ */
 function arrangeSmartOverlay(canvas){
     if (isMobile){
         if (landscapeMode){
@@ -135,6 +152,10 @@ function arrangeSmartOverlay(canvas){
     }
 
 }
+/**
+ * Fits the overlay to the canvas dimensions.
+ * @param {HTMLElement} overlay - The overlay element to fit.
+ */
 function overlayFit(overlay) {
     overlay.classList.remove('d-none')
     let canvasBorder = canvas.getBoundingClientRect();
@@ -143,6 +164,10 @@ function overlayFit(overlay) {
     overlay.style.right = canvasBorder.right +'px';
     overlay.style.bottom = canvasBorder.bottom +'px';
 }
+/**
+ * Detects the type of device the game is being accessed from.
+ * @returns {string} The type of device detected (Mobile, Tablet, or Desktop).
+ */
 function getDeviceType(){
     if (md.mobile()) {
         isMobile = true
@@ -153,9 +178,16 @@ function getDeviceType(){
         return "Desktop";
     }
 }
+/**
+ * Checks if the device is in landscape orientation.
+ * @returns {boolean} True if the device is in landscape mode, false otherwise.
+ */
 function checkLandscape(){
     return window.innerWidth > window.innerHeight
 }
+/**
+ * Sets up initial safe storage for game data.
+ */
 function setSaveSpace(){
     let firstSave = () =>{
         let keyFound = true;

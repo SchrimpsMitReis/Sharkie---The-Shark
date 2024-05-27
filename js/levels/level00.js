@@ -1,17 +1,4 @@
-const level00 = new Level(
-    [
-
-    ],
-    [
-        // new Coin(100, 200),
-    ],
-    [
-
-    ],
-    0,
-
-
-)
-level00.generateHauptmenü()
+const level00 = new Level([],[],[],0)
+level00.generatemainMenu()
 playSound(0)
 playSound(3)

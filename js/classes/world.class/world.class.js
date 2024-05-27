@@ -1,3 +1,11 @@
+/**
+ * Represents the main game world in which all game components and states are managed.
+ * This class initializes game elements, loads levels, manages the game loop, and handles user inputs.
+ *
+ * @class
+ * @param {HTMLCanvasElement} canvas - The canvas element where the game is rendered.
+ * @param {Object} keyboard - An object that tracks the state of keyboard inputs.
+ */
 class World {
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -43,6 +51,10 @@ class World {
     // Arrays and Lists
     HighScore = [];
     throwableObjects = [];
+    /**
+     * Sets the world context for the character, level, and game cursor,
+     * allowing these components to interact with the world.
+     */
     setWorld() {
         this.charakter.world = this;
         this.level.world = this;

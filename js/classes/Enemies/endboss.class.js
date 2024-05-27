@@ -1,3 +1,10 @@
+/**
+ * Represents the final boss in the game, managing its behaviors, animations, and interactions.
+ * Extends the `moveableObjekt` class to include functionalities for moving and animating based on game state.
+ *
+ * @class
+ * @extends moveableObjekt
+ */
 class Endboss extends moveableObjekt {
     position_x = 3000;
     position_y = 50;
@@ -57,6 +64,9 @@ class Endboss extends moveableObjekt {
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/5.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/3 Final Enemy/Attack/6.png",
     ]
+    /**
+     * Initializes an instance of the Endboss with initial states and animation sequences.
+     */
     constructor() {
         super().loadImage(this.IMAGES_FLOATING[0])
         this.loadImages(this.IMAGES_INTRO);
@@ -69,6 +79,10 @@ class Endboss extends moveableObjekt {
         this.energieLoop = null
         this.animate()
     }
+     /**
+     * Manages the animation states of the Endboss based on its current status,
+     * such as floating, attacking, being hurt, or dead.
+     */
     async animate() {
         this.animateLoop = setInterval(() => {
             if (!this.isDead()) {
@@ -103,10 +117,17 @@ class Endboss extends moveableObjekt {
             }
         }, 400);
     }
+    /**
+     * Checks if the Endboss is within attack range of the character.
+     * @returns {boolean} Indicates if the character is within the attack range of the boss.
+     */
     inRange() {
         let range = Math.abs(this.position_x - world.charakter.position_x)
         return range < 600
     }
+    /**
+     * Handles the attack logic for the Endboss, determining when and how to attack based on energy and range.
+     */
     attack() {
         if (this.energie >= 25 && this.inRange()) {
             this.energie -= 25
@@ -115,6 +136,9 @@ class Endboss extends moveableObjekt {
             playSoundOnce(10)
         }
     }
+    /**
+     * Stops all ongoing intervals and animations for the Endboss.
+     */
     stopLoops(){
         clearInterval(this.animateLoop);
         clearInterval(this.energieLoop);

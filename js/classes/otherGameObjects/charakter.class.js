@@ -1,3 +1,10 @@
+/**
+ * Represents the main character in the game, managing its animations, movements, and interactions within the game world.
+ * Extends the `moveableObjekt` class to include additional functionalities such as animations for different states and melee attacks.
+ *
+ * @class
+ * @extends moveableObjekt
+ */
 class Charakter extends moveableObjekt {
     height = 220;
     width = 200;
@@ -96,6 +103,7 @@ class Charakter extends moveableObjekt {
         "Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
         "Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png"
     ]
+
     constructor() {
         super().loadImage("./Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/2.Long_IDLE/I2.png")
         this.loadImages(this.IMAGES_SHARKIESTILL)
@@ -112,6 +120,9 @@ class Charakter extends moveableObjekt {
         this.animationLoop = null;
         this.animate();
     }
+    /**
+     * Manages all animations and movements based on the character's state and keyboard inputs.
+     */
     animate() {
         this.movementLoop = setInterval(() => {
             if (this.alive) {
@@ -190,6 +201,9 @@ class Charakter extends moveableObjekt {
             }
         }, 1000 / 10)
     }
+    /**
+     * Activates the character's melee attack mode temporarily.
+     */
     activateMelee() {
         this.meleeActive = true;
         setTimeout(() => {
@@ -197,21 +211,36 @@ class Charakter extends moveableObjekt {
         }, 400)
 
     }
+    /**
+     * Adds points to the character's score.
+     * @param {number} x - The number of points to add.
+     */
     addScore(x) {
         this.score += x
     }
+    /**
+     * Reduces the character's score, ensuring it does not drop below zero.
+     * @param {number} x - The number of points to subtract.
+     */
     reduceScore(x) {
         this.score -= x
         if (this.score < 0) {
             this.score = 0
         }
     }
+    /**
+     * Increases the character's energy.
+     * @param {number} x - The amount of energy to add.
+     */
     addEnergie(x) {
         this.energie += x;
         if (this.energie > 100) {
             this.energie = 100
         }
     }
+    /**
+     * Stops all ongoing animations and movements for the character.
+     */
     reconstuct(){
         this.height = 220;
         this.width = 200;
