@@ -56,6 +56,7 @@ World.prototype.clearWorld = function(){
     this.camera_x = 0;
     this.saved = false;
     this.restarted = false;
+    allSounds[9].pause();
 }
 /**
  * Stops all ongoing loops related to enemies, character, and sound objects in the game.

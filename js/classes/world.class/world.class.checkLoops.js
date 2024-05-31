@@ -190,10 +190,10 @@ World.prototype.checkMenues = function() {
                     menue.highlighted = true;
                 }
                 menue.hover()
-            }
-            if (this.keyboard.MOUSEBTN) {
+                if (this.keyboard.MOUSEBTN) {
                 playSound(2)
-                this.buttonSelection(menue)
+                    this.buttonSelection(menue)
+                }
             }
         }
         else {

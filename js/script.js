@@ -9,7 +9,6 @@ let SmartBtnA = document.getElementById('aSmartBtn')
 let SmartBtnB = document.getElementById('bSmartBtn')
 let SmartBtnZ = document.getElementById('zSmartBtn')
 
-
 SmartBtnLEFT.addEventListener('touchstart', () =>{
     keyboard.LEFT = true;
 },{ passive: true })
