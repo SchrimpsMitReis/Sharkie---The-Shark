@@ -33,12 +33,12 @@ class World {
     winShield = new winShield(150, 50, 400, 400);
     gameOverShield = new GameOver(150, 50, 400, 400);
     ScoreTable = new HighscoreBoard(20, 10, 500, 500);
-    
     // Fags and Booleans
     win = false;
     saved = false;
     muted = false;
     showGUI = false;
+    loading = false;
     startPlay = false;
     restarted = false;
     isGameOver = false;

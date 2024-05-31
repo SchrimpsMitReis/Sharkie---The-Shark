@@ -41,6 +41,9 @@ World.prototype.loadHighScore = async function() {
     } catch (error) {
         console.error(`Cannot load high scores: ${error}`);
     }
+    finally{
+        this.loading = false; // Endpunkt des Ladens beim Start
+    }
 };
 
 /**

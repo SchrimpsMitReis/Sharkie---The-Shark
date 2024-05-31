@@ -5,7 +5,8 @@
  * @memberof World
  * @method
  */
-World.prototype.LevelZero = function(){
+World.prototype.LevelZero = async function(){
+    
     this.loadHighScore()
     this.stopLoops()
     this.level = level00;

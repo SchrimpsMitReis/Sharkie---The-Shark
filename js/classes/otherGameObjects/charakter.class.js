@@ -15,6 +15,7 @@ class Charakter extends moveableObjekt {
     coins = 0;
     score = 0;
     meleeActive = false;
+    rangeActive = false;
     alive = true
     IMAGES_SHARKIESTILL = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png",
@@ -125,24 +126,28 @@ class Charakter extends moveableObjekt {
      */
     animate() {
         this.movementLoop = setInterval(() => {
-            if (this.alive) {
+            if (this.alive && !this.world.isGameOver) {
                 allSounds[9].pause()
                 if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
                     this.moveRight()
                     allSounds[9].play()
+                    this.resetSleeptimer()
                 }
                 if (this.world.keyboard.LEFT && this.position_x > 110) {
                     this.moveLeft()
                     allSounds[9].play()
+                    this.resetSleeptimer()
 
                 }
                 if (this.world.keyboard.UP && this.position_y > 0 - 30) {
                     this.moveUp()
                     allSounds[9].play()
+                    this.resetSleeptimer()
                 }
                 if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
                     this.moveDown()
                     allSounds[9].play()
+                    this.resetSleeptimer()
                 }
                 if (this.world.keyboard.SHIFT && !(this.energie < 10)) {
                     this.speed = 10;
@@ -154,6 +159,7 @@ class Charakter extends moveableObjekt {
                 if (this.world.keyboard.SPACE && !this.meleeActive) {
                     this.activateMelee()
                     playRandomSound(hitSounds);
+                    this.resetSleeptimer()
                 }
                 this.world.camera_x = -this.position_x + 100;
             }
@@ -182,7 +188,8 @@ class Charakter extends moveableObjekt {
                     this.addEnergie(0.5)
                 }else if (this.meleeActive){
                     this.playAnimation(this.IMAGES_SHARKIE_FINSLAP)
-                    
+                }else if(this.rangeActive){
+                    this.playAnimation(this.IMAGES_SHARKIE_SHOOT)
                 }else if(this.isHurt()){
                     if (this.lastHitBy instanceof Pufferfish) {
                         this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)

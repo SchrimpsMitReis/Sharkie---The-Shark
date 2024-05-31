@@ -45,10 +45,22 @@ class drawableObject {
         })
     }
     /**
+ * Animates the object by cycling through a sequence of images.
+ * @param {string[]} images - An array of image paths for the animation.
+ */
+    playAnimation(images) {
+        let i = this.currentImage % images.length
+        let path = images[i];
+        this.img = this.imageCache[path]
+        this.currentImage++
+
+    }
+
+    /**
      * Loads a single image and stores it in the image cache.
      * @param {string} path - The path to the image file.
      */
-    loadSingleImage(path){
+    loadSingleImage(path) {
         let img = new Image()
         img.src = path;
         this.imageCache[path] = img
@@ -57,7 +69,7 @@ class drawableObject {
      * Sets the current image for rendering from the image cache.
      * @param {string} path - The path to the cached image to display.
      */
-    showImage(path){
+    showImage(path) {
         this.img = this.imageCache[path]
     }
     /**
@@ -114,7 +126,7 @@ class drawableObject {
      * @param {number} r - Right offset as a fraction of the object's width.
      * @param {number} b - Bottom offset as a fraction of the object's height.
      */
-    setOffset(t, l, r, b) { 
+    setOffset(t, l, r, b) {
         this.offset.top = t * this.height
         this.offset.left = l * this.width
         this.offset.right = r * this.width

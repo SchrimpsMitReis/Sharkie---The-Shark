@@ -29,22 +29,22 @@ class Level {
     /**
      * Sets up the main menu with buttons and background for the game start.
      */
-    generatemainMenu(){
+    generatemainMenu() {
         const mainMenu = [
             new planeShield(0, 0, 720, 480),
             new Startbutton(10, 330, 150, 150),
-            new Controlbutton(185, 340,150, 133),
+            new Controlbutton(185, 340, 150, 133),
             new Highscorebutton(550, 340, 150, 133),
             new Mutebutton(370, 340, 150, 133),
-        ] 
+        ]
         this.menues = mainMenu;
-        this.scenerie = [new BackgroundObjekt("./IMG/lvl00.webp",0, 800 , 480),]
+        this.scenerie = [new BackgroundObjekt("./IMG/lvl00.webp", 0, 800, 480),]
 
     }
     /**
      * Configures the in-game menu which can include pause functionality and score display.
      */
-    generateIngameMenue(){
+    generateIngameMenue() {
         const ingameMenue = [
             new planeShield_IG(0, 0, 720, 480),
             new PauseBtn(20, 0, 75, 75),
@@ -59,28 +59,28 @@ class Level {
      */
     async generateEnemie(dif) {
         let count = 0;
-        this.prozGeneration = setInterval(()=>{
-                if (this.world.startPlay){
-                    this.generatePufferfish(dif)
-                    this.generateSquid(dif)
-                    this.generateCoin(dif)
-                    this.generateEndboss()
-                }
-                count++
-            },count * (1000 / (dif + 1)))
-    
+        this.prozGeneration = setInterval(() => {
+            if (this.world.startPlay) {
+                this.generatePufferfish(dif)
+                this.generateSquid(dif)
+                this.generateCoin(dif)
+                this.generateEndboss()
+            }
+            count++
+        }, count * (1000 / (dif + 1)))
+
     }
     /**
      * Generates a pufferfish enemy at a calculated position based on difficulty and player's current position.
      * @param {number} dif - Difficulty factor affecting the spawn rate and positioning.
      */
     generatePufferfish(dif) {
-            if (this.enemies.length < 10 * dif) {
-                let pX = world.charakter.position_x + 720
-                let pY = (Math.random() * 310) + 110;
-                let pufferfish = new Pufferfish(pX, pY);
-                this.enemies.push(pufferfish)
-            }
+        if (this.enemies.length < 10 * dif) {
+            let pX = world.charakter.position_x + 1420
+            let pY = (Math.random() * 310) + 110;
+            let pufferfish = new Pufferfish(pX, pY);
+            this.enemies.push(pufferfish)
+        }
     }
     /**
      * Generates a squid enemy at a calculated position based on difficulty and player's current position.
@@ -98,36 +98,37 @@ class Level {
      * Generates a coin at a random position within the level, influenced by the difficulty setting.
      * @param {number} dif - Difficulty factor affecting the spawn rate and positioning of coins.
      */
-    generateCoin(dif) { 
+    generateCoin(dif) {
         if (this.collectables.length < 10 * dif) {
             let pX = world.charakter.position_x + 720 + (720 * Math.random())
             let pY = Math.random() * 420;
             let coin = new Coin(pX, pY);
             this.collectables.push(coin)
+
         }
     }
     /**
      * Generates the level's end boss if it has not been spawned yet.
      */
     generateEndboss() {
-        let endbossExistiert  = this.enemies.find(enemie =>  enemie instanceof Endboss)
+        let endbossExistiert = this.enemies.find(enemie => enemie instanceof Endboss)
         let allEndbosses = this.enemies.filter(enemie => enemie instanceof Endboss)
-        if(allEndbosses.length === 0){
+        if (allEndbosses.length === 0) {
             if (!endbossExistiert && !this.spawnedEndboss) {
                 this.spawnedEndboss = true
                 let endboss = new Endboss();
                 this.enemies.push(endboss)
             }
-        }else if(allEndbosses.length > 1){
+        } else if (allEndbosses.length > 1) {
             allEndbosses[0].deconstuct(world.enemies)
         }
-            
+
     }
     /**
      * Stops all ongoing enemy generation loops within the level.
      */
-    stopLoops(){
+    stopLoops() {
         clearInterval(this.prozGeneration)
     }
-    
+
 }

@@ -110,9 +110,11 @@ World.prototype.inYourFace = function(enemie){
  */
 World.prototype.collidingMelee = function(enemie){
     this.charakter.addScore(30)
-    if (enemie instanceof Endboss && !enemie.isHurt()) {
-        enemie.hit(20);
-        playSound(11)
+    if (enemie instanceof Endboss) {
+        if(!enemie.isHurt()){
+            enemie.hit(20);
+            playSound(11)
+        }
     } else {
         enemie.hit(10)
     }
@@ -274,13 +276,18 @@ World.prototype.buttonSelection = function(menue){
  */
 World.prototype.checkObjectThrow = function() {
     if (this.keyboard.SECONDARY && this.charakter.energie >= 25) {
-        setTimeout(() => {
-            this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_SHOOT)
-        }, 2000);
+        this.charakter.rangeActive = true
+        // setTimeout(() => {
+            // this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_SHOOT)
+        // }, 2000);
         let newBubble = new bubble(this.charakter.position_x + 100, this.charakter.position_y + 100)
         this.throwableObjects.push(newBubble)
         playSound(5)
         this.charakter.energie -= 25;
         this.keyboard.SECONDARY = !this.keyboard.SECONDARY;
+        setTimeout(()=>{
+            this.charakter.rangeActive = false
+
+        }, 100)
     }
 }

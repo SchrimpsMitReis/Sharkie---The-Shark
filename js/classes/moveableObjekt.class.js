@@ -109,23 +109,15 @@ class moveableObjekt extends drawableObject {
         timepassed = timepassed / 1000;
         return timepassed > 10 && !this.isHurt() && !world.isGameOver;
     }
+    resetSleeptimer(){
+        this.sleepTimer = new Date().getTime()
+    }
     /**
      * Checks if the object is dead, i.e., no life points remaining.
      * @returns {boolean} True if the object has no life points.
      */
     isDead() {
         return this.lifePoints == 0;
-    }
-    /**
-     * Animates the object by cycling through a sequence of images.
-     * @param {string[]} images - An array of image paths for the animation.
-     */
-    playAnimation(images) {
-        let i = this.currentImage % images.length
-        let path = images[i];
-        this.img = this.imageCache[path]
-        this.currentImage++
-
     }
     // Movement methods that adjust the object's position based on speed and direction.
     moveRight() {
