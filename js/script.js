@@ -9,27 +9,28 @@ let SmartBtnA = document.getElementById('aSmartBtn')
 let SmartBtnB = document.getElementById('bSmartBtn')
 let SmartBtnZ = document.getElementById('zSmartBtn')
 
+
 SmartBtnLEFT.addEventListener('touchstart', () =>{
     keyboard.LEFT = true;
-})
+},{ passive: true })
 SmartBtnRIGHT.addEventListener('touchstart', () =>{
     keyboard.RIGHT = true;
-})
+},{ passive: true })
 SmartBtnUP.addEventListener('touchstart', () =>{
     keyboard.UP = true;
-})
+},{ passive: true })
 SmartBtnDOWN.addEventListener('touchstart', () =>{
     keyboard.DOWN = true;
-})
+},{ passive: true })
 SmartBtnA.addEventListener('touchstart', () =>{
     keyboard.SPACE = true;
-})
+},{ passive: true })
 SmartBtnB.addEventListener('touchstart', () =>{
     keyboard.SECONDARY = true;
-})
+},{ passive: true })
 SmartBtnDOWN.addEventListener('touchstart', () =>{
     keyboard.SHIFT = true;
-})
+},{ passive: true })
 SmartBtnLEFT.addEventListener('touchend', () =>{
     keyboard.LEFT = false;
 })
