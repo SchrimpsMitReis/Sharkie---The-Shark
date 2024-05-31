@@ -47,6 +47,9 @@ class Pufferfish extends moveableObjekt {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DIE)
                 this.showImage(this.IMAGES_DIE[2])
+                setTimeout(()=>{
+                    this.deconstruct(world.enemies)
+                },500)
             }
             else {
                 this.moveLeft();

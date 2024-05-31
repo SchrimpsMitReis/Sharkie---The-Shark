@@ -88,7 +88,7 @@ class Endboss extends moveableObjekt {
             if (!this.isDead()) {
                 playSoundOnceUnuse(10)
                 this.playAnimation(this.IMAGES_FLOATING)
-                if (this.isHurt()) {
+                if (this.isHurt(2)) {
                     this.playAnimation(this.IMAGES_HURT)
                 } else {
                     this.attack()

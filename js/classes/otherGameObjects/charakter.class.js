@@ -116,7 +116,7 @@ class Charakter extends moveableObjekt {
         this.loadImages(this.IMAGES_SHARKIE_SLEEP)
         this.loadImages(this.IMAGES_SHARKIE_SHOOT)
         this.applyGravity()
-        this.setOffset(0.5, 0.05, 0.10, 0.30)
+        this.setOffset(0.6,0.3,0.22,0.3) // top, left, right, bottom
         this.movementLoop = null;
         this.animationLoop = null;
         this.animate();
@@ -183,7 +183,7 @@ class Charakter extends moveableObjekt {
                     allSounds[12].play()
                     this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
                     this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
-                } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() ) {
+                } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.meleeActive) {
                     this.playAnimation(this.IMAGES_SHARKIE_SWIM)
                     this.addEnergie(0.5)
                 }else if (this.meleeActive){

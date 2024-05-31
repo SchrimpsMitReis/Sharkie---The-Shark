@@ -95,7 +95,7 @@ class moveableObjekt extends drawableObject {
      * Checks if the object is currently hurt, based on the last hit time.
      * @returns {boolean} True if the object was hurt within the last 3 seconds.
      */
-    isHurt() {
+    isHurt(stuntime = 3) {
         let timepassed = new Date().getTime() - this.lastHit
         timepassed = timepassed / 1000;
         return timepassed < 3;

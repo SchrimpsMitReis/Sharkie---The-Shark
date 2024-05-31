@@ -46,6 +46,10 @@ class Squid extends moveableObjekt {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DIE)
                 this.loadImage(this.IMAGES_DIE[2])
+                setTimeout(()=>{
+                    this.deconstruct(world.enemies)
+                },500)
+
             }
             else {
                 this.moveUp()
