@@ -9,7 +9,7 @@ class Level {
     world;
     levelEndX = 1440 * 3;
     spawnedEndboss = false
-    /**
+/**
      * Initializes a new instance of a game level with specified game objects.
      * @param {Array} enemies - An array of enemies to be included in the level.
      * @param {Array} scenerie - An array of scenery objects for the level's background.
@@ -120,6 +120,7 @@ class Level {
                 this.enemies.push(endboss)
             }
         } else if (allEndbosses.length > 1) {
+            allEndbosses[0].stopLoops();
             allEndbosses[0].deconstuct(world.enemies)
         }
 

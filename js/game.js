@@ -6,12 +6,13 @@ let landscapeMode = checkLandscape()
 let md = new MobileDetect(window.navigator.userAgent)
 const body = document.getElementById('body')
 let smartOverlay;
-
+const mainSection = document.getElementById('mainSection');
 /**
  * Initializes the game by setting safe storage and loading the game world.
  * @async
  */
 async function init(){
+    mainSection.innerHTML = setCanvas()
     setSaveSpace()
     loadWorld();
 }
@@ -25,6 +26,9 @@ function loadWorld(){
     smartOverlay = document.getElementById('smartOverlay')
     portaitDialog = document.getElementById('portaitDialog')
     arrangeSmartOverlay(canvas)
+    if (isMobile){
+        smartControlListener()
+    }
     keyEventListeners()
 }
 /**
@@ -204,4 +208,76 @@ function setSaveSpace(){
         let HighScoreProtoAsJSON = JSON.stringify(HighScoreProto)
         localStorage.setItem('HighScore', HighScoreProtoAsJSON)
     }
+}
+function setCanvas(){
+    return /*html*/`
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="smartOverlay" class="smartOverlay d-none">
+            <div id="leftSmartBtn" class="overlayButton leftBtn">&#8592;</div>
+            <div id="rightSmartBtn" class="overlayButton rightBtn">&#8594;</div>
+            <div id="upSmartBtn" class="overlayButton upBtn">&#8593;</div>
+            <div id="downSmartBtn" class="overlayButton downBtn">&#8595;</div>
+            <div id="aSmartBtn" class="overlayButton aBtn">A</div>
+            <div id="bSmartBtn" class="overlayButton bBtn">B</div>
+            <div id="zSmartBtn" class="overlayButton zBtn">Z</div>
+        </div>
+        <div id="portaitDialog" class="smartOverlay bgColor d-none">
+            <h1>Falsches Format</h1>
+        </div>
+
+    `
+}
+/**
+ * Sets up touch event listeners for on-screen control buttons to simulate keyboard input for a game.
+ */
+function smartControlListener(){
+    let SmartBtnLEFT = document.getElementById('leftSmartBtn')
+    let SmartBtnRIGHT = document.getElementById('rightSmartBtn')
+    let SmartBtnUP = document.getElementById('upSmartBtn')
+    let SmartBtnDOWN = document.getElementById('downSmartBtn')
+    let SmartBtnA = document.getElementById('aSmartBtn')
+    let SmartBtnB = document.getElementById('bSmartBtn')
+    let SmartBtnZ = document.getElementById('zSmartBtn')
+    SmartBtnLEFT.addEventListener('touchstart', () => {
+        keyboard.LEFT = true;
+    }, { passive: true })
+    SmartBtnRIGHT.addEventListener('touchstart', () => {
+        keyboard.RIGHT = true;
+    }, { passive: true })
+    SmartBtnUP.addEventListener('touchstart', () => {
+        keyboard.UP = true;
+    }, { passive: true })
+    SmartBtnDOWN.addEventListener('touchstart', () => {
+        keyboard.DOWN = true;
+    }, { passive: true })
+    SmartBtnA.addEventListener('touchstart', () => {
+        keyboard.SPACE = true;
+    }, { passive: true })
+    SmartBtnB.addEventListener('touchstart', () => {
+        keyboard.SECONDARY = true;
+    }, { passive: true })
+    SmartBtnDOWN.addEventListener('touchstart', () => {
+        keyboard.SHIFT = true;
+    }, { passive: true })
+    SmartBtnLEFT.addEventListener('touchend', () => {
+        keyboard.LEFT = false;
+    })
+    SmartBtnRIGHT.addEventListener('touchend', () => {
+        keyboard.RIGHT = false;
+    })
+    SmartBtnUP.addEventListener('touchend', () => {
+        keyboard.UP = false;
+    })
+    SmartBtnDOWN.addEventListener('touchend', () => {
+        keyboard.DOWN = false;
+    })
+    SmartBtnA.addEventListener('touchend', () => {
+        keyboard.SPACE = false;
+    })
+    SmartBtnB.addEventListener('touchend', () => {
+        keyboard.SECONDARY = false;
+    })
+    SmartBtnDOWN.addEventListener('touchend', () => {
+        keyboard.SHIFT = false;
+    })
 }

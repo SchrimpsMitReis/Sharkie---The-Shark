@@ -15,16 +15,30 @@ body{
     height: 100vh;
 }
 body:hover{
-    cursor: url('../IMG/Mauszeiger.png');
+    cursor: url('.../IMG/Mauszeiger.png');
 }
 .cursorNone{
     cursor: none;
 }
+.startBtn{
+    background-color: #1147AD;
+    color: #FFE878;
+    border: 4px solid #FFE878;
+    border-radius: 2em;
+    width: 40%;
+    font-size: 40pt;
+    font-family: 'Spongebob'
+}
 canvas{
     background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 0.2em double #FFE878;
 }
 canvas:hover{
-    cursor: none;
+    cursor:none;
 }
 .smartOverlay{
     position: absolute;
@@ -83,6 +97,8 @@ canvas:hover{
     display: none;
 }
 footer{
+    position: absolute;
+    bottom: 0;
     background-color: #1147AD;
     background-size: cover;
     width: 100%;
@@ -95,6 +111,9 @@ footer a{
     text-decoration: none;
     margin: 1em;
 }
-h1{
-    margin: 0;
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }

@@ -8,55 +8,15 @@
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Sharkie</title>
-    <div id="skripte">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
-        <script src="./js/sounds.js"></script>
-        <script src="./js/classes/otherGameObjects/score.class.js"></script>
-        <script src="./js/classes/drawableObject.class.js"></script>
-        <script src="./js/classes/sprite.class.js"></script>
-        <script src="./js/classes/sprites/planeShield.class.js"></script>
-        <script src="./js/classes/sprites/GameOver.class.js"></script>
-        <script src="./js/classes/sprites/highscoreBoard.class.js"></script>
-        <script src="./js/classes/sprites/winShield.class.js"></script>
-        <script src="./js/classes/sprites/planeShield_GAME.class.js"></script>
-        <script src="./js/classes/sprites/lifebarFrame.class.js"></script>
-        <script src="./js/classes/sprites/scoreBoard.class.js"></script>
-        <script src="./js/classes/buttons/muteButton.class.js"></script>
-        <script src="./js/classes/buttons/startBtn.class.js"></script>
-        <script src="./js/classes/buttons/controllsBtn01.class.js"></script>
-        <script src="./js/classes/buttons/highscoreButton.class.js"></script>
-        <script src="./js/classes/buttons/pauseBtn.class.js"></script>
-        <script src="./js/classes/buttons/menuHelp.class.js"></script>
-        <script src="./js/classes/sprites/EscMenu.class.js"></script>
-        <script src="./js/classes/moveableObjekt.class.js"></script>
-        <script src="./js/classes/throwableObject.class.js"></script>
-        <script src="./js/classes/otherGameObjects/bubble.class.js"></script>
-        <script src="./js/classes/otherGameObjects/coin.class.js"></script>
-        <script src="./js/classes/otherGameObjects/charakter.class.js"></script>
-        <script src="./js/classes/Enemies/pufferfish.class.js"></script>
-        <script src="./js/classes/Enemies/squid.class.js"></script>
-        <script src="./js/classes/otherGameObjects/scenerie.class.js"></script>
-        <script src="./js/classes/Enemies/endboss.class.js"></script>
-        <script src="./js/classes/world.class/world.class.js"></script>
-        <script src="./js/classes/world.class/world.class.checkLoops.js"></script>
-        <script src="./js/classes/world.class/world.class.draw.js"></script>
-        <script src="./js/classes/world.class/world.class.saveLoad.js"></script>
-        <script src="./js/classes/world.class/world.class.changingLevels.js"></script>
-        <script src="./js/classes/level.class.js"></script>
-        <script src="./js/levels/level00.js"></script>
-        <script src="./js/levels/level01.js"></script>
-        <script src="./js/classes/otherGameObjects/curser.class.js"></script>
-        <script src="./js/classes/keyboard.class.js"></script>
-        <script src="./js/classes/otherGameObjects/2dSoundObject.class.js"></script>
-        <script src="./js/game.js"></script>
-    </div>
 
 </head>
 
-<body id="body" onload="init()">
+<body id="body">
     <h1 id="heading">Sharkie</h1>
-    <main>
-        <canvas id="canvas" width="720" height="480"></canvas>
+    <main id="mainSection">
+        <h2>Ready to Start?</h2>
+        <button id="startBtn" class="startBtn" onclick="init()">Yey!!!</button>
+        <!-- <canvas id="canvas" width="720" height="480"></canvas>
         <div id="smartOverlay" class="smartOverlay d-none">
             <div id="leftSmartBtn" class="overlayButton leftBtn">&#8592;</div>
             <div id="rightSmartBtn" class="overlayButton rightBtn">&#8594;</div>
@@ -68,7 +28,7 @@
         </div>
         <div id="portaitDialog" class="smartOverlay bgColor d-none">
             <h1>Falsches Format</h1>
-        </div>
+        </div> -->
     </main>
     <footer>
         <a href="https://roman-schroeder.developerakademie.net/" id="Impressum">Impressum</a>
@@ -76,6 +36,48 @@
 
     </footer>
 </body>
-    <script src="./js/script.js"></script>
+<script src="./js/script.js"></script>
+<div id="skripte">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
+    <script src="./js/sounds.js"></script>
+    <script src="./js/classes/otherGameObjects/score.class.js"></script>
+    <script src="./js/classes/drawableObject.class.js"></script>
+    <script src="./js/classes/sprite.class.js"></script>
+    <script src="./js/classes/sprites/planeShield.class.js"></script>
+    <script src="./js/classes/sprites/GameOver.class.js"></script>
+    <script src="./js/classes/sprites/highscoreBoard.class.js"></script>
+    <script src="./js/classes/sprites/winShield.class.js"></script>
+    <script src="./js/classes/sprites/planeShield_GAME.class.js"></script>
+    <script src="./js/classes/sprites/lifebarFrame.class.js"></script>
+    <script src="./js/classes/sprites/scoreBoard.class.js"></script>
+    <script src="./js/classes/buttons/muteButton.class.js"></script>
+    <script src="./js/classes/buttons/startBtn.class.js"></script>
+    <script src="./js/classes/buttons/controllsBtn01.class.js"></script>
+    <script src="./js/classes/buttons/highscoreButton.class.js"></script>
+    <script src="./js/classes/buttons/pauseBtn.class.js"></script>
+    <script src="./js/classes/buttons/menuHelp.class.js"></script>
+    <script src="./js/classes/sprites/EscMenu.class.js"></script>
+    <script src="./js/classes/moveableObjekt.class.js"></script>
+    <script src="./js/classes/throwableObject.class.js"></script>
+    <script src="./js/classes/otherGameObjects/bubble.class.js"></script>
+    <script src="./js/classes/otherGameObjects/coin.class.js"></script>
+    <script src="./js/classes/otherGameObjects/charakter.class.js"></script>
+    <script src="./js/classes/Enemies/pufferfish.class.js"></script>
+    <script src="./js/classes/Enemies/squid.class.js"></script>
+    <script src="./js/classes/otherGameObjects/scenerie.class.js"></script>
+    <script src="./js/classes/Enemies/endboss.class.js"></script>
+    <script src="./js/classes/world.class/world.class.js"></script>
+    <script src="./js/classes/world.class/world.class.checkLoops.js"></script>
+    <script src="./js/classes/world.class/world.class.draw.js"></script>
+    <script src="./js/classes/world.class/world.class.saveLoad.js"></script>
+    <script src="./js/classes/world.class/world.class.changingLevels.js"></script>
+    <script src="./js/classes/level.class.js"></script>
+    <script src="./js/levels/level00.js"></script>
+    <script src="./js/levels/level01.js"></script>
+    <script src="./js/classes/otherGameObjects/curser.class.js"></script>
+    <script src="./js/classes/keyboard.class.js"></script>
+    <script src="./js/classes/otherGameObjects/2dSoundObject.class.js"></script>
+    <script src="./js/game.js"></script>
+</div>
 
 </html>

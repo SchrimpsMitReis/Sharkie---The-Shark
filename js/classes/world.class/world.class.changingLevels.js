@@ -6,7 +6,7 @@
  * @method
  */
 World.prototype.LevelZero = async function(){
-    
+    playSoundOnceUnuse(6)
     this.loadHighScore()
     this.stopLoops()
     this.level = level00;
@@ -38,6 +38,7 @@ World.prototype.LevelOne = function(){
  * @method
  */
 World.prototype.clearLevel = function(){
+    this.level.stopLoops()
     this.level.enemies.length = 0;
     this.level.spawnedEndboss = false
 }
@@ -56,7 +57,7 @@ World.prototype.clearWorld = function(){
     this.camera_x = 0;
     this.saved = false;
     this.restarted = false;
-    allSounds[9].pause();
+    this.pauseSounds();
 }
 /**
  * Stops all ongoing loops related to enemies, character, and sound objects in the game.
@@ -68,6 +69,18 @@ World.prototype.stopLoops = function(){
     this.stopCharakterLoops();
     this.stopSOLoops()
 
+}
+World.prototype.pauseSounds = function (){
+    allSounds.forEach((sound) =>{
+        if (sound.src !== 'audio/click1.mp3' || sound.src !== 'audio/bite.mp3' ){
+            if(!sound.paused){
+                sound.pause()
+                sound.currentTime = 0;
+            }
+        }
+    })
+    
+    
 }
 /**
  * Loads the current level's data into the game world, including enemies, scenery, collectables, and menus.
