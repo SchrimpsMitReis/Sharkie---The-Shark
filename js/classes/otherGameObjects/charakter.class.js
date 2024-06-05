@@ -10,7 +10,7 @@ class Charakter extends moveableObjekt {
     width = 200;
     world;
     speed = 5;
-    lifePoints = 10;
+    lifePoints = 100;
     energie = 100;
     coins = 0;
     score = 0;
@@ -126,7 +126,7 @@ class Charakter extends moveableObjekt {
      */
     async animate() {
         this.movementLoop = setInterval(async () => {
-            if (this.alive && !this.world.isGameOver) {
+            if (this.alive && !world.isGameOver) {
                 allSounds[9].pause()
                 if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
                     this.moveRight()

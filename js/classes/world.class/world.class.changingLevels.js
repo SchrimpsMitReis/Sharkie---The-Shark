@@ -5,13 +5,15 @@
  * @memberof World
  * @method
  */
-World.prototype.LevelZero = async function(){
+World.prototype.LevelZero = async function () {
     this.loadHighScore()
     this.stopLoops()
     this.level = level00;
     this.clearLevel()
     this.clearWorld()
     this.loadingLevel()
+    playSound(0)
+    playSound(3)
     playSoundOnceUnuse(6)
 }
 /**
@@ -21,7 +23,7 @@ World.prototype.LevelZero = async function(){
  * @memberof World
  * @method
  */
-World.prototype.LevelOne = function(){
+World.prototype.LevelOne = function () {
     this.level = level01;
     this.clearLevel()
     this.loadingCharakter()
@@ -37,7 +39,7 @@ World.prototype.LevelOne = function(){
  * @memberof World
  * @method
  */
-World.prototype.clearLevel = function(){
+World.prototype.clearLevel = function () {
     this.level.stopLoops()
     this.level.spawnedEndboss = false
     this.level.enemies.length = 0;
@@ -47,7 +49,7 @@ World.prototype.clearLevel = function(){
  * @memberof World
  * @method
  */
-World.prototype.clearWorld = function(){
+World.prototype.clearWorld = function () {
     this.isGameOver = false;
     this.win = false;
     this.showGUI = false;
@@ -64,30 +66,28 @@ World.prototype.clearWorld = function(){
  * @memberof World
  * @method
  */
-World.prototype.stopLoops = function(){
+World.prototype.stopLoops = function () {
     this.stopEnemieLoops()
     this.stopCharakterLoops();
     this.stopSOLoops()
 
 }
-World.prototype.pauseSounds = function (){
-    allSounds.forEach((sound) =>{
-        if (sound.src !== 'audio/click1.mp3' || sound.src !== 'audio/bite.mp3' ){
-            if(!sound.paused){
+World.prototype.pauseSounds = function () {
+    allSounds.forEach((sound) => {
+        if (sound.src !== 'audio/click1.mp3' || sound.src !== 'audio/bite.mp3') {
+            if (!sound.paused) {
                 sound.pause()
                 sound.currentTime = 0;
             }
         }
     })
-    
-    
 }
 /**
  * Loads the current level's data into the game world, including enemies, scenery, collectables, and menus.
  * @memberof World
  * @method
  */
-World.prototype.loadingLevel = function(){
+World.prototype.loadingLevel = function () {
     this.enemies = this.level.enemies;
     this.scenerie = this.level.scenerie;
     this.collectables = this.level.collectables;
@@ -98,7 +98,7 @@ World.prototype.loadingLevel = function(){
  * @memberof World
  * @method
  */
-World.prototype.loadingCharakter = function(){
+World.prototype.loadingCharakter = function () {
     this.charakter = new Charakter()
     this.camera_x = 100
     this.setWorld()
@@ -108,7 +108,7 @@ World.prototype.loadingCharakter = function(){
  * @memberof World
  * @method
  */
-World.prototype.loadingSoundObjects = function(){
+World.prototype.loadingSoundObjects = function () {
     this.soundObjects = [
         new SoundObject2D('./audio/BarCrowd.mp3', 0, 1000),
         new SoundObject2D('./audio/EndbossMusic.mp3', 3000, 1000),
@@ -120,7 +120,7 @@ World.prototype.loadingSoundObjects = function(){
  * @memberof `World`
  * @method
  */
-World.prototype.stopEnemieLoops = function(){
+World.prototype.stopEnemieLoops = function () {
     if (this.enemies) {
         this.enemies.forEach((enemie) => {
             enemie.stopLoops();
@@ -132,7 +132,7 @@ World.prototype.stopEnemieLoops = function(){
  * @memberof World
  * @method
  */
-World.prototype.stopCharakterLoops = function(){
+World.prototype.stopCharakterLoops = function () {
     if (this.charakter) {
         this.charakter.stopLoops();
     }
@@ -142,7 +142,7 @@ World.prototype.stopCharakterLoops = function(){
  * @memberof World
  * @method
  */
-World.prototype.stopSOLoops = function(){
+World.prototype.stopSOLoops = function () {
     if (this.soundObjects) {
         this.soundObjects.forEach((SO) => {
             SO.sound.pause()
@@ -150,7 +150,7 @@ World.prototype.stopSOLoops = function(){
         })
     }
 }
-World.prototype.startSoundObjects = function(){
+World.prototype.startSoundObjects = function () {
     this.soundObjects.forEach((SO) => {
         SO.detectVolume();
     })

@@ -65,7 +65,7 @@ World.prototype.checkCollisions = function() {
 World.prototype.checkEnemies = function() {
     this.level.enemies.forEach((enemie) => {
         let enemieDead = enemie.isDead()
-        if (enemie.isDead() && !enemie instanceof Endboss) {
+        if (enemie.isDead() && !(enemie instanceof Endboss)) {
             enemie.deconstruct(this.level.enemies);
         }
         if (this.charakter.isColliding(enemie) && !enemieDead) {
