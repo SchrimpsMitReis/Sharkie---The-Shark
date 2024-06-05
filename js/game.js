@@ -77,7 +77,6 @@ function keyEventListeners(){
         else if (event.key === 'H' || event.key === 'h'){
             keyboard.HELP = !keyboard.HELP;
         }
-        world.charakter.sleepTimer = new Date().getTime();
     })
     document.addEventListener('keyup', (event)=>{
         if (event.key === 'A' || event.key === 'a'){

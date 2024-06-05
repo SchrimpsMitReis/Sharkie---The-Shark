@@ -6,13 +6,13 @@
  * @method
  */
 World.prototype.LevelZero = async function(){
-    playSoundOnceUnuse(6)
     this.loadHighScore()
     this.stopLoops()
     this.level = level00;
     this.clearLevel()
     this.clearWorld()
     this.loadingLevel()
+    playSoundOnceUnuse(6)
 }
 /**
  * Sets the game to level one, usually the first level of actual gameplay.
@@ -26,7 +26,7 @@ World.prototype.LevelOne = function(){
     this.clearLevel()
     this.loadingCharakter()
     this.loadingLevel()
-    this.stopEnemieLoops()
+    // this.stopEnemieLoops()
     this.loadingSoundObjects()
     this.showGUI = true;
     this.startPlay = true;
@@ -39,8 +39,8 @@ World.prototype.LevelOne = function(){
  */
 World.prototype.clearLevel = function(){
     this.level.stopLoops()
-    this.level.enemies.length = 0;
     this.level.spawnedEndboss = false
+    this.level.enemies.length = 0;
 }
 /**
  * Resets the entire game world state, including game over flags, GUI visibility, and character data.

@@ -49,17 +49,17 @@ allSounds[12].loop = true;
  * Plays a Sound from allSounds
  * @param {number} x 
  */
-function playSound(x){
-    allSounds[x].play()
+async function playSound(x){
+    await allSounds[x].play()
 }
 /**
  * Plays a sound from the allSounds array only once per session or until reset. 
  * Each sound can only be played once unless the 'used' property is reset elsewhere in the code.
  * @param {number} x - The index of the sound in the allSounds array to play.
  */
-function playSoundOnce(x){
+async function playSoundOnce(x){
     if(!allSounds[x].used){
-        allSounds[x].play();
+        await allSounds[x].play();
         allSounds[x].used = true;
     }
 }
@@ -79,9 +79,9 @@ function playSoundOnceUnuse(x){
  * from the provided array and plays it.
  * @param {Audio[]} x - An array of Audio objects from which a random sound will be played.
  */
-function playRandomSound(x){
+async function playRandomSound(x){
     let random = Math.floor(Math.random()* x.length)
-    x[random].play()
+    await x[random].play()
 }
 /**
  * Toggles the mute state for all sounds within the game, both for individual sound effects

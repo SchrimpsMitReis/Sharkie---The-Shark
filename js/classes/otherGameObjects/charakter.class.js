@@ -10,7 +10,7 @@ class Charakter extends moveableObjekt {
     width = 200;
     world;
     speed = 5;
-    lifePoints = 100;
+    lifePoints = 10;
     energie = 100;
     coins = 0;
     score = 0;
@@ -124,29 +124,29 @@ class Charakter extends moveableObjekt {
     /**
      * Manages all animations and movements based on the character's state and keyboard inputs.
      */
-    animate() {
-        this.movementLoop = setInterval(() => {
+    async animate() {
+        this.movementLoop = setInterval(async () => {
             if (this.alive && !this.world.isGameOver) {
                 allSounds[9].pause()
                 if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
                     this.moveRight()
-                    allSounds[9].play()
+                    await allSounds[9].play()
                     this.resetSleeptimer()
                 }
                 if (this.world.keyboard.LEFT && this.position_x > 110) {
                     this.moveLeft()
-                    allSounds[9].play()
+                    await allSounds[9].play()
                     this.resetSleeptimer()
 
                 }
                 if (this.world.keyboard.UP && this.position_y > 0 - 30) {
                     this.moveUp()
-                    allSounds[9].play()
+                    await allSounds[9].play()
                     this.resetSleeptimer()
                 }
                 if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
                     this.moveDown()
-                    allSounds[9].play()
+                    await allSounds[9].play()
                     this.resetSleeptimer()
                 }
                 if (this.world.keyboard.SHIFT && !(this.energie < 10)) {
@@ -165,22 +165,22 @@ class Charakter extends moveableObjekt {
             }
         }, 1000 / 60)
 
-        this.animationLoop = setInterval(() => {
+        this.animationLoop = setInterval(async () => {
             if (this.isDead()) {
                 allSounds[12].pause()
                 if (this.alive) {
                     this.playAnimation(this.IMAGES_SHARKIE_DEAD)
-                    this.alive = false;
+                    setTimeout(() => {
+                        this.alive = false;
+                    }, 1000)
                 } else {
                     this.loadImage(this.IMAGES_SHARKIE_DEAD[this.IMAGES_SHARKIE_DEAD.length - 1])
-                    setTimeout(() => {
                         world.isGameOver = true;
-                    }, 1000)
                 }
             } else {
                 allSounds[12].pause()
                 if (this.isSleeping()) {
-                    allSounds[12].play()
+                    await allSounds[12].play()
                     this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
                     this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
                 } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.meleeActive) {
