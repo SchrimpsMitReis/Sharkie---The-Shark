@@ -43,6 +43,7 @@ World.prototype.clearLevel = function () {
     this.level.stopLoops()
     this.level.spawnedEndboss = false
     this.level.enemies.length = 0;
+    this.level.collectables.length = 0
 }
 /**
  * Resets the entire game world state, including game over flags, GUI visibility, and character data.

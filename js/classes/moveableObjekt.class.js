@@ -26,8 +26,10 @@ class moveableObjekt extends drawableObject {
      */
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround()) {
-                this.position_y -= this.speedY;
+            if(!world.pauseGame){
+                if (this.isAboveGround()) {
+                    this.position_y -= this.speedY;
+                }
             }
         }, 1000 / 25)
     }

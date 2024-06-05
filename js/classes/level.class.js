@@ -60,7 +60,7 @@ class Level {
     async generateEnemie(dif) {
         let count = 0;
         this.prozGeneration = setInterval(() => {
-            if (this.world.startPlay) {
+            if (this.world.startPlay && !this.world.pauseGame) {
                 this.generatePufferfish(dif)
                 this.generateSquid(dif)
                 this.generateCoin(dif)

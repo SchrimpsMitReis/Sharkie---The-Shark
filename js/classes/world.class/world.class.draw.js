@@ -110,6 +110,16 @@ World.prototype.addEnergiebar = function (x, y, w, h) {
     this.addToMap(frame)
 
 }
+World.prototype.addPauseScreen = function (){
+    if (this.pauseGame){
+        this.ctx.save(); 
+        this.ctx.globalAlpha = 0.1
+        this.ctx.fillStyle = "black"
+        this.ctx.fillRect(0,0, 720, 480)
+        this.ctx.restore()
+        this.addTextElement(48, "#FFE878", "Pause", 250, 230)
+    }
+}
 /**
  * Dynamically adds the high score board to the canvas if the high score display is enabled.
  * @memberof World
@@ -167,6 +177,7 @@ World.prototype.levelGUI = function () {
         this.addEnergiebar(510, 8, 100, 60)
         this.addCharacter()
         this.gameEnd()
+        this.addPauseScreen()
     }
 }
 /**

@@ -79,41 +79,45 @@ class Endboss extends moveableObjekt {
         this.energieLoop = null
         this.animate()
     }
-     /**
-     * Manages the animation states of the Endboss based on its current status,
-     * such as floating, attacking, being hurt, or dead.
-     */
+    /**
+    * Manages the animation states of the Endboss based on its current status,
+    * such as floating, attacking, being hurt, or dead.
+    */
     async animate() {
         this.animateLoop = setInterval(() => {
-            if (!this.isDead()) {
-                playSoundOnceUnuse(10)
-                this.playAnimation(this.IMAGES_FLOATING)
-                if (this.isHurt(2)) {
-                    this.playAnimation(this.IMAGES_HURT)
-                } else {
-                    this.attack()
-                }
-                if (this.spawnCount === 0) {
-                    this.playAnimation(this.IMAGES_INTRO);
-                }
-                if (world.charakter.position_x > 2500 && !this.firstContact) {
-                    this.spawnCount = 0;
-                    this.firstContact = true;
+            if (!world.pauseGame) {
+                if (!this.isDead()) {
+                    playSoundOnceUnuse(10)
+                    this.playAnimation(this.IMAGES_FLOATING)
+                    if (this.isHurt(2)) {
+                        this.playAnimation(this.IMAGES_HURT)
+                    } else {
+                        this.attack()
+                    }
+                    if (this.spawnCount === 0) {
+                        this.playAnimation(this.IMAGES_INTRO);
+                    }
+                    if (world.charakter.position_x > 2500 && !this.firstContact) {
+                        this.spawnCount = 0;
+                        this.firstContact = true;
 
-                }    
-            } else {
-                this.playAnimation(this.IMAGES_DEAD)
-                this.showImage(this.IMAGES_DEAD[5])
-                allSounds[10].pause()
-                world.isGameOver = true;
-                world.win = true
+                    }
+                } else {
+                    this.playAnimation(this.IMAGES_DEAD)
+                    this.showImage(this.IMAGES_DEAD[5])
+                    allSounds[10].pause()
+                    world.isGameOver = true;
+                    world.win = true
+                }
+                this.spawnCount++
             }
-            this.spawnCount++
         }, 100)
         this.energieLoop = setInterval(() => {
-            this.energie += 5;
-            if (this.energie >= 30) {
-                this.energie = 30
+            if (!world.pauseGame) {
+                this.energie += 5;
+                if (this.energie >= 30) {
+                    this.energie = 30
+                }
             }
         }, 400);
     }
@@ -139,7 +143,7 @@ class Endboss extends moveableObjekt {
     /**
      * Stops all ongoing intervals and animations for the Endboss.
      */
-    stopLoops(){
+    stopLoops() {
         clearInterval(this.animateLoop);
         clearInterval(this.energieLoop);
     }

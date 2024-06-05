@@ -44,6 +44,7 @@ class World {
     isGameOver = false;
     editorMode = false;
     showHighscore = false;
+    pauseGame = false;
 
     // Camera
     camera_x = 0;

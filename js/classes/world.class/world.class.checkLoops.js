@@ -8,8 +8,10 @@
 World.prototype.run = function() {
     this.checkLoop = setInterval(() => {
         this.checkCollisions();
-        this.checkObjectThrow();
-        this.checkGameEnd();
+        if (!this.pauseGame){
+            this.checkObjectThrow();
+            this.checkGameEnd();
+        }
     }, 4)
 }
 /**
@@ -50,9 +52,11 @@ World.prototype.checkGameEnd = function() {
  * @memberof World
  */
 World.prototype.checkCollisions = function() {
+    if(!this.pauseGame){
     this.checkEnemies()
     this.checkCollectables()
     this.checkThrowables()
+    }
     this.checkMenues()
 }
 /**
@@ -248,7 +252,7 @@ World.prototype.buttonSelection = function(menue){
         this.LevelOne()
     }
     else if (menue instanceof PauseBtn) {
-        this.LevelZero()
+        this.pauseGame = !this.pauseGame
     }
     else if (menue instanceof Controlbutton) {
         this.keyboard.HELP = !this.keyboard.HELP

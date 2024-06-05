@@ -124,16 +124,16 @@ class Charakter extends moveableObjekt {
     /**
      * Manages all animations and movements based on the character's state and keyboard inputs.
      */
-    async animate() {
+    async animate() {        
         this.movementLoop = setInterval(async () => {
-            if (this.alive && !world.isGameOver) {
+            if (this.alive && !world.isGameOver && !world.pauseGame) {
                 allSounds[9].pause()
-                if (this.world.keyboard.RIGHT && this.position_x <= level01.levelEndX - 180) {
+                if (this.world.keyboard.RIGHT && this.position_x <= 3680) {
                     this.moveRight()
                     await allSounds[9].play()
                     this.resetSleeptimer()
                 }
-                if (this.world.keyboard.LEFT && this.position_x > 110) {
+                if (this.world.keyboard.LEFT && this.position_x > 110 ) {
                     this.moveLeft()
                     await allSounds[9].play()
                     this.resetSleeptimer()
@@ -166,48 +166,52 @@ class Charakter extends moveableObjekt {
         }, 1000 / 60)
 
         this.animationLoop = setInterval(async () => {
-            if (this.isDead()) {
-                allSounds[12].pause()
-                if (this.alive) {
-                    this.playAnimation(this.IMAGES_SHARKIE_DEAD)
-                    setTimeout(() => {
-                        this.alive = false;
-                    }, 1000)
-                } else {
-                    this.loadImage(this.IMAGES_SHARKIE_DEAD[this.IMAGES_SHARKIE_DEAD.length - 1])
-                        world.isGameOver = true;
-                }
-            } else {
-                allSounds[12].pause()
-                if (this.isSleeping()) {
-                    await allSounds[12].play()
-                    this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
-                    this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
-                } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.meleeActive) {
-                    this.playAnimation(this.IMAGES_SHARKIE_SWIM)
-                    this.addEnergie(0.5)
-                }else if (this.meleeActive){
-                    this.playAnimation(this.IMAGES_SHARKIE_FINSLAP)
-                }else if(this.rangeActive){
-                    this.playAnimation(this.IMAGES_SHARKIE_SHOOT)
-                }else if(this.isHurt()){
-                    if (this.lastHitBy instanceof Pufferfish) {
-                        this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)
-                    } else if(this.lastHitBy instanceof Squid){
-                        this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
-                    }else{
-                        this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+            if (!world.pauseGame){
+                if (this.isDead()) {
+                    allSounds[12].pause()
+                    if (this.alive) {
+                        this.playAnimation(this.IMAGES_SHARKIE_DEAD)
+                        setTimeout(() => {
+                            this.alive = false;
+                        }, 1000)
+                    } else {
+                        this.loadImage(this.IMAGES_SHARKIE_DEAD[this.IMAGES_SHARKIE_DEAD.length - 1])
+                            world.isGameOver = true;
                     }
-                        
+                } else {
+                    allSounds[12].pause()
+                    if (this.isSleeping()) {
+                        await allSounds[12].play()
+                        this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
+                        this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
+                    } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.meleeActive) {
+                        this.playAnimation(this.IMAGES_SHARKIE_SWIM)
+                        this.addEnergie(0.5)
+                    }else if (this.meleeActive){
+                        this.playAnimation(this.IMAGES_SHARKIE_FINSLAP)
+                    }else if(this.rangeActive){
+                        this.playAnimation(this.IMAGES_SHARKIE_SHOOT)
+                    }else if(this.isHurt()){
+                        if (this.lastHitBy instanceof Pufferfish) {
+                            this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)
+                        } else if(this.lastHitBy instanceof Squid){
+                            this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+                        }else{
+                            this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+                        }
+                            
+                    }
+                    else {
+                        this.playAnimation(this.IMAGES_SHARKIESTILL)
+                        this.addEnergie(1)
+                    }
+    
                 }
-                else {
-                    this.playAnimation(this.IMAGES_SHARKIESTILL)
-                    this.addEnergie(1)
-                }
-
             }
-        }, 1000 / 10)
+
+            }, 1000 / 10)
     }
+
     /**
      * Activates the character's melee attack mode temporarily.
      */
