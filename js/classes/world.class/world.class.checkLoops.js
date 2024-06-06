@@ -36,7 +36,7 @@ World.prototype.checkGameEnd = function() {
         if (this.win) {
             this.saveScore()
         }
-        if (this.keyboard.MOUSEBTN && !this.restarted) {
+        if ((this.keyboard.MOUSEBTN || this.keyboard.SPACE) && !this.restarted) {
             this.restarted = true;
             this.level.stopLoops()
             this.LevelZero()

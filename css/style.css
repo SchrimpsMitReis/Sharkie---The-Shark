@@ -13,6 +13,7 @@ body{
     filter: drop-shadow( 0 0em 0.1em #1147AD);
     margin: 0;
     height: 100vh;
+    width: 100vw;
 }
 body:hover{
     cursor: url('.../IMG/Mauszeiger.png');
@@ -42,22 +43,24 @@ canvas:hover{
 }
 .smartOverlay{
     position: absolute;
+    top: 50%;
+    left: 50%;
     width: 720px;
     height: 480px;
-    top:0;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: row;
-
+    z-index: 2;
 }
 .bgColor{
     background-color: #1147AD;
 }
 .overlayButton{
-    background-color: rgba(128, 128, 128, 0.331);
+    background-color: rgba(18, 57, 213, 0.552);
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    border: 2px dotted gray;
+    border: 2px dotted rgb(70, 195, 202);
     text-align: center;
     color: rgb(255, 255, 255);
     position: absolute;
@@ -116,4 +119,26 @@ main{
     flex-direction: column;
     align-items: center;
     width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.switchPortaitImage{
+    background-image: url("../IMG/SwitchPhone.png");
+    /* object-fit: cover; */
+    background-size: cover;
+    height: 15em;
+    width: 13em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+
+}
+h2{
+    font-size: 40px;
 }

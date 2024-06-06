@@ -7,26 +7,45 @@ let md = new MobileDetect(window.navigator.userAgent)
 const body = document.getElementById('body')
 let smartOverlay;
 const mainSection = document.getElementById('mainSection');
+
+window.addEventListener('load', function () {
+    init()
+    mainSection.addEventListener('contextmenu', function (event) {
+        event.preventDefault()
+    })
+
+});
+window.addEventListener("orientationchange", function () {
+    location.reload();
+});
 /**
  * Initializes the game by setting safe storage and loading the game world.
  * @async
  */
-async function init(){
-    mainSection.innerHTML = setCanvas()
+function init() {
+    if (checkLandscape()) {
+        mainSection.innerHTML = setFirstBtn()
+    } else {
+        mainSection.innerHTML = setSwitchImage()
+    }
+}
+async function startGame() {
+    mainSection.innerHTML = setCanvas();
     setSaveSpace()
     loadWorld();
+
 }
 /**
  * Loads the game world, initializes the canvas, the world object, keyboard handlers, and overlays.
  */
-function loadWorld(){
+function loadWorld() {
     getDeviceType()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     smartOverlay = document.getElementById('smartOverlay')
     portaitDialog = document.getElementById('portaitDialog')
     arrangeSmartOverlay(canvas)
-    if (isMobile){
+    if (isMobile) {
         smartControlListener()
     }
     keyEventListeners()
@@ -34,91 +53,105 @@ function loadWorld(){
 /**
  * Registers event listeners for mouse and keyboard interactions.
  */
-function keyEventListeners(){
-    document.addEventListener('mousemove', (event)=>{
+function keyEventListeners() {
+    mousemoveEventListener();
+    keyDownListener();
+    keyUpListener();
+    mouseClickListener();
+}
+function mousemoveEventListener() {
+    document.addEventListener('mousemove', (event) => {
         let canvasBorder = canvas.getBoundingClientRect();
-        if(keyboard.FULLSCREEN){
-            world.gameCurser.position_x = (event.clientX/window.innerWidth) * canvas.width;
-            world.gameCurser.position_y = (event.clientY/window.innerHeight) * canvas.height;
+        if (keyboard.FULLSCREEN) {
+            world.gameCurser.position_x = (event.clientX / window.innerWidth) * canvas.width;
+            world.gameCurser.position_y = (event.clientY / window.innerHeight) * canvas.height;
         }
-        else{
-            world.gameCurser.position_x = event.clientX - canvasBorder.left ;
+        else {
+            world.gameCurser.position_x = event.clientX - canvasBorder.left;
             world.gameCurser.position_y = event.clientY - canvasBorder.top;
         }
     })
-    document.addEventListener('keydown', (event)=>{
-        if (event.key === 'A' || event.key === 'a'){
-            keyboard.LEFT = true;
-        }
-        else if (event.key === 'W' || event.key === 'w'){
-            keyboard.UP = true;
-        }
-        else if (event.key === 'S' || event.key === 's'){
-            keyboard.DOWN = true;
-        }
-        else if (event.key === 'D' || event.key === 'd'){
-            keyboard.RIGHT = true;
-        }
-        else if (event.key === 'Escape'){
-            keyboard.ESCAPE = true;
-        }
-        else if (event.key === 'Shift'){
-            keyboard.SHIFT = true;
-        }
-        else if (event.key === ' '){
-            keyboard.SPACE = true;
-        }
-        else if (event.key === 'E' || event.key === 'e'){
-            keyboard.SECONDARY = true;
-        }
-        else if (event.key === 'F' || event.key === 'f'){
-            toggleFullscreen()
-        }
-        else if (event.key === 'H' || event.key === 'h'){
-            keyboard.HELP = !keyboard.HELP;
-        }
-    })
-    document.addEventListener('keyup', (event)=>{
-        if (event.key === 'A' || event.key === 'a'){
-            keyboard.LEFT = false;
-        }
-        else if (event.key === 'W' || event.key === 'w'){
-            keyboard.UP = false;
-        }
-        else if (event.key === 'S' || event.key === 's'){
-            keyboard.DOWN = false;
-        }
-        else if (event.key === 'D' || event.key === 'd'){
-            keyboard.RIGHT = false;
-        }
-        else if (event.key === 'Escape'){
-            keyboard.ESCAPE = false;
-        }
-        else if (event.key === 'Shift'){
-            keyboard.SHIFT = false;
-        }
-        else if (event.key === ' '){
-            keyboard.SPACE = false;
-        }
-        else if (event.key === 'E' || event.key === 'e'){
-            keyboard.SECONDARY = false;
-        }
-    
-    })
-    document.addEventListener('click', async ()=>{
+}
+function mouseClickListener() {
+    document.addEventListener('click', async () => {
         keyboard.MOUSEBTN = true;
         setTimeout(() => {
-            keyboard.MOUSEBTN = false;        
+            keyboard.MOUSEBTN = false;
         }, 3);
-    
+
+    })
+
+}
+function keyUpListener() {
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'A' || event.key === 'a') {
+            keyboard.LEFT = false;
+        }
+        else if (event.key === 'W' || event.key === 'w') {
+            keyboard.UP = false;
+        }
+        else if (event.key === 'S' || event.key === 's') {
+            keyboard.DOWN = false;
+        }
+        else if (event.key === 'D' || event.key === 'd') {
+            keyboard.RIGHT = false;
+        }
+        else if (event.key === 'Escape') {
+            keyboard.ESCAPE = false;
+        }
+        else if (event.key === 'Shift') {
+            keyboard.SHIFT = false;
+        }
+        else if (event.key === ' ') {
+            keyboard.SPACE = false;
+        }
+        else if (event.key === 'E' || event.key === 'e') {
+            keyboard.SECONDARY = false;
+        }
+
+    })
+
+}
+function keyDownListener() {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'A' || event.key === 'a') {
+            keyboard.LEFT = true;
+        }
+        else if (event.key === 'W' || event.key === 'w') {
+            keyboard.UP = true;
+        }
+        else if (event.key === 'S' || event.key === 's') {
+            keyboard.DOWN = true;
+        }
+        else if (event.key === 'D' || event.key === 'd') {
+            keyboard.RIGHT = true;
+        }
+        else if (event.key === 'Escape') {
+            keyboard.ESCAPE = true;
+        }
+        else if (event.key === 'Shift') {
+            keyboard.SHIFT = true;
+        }
+        else if (event.key === ' ') {
+            keyboard.SPACE = true;
+        }
+        else if (event.key === 'E' || event.key === 'e') {
+            keyboard.SECONDARY = true;
+        }
+        else if (event.key === 'F' || event.key === 'f') {
+            toggleFullscreen()
+        }
+        else if (event.key === 'H' || event.key === 'h') {
+            keyboard.HELP = !keyboard.HELP;
+        }
     })
 }
 /**
  * Toggles the full screen state of the canvas.
  */
-function toggleFullscreen(){
+function toggleFullscreen() {
     keyboard.FULLSCREEN = !keyboard.FULLSCREEN;
-    if (keyboard.FULLSCREEN){
+    if (keyboard.FULLSCREEN) {
         if (canvas.requestFullscreen) {
             canvas.requestFullscreen();
         } else if (canvas.mozRequestFullScreen) { /* Firefox */
@@ -128,7 +161,7 @@ function toggleFullscreen(){
         } else if (canvas.msRequestFullscreen) { /* IE/Edge */
             canvas.msRequestFullscreen();
         }
-    }else{
+    } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.mozCancelFullScreen) { /* Firefox */
@@ -144,12 +177,12 @@ function toggleFullscreen(){
  * Arranges the overlay based on device orientation.
  * @param {HTMLElement} canvas - The canvas element where the game is rendered.
  */
-function arrangeSmartOverlay(canvas){
-    if (isMobile){
-        if (landscapeMode){
+function arrangeSmartOverlay(canvas) {
+    if (isMobile) {
+        if (landscapeMode) {
             overlayFit(smartOverlay)
         }
-        else{
+        else {
             overlayFit(portaitDialog)
         }
     }
@@ -161,17 +194,17 @@ function arrangeSmartOverlay(canvas){
  */
 function overlayFit(overlay) {
     overlay.classList.remove('d-none')
-    let canvasBorder = canvas.getBoundingClientRect();
-    overlay.style.left = canvasBorder.left +'px';
-    overlay.style.top = canvasBorder.top +'px';
-    overlay.style.right = canvasBorder.right +'px';
-    overlay.style.bottom = canvasBorder.bottom +'px';
+    // let canvasBorder = canvas.getBoundingClientRect();
+    // overlay.style.left = canvasBorder.left + 'px';
+    // overlay.style.top = canvasBorder.top + 'px';
+    // overlay.style.right = canvasBorder.right + 'px';
+    // overlay.style.bottom = canvasBorder.bottom + 'px';
 }
 /**
  * Detects the type of device the game is being accessed from.
  * @returns {string} The type of device detected (Mobile, Tablet, or Desktop).
  */
-function getDeviceType(){
+function getDeviceType() {
     if (md.mobile()) {
         isMobile = true
         return "Mobilgerät";
@@ -185,33 +218,33 @@ function getDeviceType(){
  * Checks if the device is in landscape orientation.
  * @returns {boolean} True if the device is in landscape mode, false otherwise.
  */
-function checkLandscape(){
+function checkLandscape() {
     return window.innerWidth > window.innerHeight
 }
 /**
  * Sets up initial safe storage for game data.
  */
-function setSaveSpace(){
-    let firstSave = () =>{
+function setSaveSpace() {
+    let firstSave = () => {
         let keyFound = true;
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
-            if (key == 'HighScore'){
+            if (key == 'HighScore') {
                 keyFound = false;
             }
         }
         return keyFound;
     }
-    if (firstSave){
+    if (firstSave) {
         let HighScoreProto = [testScore1, testScore2, testScore3, testScore4, testScore5];
         let HighScoreProtoAsJSON = JSON.stringify(HighScoreProto)
         localStorage.setItem('HighScore', HighScoreProtoAsJSON)
     }
 }
-function setCanvas(){
+function setCanvas() {
     return /*html*/`
         <canvas id="canvas" width="720" height="480"></canvas>
-        <div id="smartOverlay" class="smartOverlay d-none">
+        <div id="smartOverlay" class="smartOverlay">
             <div id="leftSmartBtn" class="overlayButton leftBtn">&#8592;</div>
             <div id="rightSmartBtn" class="overlayButton rightBtn">&#8594;</div>
             <div id="upSmartBtn" class="overlayButton upBtn">&#8593;</div>
@@ -220,16 +253,24 @@ function setCanvas(){
             <div id="bSmartBtn" class="overlayButton bBtn">B</div>
             <div id="zSmartBtn" class="overlayButton zBtn">Z</div>
         </div>
-        <div id="portaitDialog" class="smartOverlay bgColor d-none">
-            <h1>Falsches Format</h1>
-        </div>
+    `
+}
+function setSwitchImage() {
+    return /*html*/`
+                <div class="switchPortaitImage"></div>
+    `
+}
+function setFirstBtn() {
+    return /*html*/`
+        <h2>Ready to Start?</h2>
+        <button id="startBtn" class="startBtn" onclick="startGame()">Yey!!!</button>
 
     `
 }
 /**
  * Sets up touch event listeners for on-screen control buttons to simulate keyboard input for a game.
  */
-function smartControlListener(){
+function smartControlListener() {
     let SmartBtnLEFT = document.getElementById('leftSmartBtn')
     let SmartBtnRIGHT = document.getElementById('rightSmartBtn')
     let SmartBtnUP = document.getElementById('upSmartBtn')
@@ -237,6 +278,7 @@ function smartControlListener(){
     let SmartBtnA = document.getElementById('aSmartBtn')
     let SmartBtnB = document.getElementById('bSmartBtn')
     let SmartBtnZ = document.getElementById('zSmartBtn')
+
     SmartBtnLEFT.addEventListener('touchstart', () => {
         keyboard.LEFT = true;
     }, { passive: true })
@@ -255,7 +297,7 @@ function smartControlListener(){
     SmartBtnB.addEventListener('touchstart', () => {
         keyboard.SECONDARY = true;
     }, { passive: true })
-    SmartBtnDOWN.addEventListener('touchstart', () => {
+    SmartBtnZ.addEventListener('touchstart', () => {
         keyboard.SHIFT = true;
     }, { passive: true })
     SmartBtnLEFT.addEventListener('touchend', () => {
@@ -276,7 +318,7 @@ function smartControlListener(){
     SmartBtnB.addEventListener('touchend', () => {
         keyboard.SECONDARY = false;
     })
-    SmartBtnDOWN.addEventListener('touchend', () => {
+    SmartBtnZ.addEventListener('touchend', () => {
         keyboard.SHIFT = false;
     })
 }
