@@ -33,6 +33,12 @@ class World {
     winShield = new winShield(150, 50, 400, 400);
     gameOverShield = new GameOver(150, 50, 400, 400);
     ScoreTable = new HighscoreBoard(20, 10, 500, 500);
+    frameLifebar = new lifebarFrame(320, 8, 180, 60);
+    frameEnergie = new lifebarFrame(510, 8, 180, 60);
+    bgLifebar = new Scoreboard(310, 0, 200, 75)
+    bgEnergiebar = new Scoreboard(500, 0, 200, 75)
+
+
     // Fags and Booleans
     win = false;
     saved = false;

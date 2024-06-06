@@ -64,9 +64,6 @@ World.prototype.addTextElement = function (fontSize, hexColor, text, x, y) {
  * @param {number} h - The height of the lifebar.
  */
 World.prototype.addLifebar = function (x, y, w, h) {
-    let bg = new Scoreboard(310, 0, 200, 75)
-    let factor = 1.8
-    let frame = new lifebarFrame(x, y, w * factor, h)
     let lifeProcentage = this.charakter.lifePoints / 100
     let barColor = () => {
         if (lifeProcentage >= 0.6) {
@@ -77,10 +74,10 @@ World.prototype.addLifebar = function (x, y, w, h) {
             return 'red'
         }
     }
-    this.addToMap(bg)
+    this.addToMap(this.bgLifebar)
     this.ctx.fillStyle = barColor()
-    this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * factor, h - 4)
-    this.addToMap(frame)
+    this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * 1.8, h - 4)
+    this.addToMap(this.frameLifebar)
 }
 /**
  * Adds an energy bar for the character on the canvas.
@@ -91,9 +88,6 @@ World.prototype.addLifebar = function (x, y, w, h) {
  * @param {number} h - The height of the bar.
  */
 World.prototype.addEnergiebar = function (x, y, w, h) {
-    let bg = new Scoreboard(500, 0, 200, 75)
-    let factor = 1.8
-    let frame = new lifebarFrame(x, y, w * factor, h)
     let lifeProcentage = this.charakter.energie / 100
     let barColor = () => {
         if (lifeProcentage >= 0.6) {
@@ -104,10 +98,10 @@ World.prototype.addEnergiebar = function (x, y, w, h) {
             return 'white'
         }
     }
-    this.addToMap(bg)
+    this.addToMap(this.bgEnergiebar)
     this.ctx.fillStyle = barColor()
-    this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * factor, h - 4)
-    this.addToMap(frame)
+    this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * 1.8, h - 4)
+    this.addToMap(this.frameEnergie)
 
 }
 World.prototype.addPauseScreen = function (){

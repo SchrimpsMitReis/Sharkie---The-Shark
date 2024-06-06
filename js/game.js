@@ -8,6 +8,8 @@ const body = document.getElementById('body')
 let smartOverlay;
 const mainSection = document.getElementById('mainSection');
 
+
+// Global EventListener
 window.addEventListener('load', function () {
     init()
     mainSection.addEventListener('contextmenu', function (event) {
@@ -19,8 +21,8 @@ window.addEventListener("orientationchange", function () {
     location.reload();
 });
 /**
- * Initializes the game by setting safe storage and loading the game world.
- * @async
+ * Checks wether the device is in portait or landscapemode.
+ * sending Startbutton or sending the switchimage to MainSection
  */
 function init() {
     if (checkLandscape()) {
@@ -29,6 +31,10 @@ function init() {
         mainSection.innerHTML = setSwitchImage()
     }
 }
+/**
+ * Initializes the game by setting safe storage and loading the game world.
+ * @async
+ */
 async function startGame() {
     mainSection.innerHTML = setCanvas();
     setSaveSpace()
@@ -46,6 +52,7 @@ function loadWorld() {
     portaitDialog = document.getElementById('portaitDialog')
     arrangeSmartOverlay(canvas)
     if (isMobile) {
+        smartOverlay.classList.remove('d-none')
         smartControlListener()
     }
     keyEventListeners()
@@ -67,11 +74,15 @@ function mousemoveEventListener() {
             world.gameCurser.position_y = (event.clientY / window.innerHeight) * canvas.height;
         }
         else {
-            world.gameCurser.position_x = event.clientX - canvasBorder.left;
+            world.gameCurser.position_x = event.clientX  - canvasBorder.left ;
             world.gameCurser.position_y = event.clientY - canvasBorder.top;
+            console.log(event.clientX , "/", event.clientY);
         }
     })
 }
+/**
+ * On Mouse 1 click it switches keyboard
+ */
 function mouseClickListener() {
     document.addEventListener('click', async () => {
         keyboard.MOUSEBTN = true;
@@ -82,6 +93,9 @@ function mouseClickListener() {
     })
 
 }
+/**
+ * Check wether a relevant key is released
+ */
 function keyUpListener() {
     document.addEventListener('keyup', (event) => {
         if (event.key === 'A' || event.key === 'a') {
@@ -110,8 +124,10 @@ function keyUpListener() {
         }
 
     })
-
 }
+/**
+ * Check wether a relevant key is pressed
+ */
 function keyDownListener() {
     document.addEventListener('keydown', (event) => {
         if (event.key === 'A' || event.key === 'a') {
@@ -186,7 +202,6 @@ function arrangeSmartOverlay(canvas) {
             overlayFit(portaitDialog)
         }
     }
-
 }
 /**
  * Fits the overlay to the canvas dimensions.
@@ -235,7 +250,7 @@ function setSaveSpace() {
         }
         return keyFound;
     }
-    if (firstSave) {
+    if (firstSave()) {
         let HighScoreProto = [testScore1, testScore2, testScore3, testScore4, testScore5];
         let HighScoreProtoAsJSON = JSON.stringify(HighScoreProto)
         localStorage.setItem('HighScore', HighScoreProtoAsJSON)
@@ -244,7 +259,7 @@ function setSaveSpace() {
 function setCanvas() {
     return /*html*/`
         <canvas id="canvas" width="720" height="480"></canvas>
-        <div id="smartOverlay" class="smartOverlay">
+        <div id="smartOverlay" class="smartOverlay d-none">
             <div id="leftSmartBtn" class="overlayButton leftBtn">&#8592;</div>
             <div id="rightSmartBtn" class="overlayButton rightBtn">&#8594;</div>
             <div id="upSmartBtn" class="overlayButton upBtn">&#8593;</div>
