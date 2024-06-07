@@ -9,7 +9,7 @@ World.prototype.draw = function () {
     this.levelGUI();
     this.addHighscoreBoard();
     this.addHelp();
-    this.addToMap(this.gameCurser);
+    this.addGameCurser()
     let self = this;
     requestAnimationFrame(() => {
         self.draw();
@@ -195,4 +195,11 @@ World.prototype.addCharacter = function () {
     this.ctx.translate(this.camera_x, 0)
     this.addToMap(this.charakter)
     this.ctx.translate(-this.camera_x, 0)
+}
+World.prototype.addGameCurser = function () {
+    if(!isMobile){
+        this.addToMap(this.gameCurser);
+    }
+    
+    
 }

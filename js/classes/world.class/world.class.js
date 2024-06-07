@@ -51,7 +51,9 @@ class World {
     editorMode = false;
     showHighscore = false;
     pauseGame = false;
+    activLevel = false;
 
+    buttonHighlighted = 1
     // Camera
     camera_x = 0;
 

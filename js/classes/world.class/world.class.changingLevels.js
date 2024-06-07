@@ -6,6 +6,8 @@
  * @method
  */
 World.prototype.LevelZero = async function () {
+    this.activLevel = false
+    this.pauseGame = false
     this.loadHighScore()
     this.stopLoops()
     this.level = level00;
@@ -24,6 +26,7 @@ World.prototype.LevelZero = async function () {
  * @method
  */
 World.prototype.LevelOne = function () {
+    this.activLevel = true;
     this.level = level01;
     this.clearLevel()
     this.loadingCharakter()

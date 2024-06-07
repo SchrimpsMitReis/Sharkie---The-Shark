@@ -21,14 +21,16 @@ body:hover{
 .cursorNone{
     cursor: none;
 }
-.startBtn{
+.startGameBtn{
     background-color: #1147AD;
     color: #FFE878;
     border: 4px solid #FFE878;
     border-radius: 2em;
     width: 40%;
-    font-size: 40pt;
-    font-family: 'Spongebob'
+    font-size: 40px;
+    font-family: 'Spongebob';
+    padding: 0.1em;
+    align-content: center;
 }
 canvas{
     background-color: black;
@@ -94,6 +96,18 @@ canvas:hover{
 .zBtn{
     bottom:70px;
     right: 70px;
+}
+.startBtn{
+    top:0px;
+    right: 70px;
+    font-size: 10px;
+    align-content: center;
+}
+.pauseBtn{
+    top:0px;
+    left: 70px;
+    font-size: 10px;
+    align-content: center;
 }
 
 .d-none{

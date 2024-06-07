@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>testAreal</title>
 </head>
-<body>
-    <canvas id="myCanvas"></canvas>
+<body id="body" onload="printList()">
+    <div>
+        <input id="textInput" placeholder="Name" type="text">
+        <input id="ageInput" placeholder="Age" type="number">
+        <input id="submit" onclick="sendNames()" type="button" value="Senden">
+        <!-- <input id="submit" onclick="loadData()" type="button" value="Laden"> -->
+    </div>
+    <table id="table">
+    </table>
 </body>
 <script src="script.js"></script>
+<style>
+    .student{
+        display: flex;
+        flex-direction: row;
+    }
+    #table{
+        display: flex;
+        flex-direction: column;
+    }
+</style>
 </html>

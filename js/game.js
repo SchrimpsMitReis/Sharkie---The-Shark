@@ -74,9 +74,8 @@ function mousemoveEventListener() {
             world.gameCurser.position_y = (event.clientY / window.innerHeight) * canvas.height;
         }
         else {
-            world.gameCurser.position_x = event.clientX  - canvasBorder.left ;
+            world.gameCurser.position_x = event.clientX - canvasBorder.left;
             world.gameCurser.position_y = event.clientY - canvasBorder.top;
-            console.log(event.clientX , "/", event.clientY);
         }
     })
 }
@@ -267,6 +266,8 @@ function setCanvas() {
             <div id="aSmartBtn" class="overlayButton aBtn">A</div>
             <div id="bSmartBtn" class="overlayButton bBtn">B</div>
             <div id="zSmartBtn" class="overlayButton zBtn">Z</div>
+            <div id="startSmartBtn" class="overlayButton startBtn">Start</div>
+            <div id="pauseSmartBtn" class="overlayButton pauseBtn">Pause</div>
         </div>
     `
 }
@@ -277,8 +278,7 @@ function setSwitchImage() {
 }
 function setFirstBtn() {
     return /*html*/`
-        <h2>Ready to Start?</h2>
-        <button id="startBtn" class="startBtn" onclick="startGame()">Yey!!!</button>
+        <button id="startBtn" class="startGameBtn" onclick="startGame()">Start&nbsp;Game</button>
 
     `
 }
@@ -293,18 +293,36 @@ function smartControlListener() {
     let SmartBtnA = document.getElementById('aSmartBtn')
     let SmartBtnB = document.getElementById('bSmartBtn')
     let SmartBtnZ = document.getElementById('zSmartBtn')
+    let SmartBtnStart = document.getElementById('startSmartBtn')
+    let SmartBtnPause = document.getElementById('pauseSmartBtn')
 
     SmartBtnLEFT.addEventListener('touchstart', () => {
         keyboard.LEFT = true;
+        switchDownMobileSelection()
     }, { passive: true })
     SmartBtnRIGHT.addEventListener('touchstart', () => {
         keyboard.RIGHT = true;
+        switchUpMobileSelection()
     }, { passive: true })
     SmartBtnUP.addEventListener('touchstart', () => {
         keyboard.UP = true;
+        switchDownMobileSelection()
     }, { passive: true })
     SmartBtnDOWN.addEventListener('touchstart', () => {
         keyboard.DOWN = true;
+        switchUpMobileSelection()
+    }, { passive: true })
+    SmartBtnStart.addEventListener('touchstart', () => {
+        if (world.activLevel){
+            world.LevelZero()
+        }else{
+            world.LevelOne()
+        }
+    })
+    SmartBtnPause.addEventListener('touchstart', () => {
+        if (world.activLevel){
+            world.pauseGame = !world.pauseGame
+        }
     }, { passive: true })
     SmartBtnA.addEventListener('touchstart', () => {
         keyboard.SPACE = true;
@@ -336,4 +354,22 @@ function smartControlListener() {
     SmartBtnZ.addEventListener('touchend', () => {
         keyboard.SHIFT = false;
     })
+}
+function switchUpMobileSelection() {
+    if (!world.activLevel) {
+        world.buttonHighlighted++
+        playSound(1)
+        if (world.buttonHighlighted > 4) {
+            world.buttonHighlighted = 1;
+        }
+    }
+}
+function switchDownMobileSelection() {
+    if (!world.activLevel) {
+        world.buttonHighlighted--
+        playSound(1)
+        if (world.buttonHighlighted < 1) {
+            world.buttonHighlighted = 4;
+        }
+    }
 }

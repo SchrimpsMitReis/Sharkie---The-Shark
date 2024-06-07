@@ -34,8 +34,8 @@ class Level {
             new planeShield(0, 0, 720, 480),
             new Startbutton(10, 330, 150, 150),
             new Controlbutton(185, 340, 150, 133),
-            new Highscorebutton(550, 340, 150, 133),
             new Mutebutton(370, 340, 150, 133),
+            new Highscorebutton(550, 340, 150, 133),
         ]
         this.menues = mainMenu;
         this.scenerie = [new BackgroundObjekt("./IMG/lvl00.webp", 0, 800, 480),]
