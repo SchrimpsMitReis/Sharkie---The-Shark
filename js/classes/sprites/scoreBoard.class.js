@@ -10,6 +10,7 @@
  * @param {number} h - The height of the scoreboard image.
  */
 class Scoreboard extends sprite{
+    
     IMAGE_SPRITE = "./IMG/leer.png"
 
     constructor(x,y, w, h){

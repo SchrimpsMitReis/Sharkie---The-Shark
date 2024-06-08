@@ -8,8 +8,10 @@
  * @param {number} y - The initial y-coordinate where the coin will be placed on the canvas.
  */
 class Coin extends moveableObjekt {
+    
     speed = 0;
     IMAGE = "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/4. Marcadores/1. Coins/1.png";
+
     /**
          * Initializes a new coin object with specified coordinates.
          */

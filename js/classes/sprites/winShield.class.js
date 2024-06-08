@@ -11,11 +11,12 @@
  * @param {number} h - The height of the win shield image.
  */
 class winShield extends sprite{
+    
     /**
      * Path to the sprite image used for the win shield.
      * @type {string}
      */
-    IMAGE_SPRITE = "./IMG/winShield.png"
+    IMAGE_SPRITE = "./IMG/winShield_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadImage(this.IMAGE_SPRITE);

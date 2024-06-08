@@ -8,11 +8,13 @@
  * @param {number} y - The y coordinate where the menu will be placed on the canvas.
  */
 class ESCMenu extends sprite{
+
     /**
      * Path to the image used for the ESC menu.
      * @type {string}
      */
     IMAGE = "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/7. Eigene/keys.png"
+    
     constructor(x,y){
         super(x,y)
         this.loadImage(this.IMAGE)

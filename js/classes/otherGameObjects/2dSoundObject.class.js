@@ -17,6 +17,7 @@ class SoundObject2D {
         this.range = range
         this.detectionLoop = null;
     }
+
     /**
      * Sets up an interval to adjust the sound's volume based on the character's proximity to the sound source.
      * Volume is maximized when the character is at the position of the sound and decreases with distance until it reaches zero outside the specified range.
@@ -32,10 +33,12 @@ class SoundObject2D {
             }
         }, 10)
     }
+
     /**
      * Stops all active loops for this sound object, particularly the interval that adjusts its volume.
      */
     stopLoops(){
         clearInterval(this.detectionLoop)
     }
+    
 }

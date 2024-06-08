@@ -41,6 +41,7 @@ World.prototype.addToMap = function (mo) {
         mo.switchDirectionBack(this.ctx);
     }
 };
+
 /**
  * Adds a text element to the canvas at specified coordinates with a specific font size and color.
  * @memberof World
@@ -55,6 +56,7 @@ World.prototype.addTextElement = function (fontSize, hexColor, text, x, y) {
     this.ctx.fillStyle = `#${hexColor}`;
     this.ctx.fillText(text, x, y);
 };
+
 /**
  * Adds a lifebar graphic to the canvas.
  * @memberof World
@@ -79,6 +81,7 @@ World.prototype.addLifebar = function (x, y, w, h) {
     this.ctx.fillRect(x + 4, y + 2, (lifeProcentage * 96) * 1.8, h - 4)
     this.addToMap(this.frameLifebar)
 }
+
 /**
  * Adds an energy bar for the character on the canvas.
  * @memberof World
@@ -104,6 +107,9 @@ World.prototype.addEnergiebar = function (x, y, w, h) {
     this.addToMap(this.frameEnergie)
 
 }
+/**
+ * Adds The Pause Screen
+ */
 World.prototype.addPauseScreen = function (){
     if (this.pauseGame){
         this.ctx.save(); 
@@ -114,6 +120,7 @@ World.prototype.addPauseScreen = function (){
         this.addTextElement(48, "#FFE878", "Pause", 250, 230)
     }
 }
+
 /**
  * Dynamically adds the high score board to the canvas if the high score display is enabled.
  * @memberof World
@@ -124,19 +131,25 @@ World.prototype.addHighscoreBoard = async function () {
         this.loadHighScore()
         this.HighScore.sort((a, b) => b.scoreValue - a.scoreValue)
         this.addToMap(this.ScoreTable)
-        this.addTextElement(34, "7E3C12", this.HighScore[0]['scoreValue'], 120, 241)
-        this.addTextElement(34, "7E3C12", this.HighScore[0]['date'], 235, 241)
-        this.addTextElement(32, "7E3C12", this.HighScore[1]['scoreValue'], 120, 281)
-        this.addTextElement(32, "7E3C12", this.HighScore[1]['date'], 250, 281)
-        this.addTextElement(32, "7E3C12", this.HighScore[2]['scoreValue'], 120, 319)
-        this.addTextElement(32, "7E3C12", this.HighScore[2]['date'], 250, 319)
-        this.addTextElement(32, "7E3C12", this.HighScore[3]['scoreValue'], 120, 358)
-        this.addTextElement(32, "7E3C12", this.HighScore[3]['date'], 250, 358)
-        this.addTextElement(32, "7E3C12", this.HighScore[4]['scoreValue'], 120, 394)
-        this.addTextElement(32, "7E3C12", this.HighScore[4]['date'], 250, 394)
+        this.tableValues()
     }
-
 }
+/**
+ * Sets the HigscoreBoard
+ */
+World.prototype.tableValues = function(){
+    this.addTextElement(34, "7E3C12", this.HighScore[0]['scoreValue'], 120, 248)
+    this.addTextElement(34, "7E3C12", this.HighScore[0]['date'], 250, 248)
+    this.addTextElement(30, "7E3C12", this.HighScore[1]['scoreValue'], 120, 279)
+    this.addTextElement(30, "7E3C12", this.HighScore[1]['date'], 250, 279)
+    this.addTextElement(30, "7E3C12", this.HighScore[2]['scoreValue'], 120, 311)
+    this.addTextElement(30, "7E3C12", this.HighScore[2]['date'], 250, 311)
+    this.addTextElement(30, "7E3C12", this.HighScore[3]['scoreValue'], 120, 345)
+    this.addTextElement(30, "7E3C12", this.HighScore[3]['date'], 250, 345)
+    this.addTextElement(30, "7E3C12", this.HighScore[4]['scoreValue'], 120, 377)
+    this.addTextElement(30, "7E3C12", this.HighScore[4]['date'], 250, 377)
+}
+
 /**
  * Adds a help menu to the canvas if the help is toggled on.
  * @memberof World
@@ -147,6 +160,7 @@ World.prototype.addHelp = function (){
     }
 
 }
+
 /**
  * Draws level-specific components like scenery, enemies, collectables, and throwable objects, applying camera transformations.
  * @memberof World
@@ -160,6 +174,7 @@ World.prototype.drawLevelComponents = function () {
     this.ctx.translate(-this.camera_x, 0)
 
 }
+
 /**
  * Displays the GUI for the level, including scores, lifebars, and energy bars.
  * @memberof World
@@ -174,6 +189,7 @@ World.prototype.levelGUI = function () {
         this.addPauseScreen()
     }
 }
+
 /**
  * Ends the game showing either a victory or game over screen based on the game's outcome.
  * @memberof World
@@ -187,6 +203,7 @@ World.prototype.gameEnd = function () {
         }
     }
 }
+
 /**
  * Adds the character to the map, applying camera transformations.
  * @memberof World
@@ -196,6 +213,10 @@ World.prototype.addCharacter = function () {
     this.addToMap(this.charakter)
     this.ctx.translate(-this.camera_x, 0)
 }
+
+/**
+ * Adds the Gamecurser to the Game when not Mobile
+ */
 World.prototype.addGameCurser = function () {
     if(!isMobile){
         this.addToMap(this.gameCurser);

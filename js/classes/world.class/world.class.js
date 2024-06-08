@@ -7,6 +7,7 @@
  * @param {Object} keyboard - An object that tracks the state of keyboard inputs.
  */
 class World {
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -17,6 +18,7 @@ class World {
         this.run()
         this.loadHighScore();
     }
+
     // Levelbased Lists
     level;
     enemies;
@@ -38,7 +40,6 @@ class World {
     bgLifebar = new Scoreboard(310, 0, 200, 75)
     bgEnergiebar = new Scoreboard(500, 0, 200, 75)
 
-
     // Fags and Booleans
     win = false;
     saved = false;
@@ -52,14 +53,15 @@ class World {
     showHighscore = false;
     pauseGame = false;
     activLevel = false;
-
     buttonHighlighted = 1
+
     // Camera
     camera_x = 0;
 
     // Arrays and Lists
     HighScore = [];
     throwableObjects = [];
+    
     /**
      * Sets the world context for the character, level, and game cursor,
      * allowing these components to interact with the world.

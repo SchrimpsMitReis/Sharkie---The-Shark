@@ -79,6 +79,7 @@ class Endboss extends moveableObjekt {
         this.energieLoop = null
         this.animate()
     }
+
     /**
     * Manages the animation states of the Endboss based on its current status,
     * such as floating, attacking, being hurt, or dead.
@@ -89,29 +90,31 @@ class Endboss extends moveableObjekt {
                 if (!this.isDead()) {
                     playSoundOnceUnuse(10)
                     this.playAnimation(this.IMAGES_FLOATING)
-                    if (this.isHurt(2)) {
-                        this.playAnimation(this.IMAGES_HURT)
-                    } else {
-                        this.attack()
-                    }
-                    if (this.spawnCount === 0) {
-                        this.playAnimation(this.IMAGES_INTRO);
-                    }
-                    if (world.charakter.position_x > 2500 && !this.firstContact) {
-                        this.spawnCount = 0;
-                        this.firstContact = true;
-
-                    }
+                    this.battleBehavior()
                 } else {
-                    this.playAnimation(this.IMAGES_DEAD)
-                    this.showImage(this.IMAGES_DEAD[5])
-                    allSounds[10].pause()
-                    world.isGameOver = true;
-                    world.win = true
+                    this.gameEnd()
                 }
                 this.spawnCount++
             }
         }, 100)
+        this.regEnergy()
+    }
+
+    /**
+     * what does Endboss tho while Fighting
+     */
+    battleBehavior(){
+        if (this.isHurt(2)) {
+            this.playAnimation(this.IMAGES_HURT)
+        } else {
+            this.attack()
+        }
+    }
+
+    /**
+     * Regenerates the Endboss' Energy he uses for attacking
+     */
+    regEnergy() {
         this.energieLoop = setInterval(() => {
             if (!world.pauseGame) {
                 this.energie += 5;
@@ -121,6 +124,18 @@ class Endboss extends moveableObjekt {
             }
         }, 400);
     }
+
+    /**
+     * Game ends Congratulations!!!
+     */
+    gameEnd() {
+        this.playAnimation(this.IMAGES_DEAD)
+        this.showImage(this.IMAGES_DEAD[5])
+        allSounds[10].pause()
+        world.isGameOver = true;
+        world.win = true
+    }
+
     /**
      * Checks if the Endboss is within attack range of the character.
      * @returns {boolean} Indicates if the character is within the attack range of the boss.
@@ -129,6 +144,7 @@ class Endboss extends moveableObjekt {
         let range = Math.abs(this.position_x - world.charakter.position_x)
         return range < 600
     }
+
     /**
      * Handles the attack logic for the Endboss, determining when and how to attack based on energy and range.
      */
@@ -140,6 +156,7 @@ class Endboss extends moveableObjekt {
             playSoundOnce(10)
         }
     }
+    
     /**
      * Stops all ongoing intervals and animations for the Endboss.
      */

@@ -25,6 +25,7 @@ class Squid extends moveableObjekt {
     ]
     currentImage = 0;
     lifePoints = 5;
+
     /**
      * Initializes an instance of Squid with given coordinates and default properties.
      */
@@ -38,6 +39,7 @@ class Squid extends moveableObjekt {
         this.animateLoop = null;
         this.animate()
     }
+
     /**
         * Manages the animation states of the Squid, including moving up and dying.
         */
@@ -50,7 +52,6 @@ class Squid extends moveableObjekt {
                     setTimeout(() => {
                         this.deconstruct(world.enemies)
                     }, 500)
-
                 }
                 else {
                     this.moveUp()
@@ -58,14 +59,15 @@ class Squid extends moveableObjekt {
                 }
             }
         }, 300)
-
     }
+
     /**
      * Stops all ongoing animations for the Squid.
      */
     stopLoops() {
         this.animateLoop = null;
     }
+    
     /**
      * Determines if the Squid is out of the view above the visible screen area.
      * @returns {boolean} Indicates whether the Squid is out of the player's view above the screen.

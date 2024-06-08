@@ -9,6 +9,7 @@
  */
 class Pufferfish extends moveableObjekt {
     speed = Math.random() * 7;
+
     IMAGES_PUFFERFISHSTILL = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png",
@@ -25,8 +26,10 @@ class Pufferfish extends moveableObjekt {
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/1.Puffer fish (3 color options)/4.DIE/DIE (2).png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/2.Enemy/1.Puffer fish (3 color options)/4.DIE/DIE (3).png"
     ]
+
     currentImage = 0;
     lifePoints = 5;
+
     /**
      * Initializes an instance of a Pufferfish with given coordinates and default properties.
      */
@@ -39,6 +42,7 @@ class Pufferfish extends moveableObjekt {
         this.animateLoop = null;
         this.animate()
     }
+
     /**
          * Manages the animation states of the Pufferfish, including swimming and dying.
          */
@@ -60,12 +64,14 @@ class Pufferfish extends moveableObjekt {
         }, 100)
 
     }
+
     /**
      * Stops all ongoing animations for the Pufferfish.
      */
     stopLoops() {
         clearInterval(this.animateLoop);
     }
+    
     /**
      * Determines if the Pufferfish is out of the view relative to the character's position.
      * @returns {boolean} Indicates whether the Pufferfish is out of the player's view.

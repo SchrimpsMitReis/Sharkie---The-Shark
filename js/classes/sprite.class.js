@@ -4,10 +4,12 @@
  * @extends drawableObject
  */
 class sprite extends drawableObject{
+
     IMAGE_SPRITE; IMAGE_SPRITE_HOVER;
     width = 720;
     height = 480;
     highlighted = false
+
     /**
      * Creates a sprite object positioned at the specified coordinates.
      * @param {number} x - The x coordinate where the sprite will be placed.
@@ -19,12 +21,14 @@ class sprite extends drawableObject{
         this.position_y = y;
         
     }
+
     /**
      * Changes the sprite's current display image to the hover image to indicate an interactive state.
      */
     hover(){
         this.showImage(this.IMAGE_SPRITE_HOVER)
     }
+    
     /**
      * Reverts the sprite's display image to the normal state image when not hovered.
      */

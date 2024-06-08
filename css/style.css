@@ -4,7 +4,7 @@ body{
     align-items: center;
     flex-direction: column;
     background-image: url("../IMG/BrowserBG3.webp");
-    background-size: 110% 110%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
     font-family: 'Spongebob';

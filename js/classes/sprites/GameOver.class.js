@@ -10,11 +10,12 @@
  * @param {number} h - The height of the Game Over image.
  */
 class GameOver extends sprite{
+    
     /**
      * Path to the sprite image used for the Game Over screen.
      * @type {string}
      */
-    IMAGE_SPRITE = "./IMG/GameOver.png"
+    IMAGE_SPRITE = "./IMG/GameOver_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadImage(this.IMAGE_SPRITE);

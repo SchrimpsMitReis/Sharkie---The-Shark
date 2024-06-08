@@ -4,6 +4,7 @@
  * @extends moveableObjekt
  */
 class throwableObject extends moveableObjekt {
+    
     /**
          * Initializes a new throwable object, setting its initial direction based on the character's facing direction.
          */
@@ -11,6 +12,7 @@ class throwableObject extends moveableObjekt {
         super()
         this.directionLeft = world.charakter.otherDirection
     }
+
     /**
      * Initiates the object's motion in the throw direction with a specified initial velocity.
      * @param {number} x - The initial horizontal velocity of the throw in pixels per interval.

@@ -11,11 +11,12 @@
  * @param {number} h - The height of the high score board image.
  */
 class HighscoreBoard extends sprite{
+    
     /**
      * Path to the sprite image used for the high score board.
      * @type {string}
      */
-    IMAGE_SPRITE = "./IMG/Scoreboard.png"
+    IMAGE_SPRITE = "./IMG/Scoreboard_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadImage(this.IMAGE_SPRITE);

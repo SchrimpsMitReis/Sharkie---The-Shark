@@ -10,8 +10,8 @@
  * @param {number} h - The height of the control button.
  */
 class Controlbutton extends sprite{
-    IMAGE_SPRITE = "./IMG/Controlbutton.png"
-    IMAGE_SPRITE_HOVER = "./IMG/Controlbutton_hover.png"
+    IMAGE_SPRITE = "./IMG/Controlbutton_2.png"
+    IMAGE_SPRITE_HOVER = "./IMG/Controlbutton_hover_2.png"
 
     constructor(x,y, w, h){
         super(x,y).loadSingleImage(this.IMAGE_SPRITE)

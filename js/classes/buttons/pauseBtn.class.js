@@ -11,8 +11,9 @@
  * @param {number} h - The height of the pause button.
  */
 class PauseBtn extends sprite{
-    IMAGE_SPRITE = "./IMG/pauseBtn.png"
-    IMAGE_SPRITE_HOVER = "./IMG/pauseBtn_hover.png"
+    
+    IMAGE_SPRITE = "./IMG/pauseBtn_1.png"
+    IMAGE_SPRITE_HOVER = "./IMG/pauseBtn_hover_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadSingleImage(this.IMAGE_SPRITE)

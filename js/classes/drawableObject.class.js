@@ -4,20 +4,24 @@
  * @class
  */
 class drawableObject {
+
     position_x;
     position_y;
+
     offset = {
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
     }
+
     img;
     height;
     width;
     imageCache = {};
     currentImage = 0;
     id;
+
     /**
      * Initializes a new drawable object, setting an unique ID.
      */
@@ -25,6 +29,7 @@ class drawableObject {
         this.id = this.getID()
 
     }
+
     /**
      * Loads an image into the object's image property from a specified path.
      * @param {string} path - The path to the image file.
@@ -33,6 +38,7 @@ class drawableObject {
         this.img = new Image()
         this.img.src = path;
     }
+
     /**
      * Preloads multiple images and stores them in the image cache.
      * @param {string[]} arr - Array of image paths to load.
@@ -44,10 +50,11 @@ class drawableObject {
             this.imageCache[path] = img;
         })
     }
+
     /**
- * Animates the object by cycling through a sequence of images.
- * @param {string[]} images - An array of image paths for the animation.
- */
+    * Animates the object by cycling through a sequence of images.
+    * @param {string[]} images - An array of image paths for the animation.
+    */
     playAnimation(images) {
         let i = this.currentImage % images.length
         let path = images[i];
@@ -65,6 +72,7 @@ class drawableObject {
         img.src = path;
         this.imageCache[path] = img
     };
+
     /**
      * Sets the current image for rendering from the image cache.
      * @param {string} path - The path to the cached image to display.
@@ -72,6 +80,7 @@ class drawableObject {
     showImage(path) {
         this.img = this.imageCache[path]
     }
+
     /**
      * Draws the object's current image on a canvas context.
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
@@ -79,6 +88,7 @@ class drawableObject {
     draw(ctx) {
         ctx.drawImage(this.img, this.position_x, this.position_y, this.width, this.height)
     }
+
     /**
      * Draws a frame around the object. Only applies to character and enemy classes.
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
@@ -92,6 +102,7 @@ class drawableObject {
             ctx.stroke();
         }
     }
+
     /**
      * Generates a unique identifier for the object.
      * @returns {number} A unique identifier.
@@ -99,6 +110,7 @@ class drawableObject {
     getID() {
         return Math.floor(Math.random() * 90000) + 10000;
     }
+
     /**
      * Removes the object from a game array, effectively deconstructing it from the game.
      * @param {Array} gameArray - The array from which the object should be removed.
@@ -107,6 +119,7 @@ class drawableObject {
         let index = gameArray.findIndex(münze => münze.id === this.id)
         gameArray.splice(index, 1);
     }
+
     // Collision Functions
     /**
      * Checks if the object is colliding with another object, taking offsets into account.
@@ -119,6 +132,7 @@ class drawableObject {
             (this.position_y + this.height) - this.offset.bottom >= obj.position_y + obj.offset.top &&
             (this.position_y + this.offset.top) <= (obj.position_y + obj.height) - obj.offset.bottom;
     }
+    
     /**
      * Sets offset values for the object to adjust collision detection margins.
      * @param {number} t - Top offset as a fraction of the object's height.

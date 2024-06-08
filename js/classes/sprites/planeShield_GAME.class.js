@@ -10,11 +10,12 @@
  * @param {number} h - The height of the plane shield image.
  */
 class planeShield_IG extends sprite{
+    
     /**
      * Path to the sprite image used for the plane shield.
      * @type {string}
      */
-    IMAGE_SPRITE = "./IMG/planeShieldBG_IG.png"
+    IMAGE_SPRITE = "./IMG/planeShieldBG_IG_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadImage(this.IMAGE_SPRITE);

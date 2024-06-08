@@ -11,6 +11,7 @@
  * @param {number} h - The height of the life bar frame.
  */
 class lifebarFrame extends sprite{
+    
     /**
      * Path to the sprite image used for the life bar frame.
      * @type {string}

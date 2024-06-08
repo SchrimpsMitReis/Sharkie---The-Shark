@@ -16,7 +16,8 @@ class Charakter extends moveableObjekt {
     score = 0;
     meleeActive = false;
     rangeActive = false;
-    alive = true
+    alive = true;
+
     IMAGES_SHARKIESTILL = [
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/1.png",
         "./Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/1.IDLE/2.png",
@@ -116,100 +117,172 @@ class Charakter extends moveableObjekt {
         this.loadImages(this.IMAGES_SHARKIE_SLEEP)
         this.loadImages(this.IMAGES_SHARKIE_SHOOT)
         this.applyGravity()
-        this.setOffset(0.6,0.3,0.22,0.3) // top, left, right, bottom
+        this.setOffset(0.6, 0.3, 0.22, 0.3) // top, left, right, bottom
         this.movementLoop = null;
         this.animationLoop = null;
         this.animate();
     }
+
     /**
      * Manages all animations and movements based on the character's state and keyboard inputs.
      */
-    async animate() {        
+    async animate() {
+        await this.movement()
+        await this.animation()
+    }
+    /**
+     * Sums up the Charakters Movement
+     */
+    async movement() {
         this.movementLoop = setInterval(async () => {
             if (this.alive && !world.isGameOver && !world.pauseGame) {
                 allSounds[9].pause()
-                if (this.world.keyboard.RIGHT && this.position_x <= 3680) {
-                    this.moveRight()
-                    await allSounds[9].play()
-                    this.resetSleeptimer()
-                }
-                if (this.world.keyboard.LEFT && this.position_x > 110 ) {
-                    this.moveLeft()
-                    await allSounds[9].play()
-                    this.resetSleeptimer()
-
-                }
-                if (this.world.keyboard.UP && this.position_y > 0 - 30) {
-                    this.moveUp()
-                    await allSounds[9].play()
-                    this.resetSleeptimer()
-                }
-                if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
-                    this.moveDown()
-                    await allSounds[9].play()
-                    this.resetSleeptimer()
-                }
-                if (this.world.keyboard.SHIFT && !(this.energie < 10)) {
-                    this.speed = 10;
-                    this.energie -= 0.7
-
-                } else {
-                    this.speed = 5
-                }
-                if (this.world.keyboard.SPACE && !this.meleeActive) {
-                    this.activateMelee()
-                    playRandomSound(hitSounds);
-                    this.resetSleeptimer()
-                }
+                await this.RIGHT()
+                await this.LEFT()
+                await this.UP()
+                await this.DOWN()
+                this.speedBoost()
+                this.meleeAttack()
                 this.world.camera_x = -this.position_x + 100;
             }
         }, 1000 / 60)
+    }
 
+    /**
+     * Describes the Funktion of the Rightbtn
+     */
+    async RIGHT() {
+        if (this.world.keyboard.RIGHT && this.position_x <= 3680) {
+            this.moveRight()
+            await allSounds[9].play()
+            this.resetSleeptimer()
+        }
+    }
+
+    /**
+    * Describes the Funktion of the Leftbtn
+    */
+    async LEFT() {
+        if (this.world.keyboard.LEFT && this.position_x > 110) {
+            this.moveLeft()
+            await allSounds[9].play()
+            this.resetSleeptimer()
+        }
+    }
+
+     /**
+     * Describes the Funktion of the Upbtn
+     */
+    async UP() {
+        if (this.world.keyboard.UP && this.position_y > 0 - 30) {
+            this.moveUp()
+            await allSounds[9].play()
+            this.resetSleeptimer()
+        }
+    }
+    
+     /**
+     * Describes the Funktion of the Downbtn
+     */
+    async DOWN() {
+        if (this.world.keyboard.DOWN && this.position_y < 480 - 150) {
+            this.moveDown()
+            await allSounds[9].play()
+            this.resetSleeptimer()
+        }
+    }
+
+    /**
+     * Power of the Speedboostbtn
+     */
+    speedBoost() {
+        if (this.world.keyboard.SHIFT && !(this.energie < 10)) {
+            this.speed = 10;
+            this.energie -= 0.7
+
+        } else {
+            this.speed = 5
+        }
+    }
+
+    /**
+     * melee Attack makes Character immortal for 2/10 Secound
+     */
+    meleeAttack() {
+        if (this.world.keyboard.SPACE && !this.meleeActive) {
+            this.activateMelee()
+            playRandomSound(hitSounds);
+            this.resetSleeptimer()
+        }
+
+    }
+    /**
+     * Say the Graical behavior and animation of the Charakter in Dead or Alive
+     */
+    async animation() {
         this.animationLoop = setInterval(async () => {
-            if (!world.pauseGame){
+            if (!world.pauseGame) {
                 if (this.isDead()) {
-                    allSounds[12].pause()
-                    if (this.alive) {
-                        this.playAnimation(this.IMAGES_SHARKIE_DEAD)
-                        setTimeout(() => {
-                            this.alive = false;
-                        }, 1000)
-                    } else {
-                        this.loadImage(this.IMAGES_SHARKIE_DEAD[this.IMAGES_SHARKIE_DEAD.length - 1])
-                            world.isGameOver = true;
-                    }
+                    this.endTheGame()
                 } else {
                     allSounds[12].pause()
-                    if (this.isSleeping()) {
-                        await allSounds[12].play()
-                        this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
-                        this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
-                    } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.meleeActive) {
-                        this.playAnimation(this.IMAGES_SHARKIE_SWIM)
-                        this.addEnergie(0.5)
-                    }else if (this.meleeActive){
-                        this.playAnimation(this.IMAGES_SHARKIE_FINSLAP)
-                    }else if(this.rangeActive){
-                        this.playAnimation(this.IMAGES_SHARKIE_SHOOT)
-                    }else if(this.isHurt()){
-                        if (this.lastHitBy instanceof Pufferfish) {
-                            this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)
-                        } else if(this.lastHitBy instanceof Squid){
-                            this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
-                        }else{
-                            this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
-                        }
-                            
-                    }
-                    else {
-                        this.playAnimation(this.IMAGES_SHARKIESTILL)
-                        this.addEnergie(1)
-                    }
-    
+                    await this.charBehavior()
                 }
             }
+        }, 1000 / 10)
 
-            }, 1000 / 10)
+    }
+
+    /**
+     * Says what Charackter does Casual Swimming, Sleeping, on meleeAttack, on rangeAttack, being Hurt or IDLE; 
+     */
+    async charBehavior() {
+        if (this.isSleeping()) {
+            await allSounds[12].play()
+            this.playAnimation(this.IMAGES_SHARKIE_SLEEP)
+            this.showImage(this.IMAGES_SHARKIE_SLEEP[13])
+        } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.meleeActive) {
+            this.playAnimation(this.IMAGES_SHARKIE_SWIM)
+            this.addEnergie(0.5)
+        } else if (this.meleeActive) {
+            this.playAnimation(this.IMAGES_SHARKIE_FINSLAP)
+        } else if (this.rangeActive) {
+            this.playAnimation(this.IMAGES_SHARKIE_SHOOT)
+        } else if (this.isHurt()) {
+            this.charHurt()
+        } else {
+            this.playAnimation(this.IMAGES_SHARKIESTILL)
+            this.addEnergie(1)
+        }
+    }
+
+    /**
+     * Make Charakter End the Game by Dying
+     */
+    endTheGame() {
+        allSounds[12].pause()
+        if (this.alive) {
+            this.playAnimation(this.IMAGES_SHARKIE_DEAD)
+            setTimeout(() => {
+                this.alive = false;
+            }, 1000)
+        } else {
+            this.loadImage(this.IMAGES_SHARKIE_DEAD[this.IMAGES_SHARKIE_DEAD.length - 1])
+            world.isGameOver = true;
+        }
+    }
+
+    /**
+     * What kind of Enemie Damage does which Hurt-Animation
+     */
+    charHurt() {
+        if (this.lastHitBy instanceof Pufferfish) {
+            this.playAnimation(this.IMAGES_SHARKIE_HURT_POISON)
+        } else if (this.lastHitBy instanceof Squid) {
+            this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+        } else {
+            this.playAnimation(this.IMAGES_SHARKIE_HURT_ELECTRO)
+        }
     }
 
     /**
@@ -222,6 +295,7 @@ class Charakter extends moveableObjekt {
         }, 400)
 
     }
+
     /**
      * Adds points to the character's score.
      * @param {number} x - The number of points to add.
@@ -229,6 +303,7 @@ class Charakter extends moveableObjekt {
     addScore(x) {
         this.score += x
     }
+
     /**
      * Reduces the character's score, ensuring it does not drop below zero.
      * @param {number} x - The number of points to subtract.
@@ -239,6 +314,7 @@ class Charakter extends moveableObjekt {
             this.score = 0
         }
     }
+
     /**
      * Increases the character's energy.
      * @param {number} x - The amount of energy to add.
@@ -249,10 +325,11 @@ class Charakter extends moveableObjekt {
             this.energie = 100
         }
     }
+
     /**
      * Stops all ongoing animations and movements for the character.
      */
-    reconstuct(){
+    reconstuct() {
         this.height = 220;
         this.width = 200;
         this.speed = 5;
@@ -264,9 +341,13 @@ class Charakter extends moveableObjekt {
         this.alive = true;
         this.position_x = 120;
         this.position_y = 250;
-    
+
     }
-    stopLoops(){
+    
+    /**
+     * clears all Charakter loops
+     */
+    stopLoops() {
         clearInterval(this.movementLoop)
         clearInterval(this.animationLoop)
         allSounds[12].pause()

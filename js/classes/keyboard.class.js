@@ -4,6 +4,7 @@
  * @class
  */
 class Keyboard{
+
     LEFT = false;
     RIGHT = false;
     UP = false;
@@ -15,4 +16,5 @@ class Keyboard{
     FULLSCREEN = false; // f Taste
     HELP = false;
     MOUSEBTN = false;
+    
 }

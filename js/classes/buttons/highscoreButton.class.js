@@ -12,8 +12,8 @@
  * @param {number} h - The height of the first high score button.
  */
 class Highscorebutton extends sprite{
-    IMAGE_SPRITE = "./IMG/HighscoreButton.png";
-    IMAGE_SPRITE_HOVER = "./IMG/HighscoreButton_hover.png"
+    IMAGE_SPRITE = "./IMG/HighscoreButton_1.png";
+    IMAGE_SPRITE_HOVER = "./IMG/HighscoreButton_hover_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadSingleImage(this.IMAGE_SPRITE)

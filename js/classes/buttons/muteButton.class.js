@@ -11,8 +11,10 @@
  * @param {number} h - The height of the mute button.
  */
 class Mutebutton extends sprite{
-    IMAGE_SPRITE = "./IMG/MuteBtn.png"
-    IMAGE_SPRITE_HOVER = "./IMG/MuteBtn_hover.png"
+
+    IMAGE_SPRITE = "./IMG/MuteBtn_1.png"
+    IMAGE_SPRITE_HOVER = "./IMG/MuteBtn_hover_1.png"
+    
     constructor(x,y, w, h){
         super(x,y).loadSingleImage(this.IMAGE_SPRITE)
         this.loadSingleImage(this.IMAGE_SPRITE_HOVER)

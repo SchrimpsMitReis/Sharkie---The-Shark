@@ -9,6 +9,7 @@ class Level {
     world;
     levelEndX = 1440 * 3;
     spawnedEndboss = false
+
 /**
      * Initializes a new instance of a game level with specified game objects.
      * @param {Array} enemies - An array of enemies to be included in the level.
@@ -25,6 +26,7 @@ class Level {
         this.prozGeneration = null;
         this.dif = dif;
     }
+
     // Generate Menues
     /**
      * Sets up the main menu with buttons and background for the game start.
@@ -41,6 +43,7 @@ class Level {
         this.scenerie = [new BackgroundObjekt("./IMG/lvl00.webp", 0, 800, 480),]
 
     }
+
     /**
      * Configures the in-game menu which can include pause functionality and score display.
      */
@@ -52,6 +55,7 @@ class Level {
         ]
         this.menues = ingameMenue;
     }
+
     // Generate Enemies
     /**
      * Periodically generates enemies based on the level's difficulty setting.
@@ -70,6 +74,7 @@ class Level {
         }, count * (1000 / (dif + 1)))
 
     }
+
     /**
      * Generates a pufferfish enemy at a calculated position based on difficulty and player's current position.
      * @param {number} dif - Difficulty factor affecting the spawn rate and positioning.
@@ -82,6 +87,7 @@ class Level {
             this.enemies.push(pufferfish)
         }
     }
+
     /**
      * Generates a squid enemy at a calculated position based on difficulty and player's current position.
      * @param {number} dif - Difficulty factor affecting the spawn rate and positioning.
@@ -94,6 +100,7 @@ class Level {
             this.enemies.push(tintenFisch)
         }
     }
+
     /**
      * Generates a coin at a random position within the level, influenced by the difficulty setting.
      * @param {number} dif - Difficulty factor affecting the spawn rate and positioning of coins.
@@ -107,6 +114,7 @@ class Level {
 
         }
     }
+
     /**
      * Generates the level's end boss if it has not been spawned yet.
      */
@@ -125,6 +133,7 @@ class Level {
         }
 
     }
+    
     /**
      * Stops all ongoing enemy generation loops within the level.
      */

@@ -18,6 +18,7 @@ World.prototype.LevelZero = async function () {
     playSound(3)
     playSoundOnceUnuse(6)
 }
+
 /**
  * Sets the game to level one, usually the first level of actual gameplay.
  * Initializes game elements specific to level one, including enemies, character, and sounds.
@@ -37,6 +38,7 @@ World.prototype.LevelOne = function () {
     this.startPlay = true;
     this.level.generateEnemie(1)
 }
+
 /**
  * Clears all current level information, resetting enemies and other level-specific states.
  * @memberof World
@@ -48,6 +50,7 @@ World.prototype.clearLevel = function () {
     this.level.enemies.length = 0;
     this.level.collectables.length = 0
 }
+
 /**
  * Resets the entire game world state, including game over flags, GUI visibility, and character data.
  * @memberof World
@@ -65,6 +68,7 @@ World.prototype.clearWorld = function () {
     this.restarted = false;
     this.pauseSounds();
 }
+
 /**
  * Stops all ongoing loops related to enemies, character, and sound objects in the game.
  * @memberof World
@@ -76,9 +80,10 @@ World.prototype.stopLoops = function () {
     this.stopSOLoops()
 
 }
+
 World.prototype.pauseSounds = function () {
     allSounds.forEach((sound) => {
-        if (sound.src !== 'audio/click1.mp3' || sound.src !== 'audio/bite.mp3') {
+        if (sound.src !== 'audio/click1.aac' || sound.src !== 'audio/bite.aac') {
             if (!sound.paused) {
                 sound.pause()
                 sound.currentTime = 0;
@@ -86,6 +91,7 @@ World.prototype.pauseSounds = function () {
         }
     })
 }
+
 /**
  * Loads the current level's data into the game world, including enemies, scenery, collectables, and menus.
  * @memberof World
@@ -97,6 +103,7 @@ World.prototype.loadingLevel = function () {
     this.collectables = this.level.collectables;
     this.gameMenues = this.level.menues;
 }
+
 /**
  * Loads the character and initializes their position and state within the world.
  * @memberof World
@@ -107,6 +114,7 @@ World.prototype.loadingCharakter = function () {
     this.camera_x = 100
     this.setWorld()
 }
+
 /**
  * Loads and prepares sound objects for the game, setting up their initial conditions and volume.
  * @memberof World
@@ -114,11 +122,12 @@ World.prototype.loadingCharakter = function () {
  */
 World.prototype.loadingSoundObjects = function () {
     this.soundObjects = [
-        new SoundObject2D('./audio/BarCrowd.mp3', 0, 1000),
-        new SoundObject2D('./audio/EndbossMusic.mp3', 3000, 1000),
+        new SoundObject2D('./audio/BarCrowd_1_1.aac', 0, 1000),
+        new SoundObject2D('./audio/EndbossMusic_1.aac', 3000, 1000),
     ]
     this.startSoundObjects();
 }
+
 /**
  * Stops all loops associated with the character's animations or actions.
  * @memberof `World`
@@ -131,6 +140,7 @@ World.prototype.stopEnemieLoops = function () {
         })
     }
 }
+
 /**
  * Stops all sound-related loops, pausing the sound playback and any other sound-related intervals.
  * @memberof World
@@ -141,6 +151,7 @@ World.prototype.stopCharakterLoops = function () {
         this.charakter.stopLoops();
     }
 }
+
 /**
  * Initiates playback of all configured sound objects, typically adjusting volume based on game settings.
  * @memberof World
@@ -154,6 +165,9 @@ World.prototype.stopSOLoops = function () {
         })
     }
 }
+/**
+ * It starts all 2D - SoundObjects
+ */
 World.prototype.startSoundObjects = function () {
     this.soundObjects.forEach((SO) => {
         SO.detectVolume();

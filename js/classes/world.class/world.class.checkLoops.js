@@ -14,12 +14,14 @@ World.prototype.run = function () {
         }
     }, 4)
 }
+
 /**
  * This Method breaks the Checkloop
  */
 World.prototype.stopCheckLoop = function () {
     clearInterval(this.checkLoop)
 }
+
 /**
  * This checks if the Game is Over and if you win or not
  * on win it saves the score
@@ -43,6 +45,7 @@ World.prototype.checkGameEnd = function () {
         }
     }
 }
+
 /**
  * It checks for any kind of Collisions in game:
  * Character <-> Enemies
@@ -60,6 +63,7 @@ World.prototype.checkCollisions = function () {
     this.checkMenues()
     this.responsiveControl()
 }
+
 /**
  * This Method Checks the Enemies
  * if an not Endboss is dead it disappiers
@@ -83,8 +87,8 @@ World.prototype.checkEnemies = function () {
             }
         }
     })
-
 }
+
 /**
  * This Method accesses the damage, taken by the Character, and the contact sound for each instance of enemies 
  * @param {moveableObjekt} enemie 
@@ -106,6 +110,7 @@ World.prototype.inYourFace = function (enemie) {
         this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_HURT_ELECTRO)
     }
 }
+
 /**
  * If the Character colliding an enemie is in meleeActiv, it deals damage
  * the Score is raised
@@ -125,6 +130,7 @@ World.prototype.collidingMelee = function (enemie) {
     }
 
 }
+
 /**
  * The Method check for each Collectable colliding with the Character
  * if the character collides with a coin @param character.coin goes +1
@@ -144,6 +150,7 @@ World.prototype.checkCollectables = function () {
         }
     })
 }
+
 /**
  * each throwable is checked if it hits any of the enemies
  * The Endboss would be hit an all other Enemies die and get removed from the array
@@ -153,23 +160,28 @@ World.prototype.checkThrowables = function () {
     this.throwableObjects.forEach((throwable) => {
         this.level.enemies.forEach((enemie) => {
             if (throwable.isColliding(enemie)) {
-                this.charakter.addScore(5)
-                if (enemie instanceof Endboss) {
-                    enemie.hit(20);
-                    playSound(11)
-                }
-                else {
-                    enemie.hit(5)
-                    enemie.playAnimation(enemie.IMAGES_DIE);
-                    setTimeout(() => {
-                        enemie.deconstruct(this.level.enemies)
-                    }, 2000)
-                }
-                throwable.deconstruct(this.throwableObjects)
+                this.hitEnemie(throwable, enemie)
             }
         })
     });
 }
+
+World.prototype.hitEnemie = function (throwable, enemie){
+    this.charakter.addScore(5)
+    if (enemie instanceof Endboss) {
+        enemie.hit(20);
+        playSound(11)
+    }
+    else {
+        enemie.hit(5)
+        enemie.playAnimation(enemie.IMAGES_DIE);
+        setTimeout(() => {
+            enemie.deconstruct(this.level.enemies)
+        }, 2000)
+    }
+    throwable.deconstruct(this.throwableObjects)
+}
+
 /**
  * checks if the menue is a Button
  * @param {Sprite} menue 
@@ -182,6 +194,7 @@ World.prototype.areButtons = function (menue) {
         menue instanceof Startbutton ||
         menue instanceof PauseBtn;
 }
+
 /**
  * the Method checks for each @param menue if the curser hovers
  * 
@@ -189,29 +202,46 @@ World.prototype.areButtons = function (menue) {
 World.prototype.checkMenues = function () {
     this.level.menues.forEach((menue) => {
         if (this.curserOverMenue(menue)) {
-            if (this.areButtons(menue)) {
-                if (!menue.highlighted) {
-                    playSound(1)
-                    menue.highlighted = true;
-                }
-                menue.hover()
-                if (this.keyboard.MOUSEBTN && !isMobile) {
-                    playSound(2)
-                    this.buttonSelection(menue)
-                }
-            }
+            this.highlightButtons(menue)
         }
         else {
-            if (this.areButtons(menue)) {
-                menue.unhover()
-            }
-            if (menue.highlighted) {
-                menue.highlighted = false;
-            }
+            this.resetButtons(menue)
         }
     })
 
 }
+
+/**
+ * Makes the Menue Buttons unhoverd wenn they are no in focus
+ * @param {*} menue 
+ */
+World.prototype.resetButtons = function(menue){
+    if (this.areButtons(menue)) {
+        menue.unhover()
+    }
+    if (menue.highlighted) {
+        menue.highlighted = false;
+    }
+}
+
+/**
+ * Makes Buttos highlighted when they are on Focus
+ * @param {*} menue 
+ */
+World.prototype.highlightButtons = function(menue){
+    if (this.areButtons(menue)) {
+        if (!menue.highlighted) {
+            playSound(1)
+            menue.highlighted = true;
+        }
+        menue.hover()
+        if (this.keyboard.MOUSEBTN && !isMobile) {
+            playSound(2)
+            this.buttonSelection(menue)
+        }
+    }
+}
+
 /**
  * Determines if the game cursor is currently over a specified menu.
  * This method checks if the cursor's coordinates are within the boundaries of the menu's rectangle
@@ -232,6 +262,7 @@ World.prototype.curserOverMenue = function (menue) {
         this.gameCurser.position_x <= menue.position_x + menue.width &&
         this.gameCurser.position_y <= menue.position_y + menue.height;
 }
+
 /**
  * Handles the actions triggered when different types of menu buttons are selected.
  * This method checks the type of the given menu object and executes an action based on its type:
@@ -265,6 +296,7 @@ World.prototype.buttonSelection = function (menue) {
         muteAll()
     }
 }
+
 /**
  * Checks if conditions are met to throw an object in the game, typically a "bubble".
  * If the secondary action key is pressed and the character has sufficient energy,
@@ -282,9 +314,6 @@ World.prototype.buttonSelection = function (menue) {
 World.prototype.checkObjectThrow = function () {
     if (this.keyboard.SECONDARY && this.charakter.energie >= 25) {
         this.charakter.rangeActive = true
-        // setTimeout(() => {
-        // this.charakter.playAnimation(this.charakter.IMAGES_SHARKIE_SHOOT)
-        // }, 2000);
         let newBubble = new bubble(this.charakter.position_x + 100, this.charakter.position_y + 100)
         this.throwableObjects.push(newBubble)
         playSound(5)
@@ -296,51 +325,35 @@ World.prototype.checkObjectThrow = function () {
         }, 100)
     }
 }
+
+/**
+ * Describes for the Responsiv Gamepad what Menubutten does which function
+ */
 World.prototype.responsiveControl = function () {
     if (isMobile && !this.activLevel) {
-        playSoundOnceUnuse(2)
-        if (this.buttonHighlighted === 1) {
-            this.unhoverAll()
-            this.gameMenues[1].hover()
+        playSoundOnceUnuse(2);
+        const actions = [
+            () => this.LevelOne(),
+            () => this.keyboard.HELP = !this.keyboard.HELP,
+            () => muteAll(),
+            () => this.showHighscore = !this.showHighscore
+        ];
+        const buttonIndex = this.buttonHighlighted;
+        if (buttonIndex >= 1 && buttonIndex <= 4) {
+            this.unhoverAll();
+            this.gameMenues[buttonIndex].hover();
             if (this.keyboard.SPACE) {
-                this.LevelOne()
-                this.keyboard.SPACE = !this.keyboard.SPACE
-                playSoundOnce(2)
+                actions[buttonIndex - 1]();
+                playSoundOnce(2);
+                this.keyboard.SPACE = !this.keyboard.SPACE;
             }
         }
-        else if (this.buttonHighlighted === 2) {
-            this.unhoverAll()
-            this.gameMenues[2].hover()
-            if (this.keyboard.SPACE) {
-                playSoundOnce(2)
-                this.keyboard.HELP = !this.keyboard.HELP
-                this.keyboard.SPACE = !this.keyboard.SPACE
-
-            }
-        }
-        else if (this.buttonHighlighted === 3) {
-            this.unhoverAll()
-            this.gameMenues[3].hover()
-            if (this.keyboard.SPACE) {
-                playSoundOnce(2)
-                muteAll()
-                this.keyboard.SPACE = !this.keyboard.SPACE
-            }
-        }
-        else if (this.buttonHighlighted === 4) {
-            this.unhoverAll()
-            this.gameMenues[4].hover()
-            if (this.keyboard.SPACE) {
-                playSoundOnce(2)
-                this.showHighscore = !this.showHighscore
-                this.keyboard.SPACE = !this.keyboard.SPACE
-
-            }
-
-        }
-
     }
-}
+}  
+
+/**
+ * unhover all Button on responsiv
+ */
 World.prototype.unhoverAll = function(){
     this.gameMenues[1].unhover()
     this.gameMenues[2].unhover()

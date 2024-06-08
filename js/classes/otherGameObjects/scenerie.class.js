@@ -10,7 +10,9 @@
  * @param {number} [height=480] - The height of the background image; default is set to typical full-screen height.
  */
 class BackgroundObjekt extends moveableObjekt{
+
     position_y = 0;
+    
     /**
      * Initializes a new background object with specific dimensions and location based on the provided image path and extension factor.
      */

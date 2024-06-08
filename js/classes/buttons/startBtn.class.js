@@ -11,8 +11,9 @@
  * @param {number} h - The height of the start button.
  */
 class Startbutton extends sprite{
-    IMAGE_SPRITE = "./IMG/Startbutton2.png"
-    IMAGE_SPRITE_HOVER = "./IMG/Startbutton2_hover.png"
+    
+    IMAGE_SPRITE = "./IMG/Startbutton2_1.png"
+    IMAGE_SPRITE_HOVER = "./IMG/Startbutton2_hover_1.png"
 
     constructor(x,y, w, h){
         super(x,y).loadSingleImage(this.IMAGE_SPRITE)

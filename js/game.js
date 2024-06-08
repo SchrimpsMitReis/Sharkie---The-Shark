@@ -10,6 +10,7 @@ const mainSection = document.getElementById('mainSection');
 
 
 // Global EventListener
+
 window.addEventListener('load', function () {
     init()
     mainSection.addEventListener('contextmenu', function (event) {
@@ -17,9 +18,13 @@ window.addEventListener('load', function () {
     })
 
 });
+
 window.addEventListener("orientationchange", function () {
     location.reload();
 });
+
+// Functions
+
 /**
  * Checks wether the device is in portait or landscapemode.
  * sending Startbutton or sending the switchimage to MainSection
@@ -31,6 +36,7 @@ function init() {
         mainSection.innerHTML = setSwitchImage()
     }
 }
+
 /**
  * Initializes the game by setting safe storage and loading the game world.
  * @async
@@ -41,6 +47,7 @@ async function startGame() {
     loadWorld();
 
 }
+
 /**
  * Loads the game world, initializes the canvas, the world object, keyboard handlers, and overlays.
  */
@@ -57,6 +64,7 @@ function loadWorld() {
     }
     keyEventListeners()
 }
+
 /**
  * Registers event listeners for mouse and keyboard interactions.
  */
@@ -66,6 +74,10 @@ function keyEventListeners() {
     keyUpListener();
     mouseClickListener();
 }
+
+/**
+ * Sets Controlls the Mousebtn on Canvas in case of casual and Fullscreen
+ */
 function mousemoveEventListener() {
     document.addEventListener('mousemove', (event) => {
         let canvasBorder = canvas.getBoundingClientRect();
@@ -79,6 +91,7 @@ function mousemoveEventListener() {
         }
     })
 }
+
 /**
  * On Mouse 1 click it switches keyboard
  */
@@ -92,6 +105,7 @@ function mouseClickListener() {
     })
 
 }
+
 /**
  * Check wether a relevant key is released
  */
@@ -124,6 +138,7 @@ function keyUpListener() {
 
     })
 }
+
 /**
  * Check wether a relevant key is pressed
  */
@@ -161,6 +176,7 @@ function keyDownListener() {
         }
     })
 }
+
 /**
  * Toggles the full screen state of the canvas.
  */
@@ -188,6 +204,7 @@ function toggleFullscreen() {
         }
     }
 }
+
 /**
  * Arranges the overlay based on device orientation.
  * @param {HTMLElement} canvas - The canvas element where the game is rendered.
@@ -202,6 +219,7 @@ function arrangeSmartOverlay(canvas) {
         }
     }
 }
+
 /**
  * Fits the overlay to the canvas dimensions.
  * @param {HTMLElement} overlay - The overlay element to fit.
@@ -214,6 +232,7 @@ function overlayFit(overlay) {
     // overlay.style.right = canvasBorder.right + 'px';
     // overlay.style.bottom = canvasBorder.bottom + 'px';
 }
+
 /**
  * Detects the type of device the game is being accessed from.
  * @returns {string} The type of device detected (Mobile, Tablet, or Desktop).
@@ -228,6 +247,7 @@ function getDeviceType() {
         return "Desktop";
     }
 }
+
 /**
  * Checks if the device is in landscape orientation.
  * @returns {boolean} True if the device is in landscape mode, false otherwise.
@@ -235,6 +255,7 @@ function getDeviceType() {
 function checkLandscape() {
     return window.innerWidth > window.innerHeight
 }
+
 /**
  * Sets up initial safe storage for game data.
  */
@@ -255,6 +276,11 @@ function setSaveSpace() {
         localStorage.setItem('HighScore', HighScoreProtoAsJSON)
     }
 }
+
+/**
+ * CodeSnippet of the Canvas an the responsiv controll that are d-none'd
+ * @returns html
+ */
 function setCanvas() {
     return /*html*/`
         <canvas id="canvas" width="720" height="480"></canvas>
@@ -271,17 +297,28 @@ function setCanvas() {
         </div>
     `
 }
+
+/**
+ * 
+ * @returns Image that you see if the device is in Portait Mode
+ */
 function setSwitchImage() {
     return /*html*/`
                 <div class="switchPortaitImage"></div>
     `
 }
+
+/**
+ * 
+ * @returns the Startbtn to play the Canvas and unlock the Browser security stoping all Onload Listeners
+ */
 function setFirstBtn() {
     return /*html*/`
         <button id="startBtn" class="startGameBtn" onclick="startGame()">Start&nbsp;Game</button>
 
     `
 }
+
 /**
  * Sets up touch event listeners for on-screen control buttons to simulate keyboard input for a game.
  */
@@ -355,6 +392,10 @@ function smartControlListener() {
         keyboard.SHIFT = false;
     })
 }
+
+/**
+ * Set the next Button on Focus an Highlights it
+ */
 function switchUpMobileSelection() {
     if (!world.activLevel) {
         world.buttonHighlighted++
@@ -364,6 +405,10 @@ function switchUpMobileSelection() {
         }
     }
 }
+
+/**
+ * Set the previous Button on Focus an Highlights it
+ */
 function switchDownMobileSelection() {
     if (!world.activLevel) {
         world.buttonHighlighted--

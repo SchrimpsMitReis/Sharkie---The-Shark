@@ -8,10 +8,12 @@
  * @param {number} [y=100] - The initial y-coordinate where the cursor will appear on the canvas.
  */
 class Cursor extends moveableObjekt{
+
     CURSOR_IMAGE = "./IMG/Mauszeiger.png";
     width = 32;
     height = 32;
     canvasSize = "";
+    
     /**
      * Initializes a new cursor object with specified default coordinates if not provided.
      */

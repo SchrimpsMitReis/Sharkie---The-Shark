@@ -8,6 +8,7 @@
  * @param {number} y - The initial y-coordinate where the bubble is created.
  */
 class bubble extends throwableObject{
+    
     IMAGE = "Grafiken - Sharkie/Alternative Grafiken - Sharkie/1.Sharkie/4.Attack/Bubble trap/Bubble.png";
     
     
